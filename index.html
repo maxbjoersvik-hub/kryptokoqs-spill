@@ -1,0 +1,3820 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kryptokoqs – prototype</title>
+  <script type="module" crossorigin>// \0rolldown/runtime.js
+var __defProp = Object.defineProperty;
+var __exportAll = (all, no_symbols) => {
+	let target = {};
+	for (var name in all) __defProp(target, name, {
+		get: all[name],
+		enumerable: true
+	});
+	if (!no_symbols) __defProp(target, Symbol.toStringTag, { value: "Module" });
+	return target;
+};
+// \0vite/modulepreload-polyfill.js
+(function polyfill() {
+	const relList = document.createElement("link").relList;
+	if (relList && relList.supports && relList.supports("modulepreload")) return;
+	for (const link of document.querySelectorAll("link[rel=\"modulepreload\"]")) processPreload(link);
+	new MutationObserver((mutations) => {
+		for (const mutation of mutations) {
+			if (mutation.type !== "childList") continue;
+			for (const node of mutation.addedNodes) if (node.tagName === "LINK" && node.rel === "modulepreload") processPreload(node);
+		}
+	}).observe(document, {
+		childList: true,
+		subtree: true
+	});
+	function getFetchOpts(link) {
+		const fetchOpts = {};
+		if (link.integrity) fetchOpts.integrity = link.integrity;
+		if (link.referrerPolicy) fetchOpts.referrerPolicy = link.referrerPolicy;
+		if (link.crossOrigin === "use-credentials") fetchOpts.credentials = "include";
+		else if (link.crossOrigin === "anonymous") fetchOpts.credentials = "omit";
+		else fetchOpts.credentials = "same-origin";
+		return fetchOpts;
+	}
+	function processPreload(link) {
+		if (link.ep) return;
+		link.ep = true;
+		const fetchOpts = getFetchOpts(link);
+		fetch(link.href, fetchOpts);
+	}
+})();
+// src/grafikk/ikoner.js
+var ikoner_exports = /* @__PURE__ */ __exportAll({
+	IK_FARGE: () => IK_FARGE,
+	IK_STREK: () => IK_STREK,
+	IO: () => IO,
+	byttIkoner: () => byttIkoner,
+	ikonSvg: () => ikonSvg
+});
+var IK_STREK = {
+	flame: "M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 1.5 1 2 2 2 3 1-2 1-4 1-6z",
+	droplet: "M12 3l5 7a6 6 0 1 1-10 0z",
+	snowflake: "M12 2v20M4 7l16 10M20 7L4 17M9 4l3 2 3-2M9 20l3-2 3 2",
+	sparkles: "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z",
+	barbell: "M2 12h20M5 8v8M8 6v12M16 6v12M19 8v8",
+	bolt: "M13 2L4 14h7l-1 8 9-12h-7z",
+	mountain: "M2 20l7-12 4 6 3-4 6 10z",
+	feather: "M20 4C12 4 6 10 6 18l-2 2M6 18c8 0 14-6 14-14M10 14h5",
+	ghost: "M5 21V10a7 7 0 0 1 14 0v11l-2.5-2-2.3 2-2.2-2-2.2 2-2.3-2zM9.5 10h.01M14.5 10h.01",
+	list: "M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01",
+	refresh: "M20 11a8 8 0 1 0-2 5.3M20 4v7h-7",
+	home: "M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6",
+	swords: "M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2M9.5 17.5L21 6V3h-3L6.5 14.5M11 19l-6-6M8 16l-4 4M5 21l-2-2",
+	run: "M13 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17l5 1 .75-1.5M15 21v-4l-4-3 1-6M7 12V9l5-1 3 3 3 1",
+	"arrow-left": "M5 12h14M5 12l6 6M5 12l6-6",
+	palette: "M12 21a9 9 0 0 1 0-18c4.97 0 9 3.58 9 8 0 2.5-2 4-4.5 4H14a2 2 0 0 0-1 3.75A1.3 1.3 0 0 1 12 21M7.5 10.5h.01M12 7.5h.01M16.5 10.5h.01",
+	trophy: "M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM5 9a2 2 0 0 1 0-4h2M19 9a2 2 0 0 0 0-4h-2",
+	"message-circle": "M3 20l1.3-3.9A9 8 0 1 1 7.7 19.3z",
+	flask: "M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4a1.5 1.5 0 0 0 1.3-2L14 9V3M7 15h10",
+	sun: "M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4",
+	wind: "M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7",
+	moon: "M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z",
+	hammer: "M4 20h16M6 20l1-8h10l1 8M7 12c0-2 10-2 10 0M14 4l-3 6M13 3l3 1",
+	check: "M5 12l5 5 9-10",
+	minus: "M5 12h14",
+	mett: "M3 11h18a9 9 0 0 1-18 0zM8 7c0-2 2-2 2-4M13 7c0-2 2-2 2-4",
+	humor: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M8.5 14a4 4 0 0 0 7 0M9 9.5h.01M15 9.5h.01",
+	energi: "M13 2L4 14h7l-1 8 9-12h-7z",
+	klokke: "M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18M12 7v5l3 2",
+	egg: "M12 3c-3.5 0-6 5.5-6 10a6 6 0 0 0 12 0c0-4.5-2.5-10-6-10",
+	kart: "M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14",
+	las: "M6 11h12v9H6zM8.5 11V8a3.5 3.5 0 0 1 7 0v3",
+	merke: "M12 3a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11M9 13.5L7 21l5-2.5 5 2.5-2-7.5"
+};
+var IO = "stroke=\"var(--io,#2a1a10)\" stroke-width=\"1.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\"";
+var IK_FARGE = {
+	mais: `<path d="M12 3c3 0 4 4 4 8s-1 9-4 9-4-5-4-9 1-8 4-8z" fill="var(--i1,#f7c736)" ${IO}/><path d="M10 7h4M9.5 10h5M9.5 13h5M10 16h4M12 4v15" stroke="var(--io,#2a1a10)" stroke-width=".8" opacity=".5"/><path d="M12 21c-5-1-7-6-6-11 2 3 3 6 6 11zM12 21c5-1 7-6 6-11-2 3-3 6-6 11z" fill="var(--i2,#7cb342)" ${IO}/>`,
+	meitemark: `<path d="M3 15c2-4 4-4 6 0s4 4 6 0 4-4 6-1" fill="none" stroke="var(--io,#2a1a10)" stroke-width="5" stroke-linecap="round"/><path d="M3 15c2-4 4-4 6 0s4 4 6 0 4-4 6-1" fill="none" stroke="var(--i1,#f09ab0)" stroke-width="3" stroke-linecap="round"/><circle cx="20.3" cy="13.6" r=".8" fill="var(--io,#2a1a10)"/>`,
+	havre: `<path d="M12 22V6M12 14c-3-1-5-3-6-6M12 12c3-1 5-3 6-6" stroke="var(--i2,#9a7b3c)" stroke-width="1.5" fill="none"/>${[
+		[12, 4],
+		[6, 7],
+		[18, 5],
+		[8, 11],
+		[16, 9],
+		[12, 9]
+	].map(([x, y]) => `<ellipse cx="${x}" cy="${y}" rx="1.6" ry="2.6" fill="var(--i1,#e8cf8a)" ${IO}/>`).join("")}`,
+	solsikkefro: [
+		[
+			7,
+			14,
+			-25
+		],
+		[
+			12,
+			10,
+			5
+		],
+		[
+			17,
+			15,
+			30
+		]
+	].map(([x, y, r]) => `<g transform="rotate(${r} ${x} ${y})"><path d="M${x} ${y - 6}c3 2 3 9 0 11-3-2-3-9 0-11z" fill="var(--i1,#3d3d3d)" ${IO}/><path d="M${x} ${y - 5}v9" stroke="var(--i2,#e8e2d0)" stroke-width="1.1"/></g>`).join(""),
+	blabar: `${[
+		[8, 15],
+		[16, 15],
+		[12, 8.5]
+	].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4.6" fill="var(--i1,#4b5fc4)" ${IO}/><path d="M${x - 1.3} ${y - 3}l1.3 1 1.3-1" stroke="var(--io,#2a1a10)" stroke-width="1" fill="none"/>`).join("")}<path d="M12 4c1-2 3-2 4-1" stroke="var(--i2,#5a9b3c)" stroke-width="1.6" fill="none"/>`,
+	stell: `<rect x="3" y="12" width="13" height="5" rx="1.5" fill="var(--i1,#c98a4a)" ${IO}/><path d="M16 14.5h5" stroke="var(--io,#2a1a10)" stroke-width="2.4" stroke-linecap="round"/>${[
+		5,
+		7.5,
+		10,
+		12.5,
+		15
+	].map((x) => `<path d="M${x} 12V7" stroke="var(--i2,#8a6a3a)" stroke-width="1.4" stroke-linecap="round"/>`).join("")}<path d="M18 4l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z" fill="var(--i3,#ffd23f)" ${IO}/>`,
+	kos: `<path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z" fill="var(--i1,#e8504a)" ${IO}/><path d="M8 8.5a2 2 0 0 1 2-1.5" stroke="#fff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity=".8"/>`,
+	hoystakk: `<path d="M3 20c0-8 4-14 9-14s9 6 9 14z" fill="var(--i1,#f2c94c)" ${IO}/><path d="M7 20c1-6 2-10 5-12M12 20V9M17 20c-1-6-2-10-5-12" stroke="var(--i2,#b8902a)" stroke-width="1.1" fill="none"/>`,
+	hakkeblokk: `<path d="M5 12h14v8H5z" fill="var(--i1,#b5793f)" ${IO}/><ellipse cx="12" cy="12" rx="7" ry="2.5" fill="var(--i2,#e2b77f)" ${IO}/><ellipse cx="12" cy="12" rx="3" ry="1" fill="none" stroke="var(--io,#2a1a10)" stroke-width=".8"/><path d="M15 5l2-2M18 7l3-1M9 5L8 2" stroke="var(--io,#2a1a10)" stroke-width="1.3" stroke-linecap="round"/>`,
+	motvind: `<path d="M3 8h10a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h7" fill="none" stroke="var(--i1,#57b0e6)" stroke-width="2.2" stroke-linecap="round"/>`,
+	sprint: `<path d="M13 4a1.5 1.5 0 1 0 3 0 1.5 1.5 0 1 0-3 0M4 17l5 1 .75-1.5M15 21v-4l-4-3 1-6M7 12V9l5-1 3 3 3 1" fill="none" stroke="var(--i1,#e4472b)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 9h3M1 13h2" stroke="var(--io,#2a1a10)" stroke-width="1.2" stroke-linecap="round" opacity=".6"/>`,
+	meditasjon: `<path d="M12 18c-2-3-2-7 0-11 2 4 2 8 0 11zM12 18c-4 0-7-2-8-6 4 0 7 2 8 6zM12 18c4 0 7-2 8-6-4 0-7 2-8 6z" fill="var(--i1,#d98bd9)" ${IO}/><path d="M5 20h14" stroke="var(--i2,#57b0e6)" stroke-width="1.8" stroke-linecap="round"/>`,
+	nebb: `<path d="M3 9l18 3-18 3z" fill="var(--i1,#ffc22e)" ${IO}/><path d="M4 12h12" stroke="var(--io,#2a1a10)" stroke-width="1"/><path d="M19 6l2-2M19 18l2 2M21 12h2" stroke="var(--io,#2a1a10)" stroke-width="1.2" stroke-linecap="round"/>`
+};
+function ikonSvg(navn, ekstra) {
+	const k = ekstra ? " " + ekstra : "";
+	if (IK_FARGE[navn]) return `<svg class="ik ikf${k}" viewBox="0 0 24 24" aria-hidden="true">${IK_FARGE[navn]}</svg>`;
+	return `<svg class="ik${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${IK_STREK[navn] || IK_STREK.sparkles}"/></svg>`;
+}
+function byttIkoner(rot) {
+	(rot || document).querySelectorAll("i.ti").forEach((el) => {
+		const navn = [...el.classList].find((c) => c.startsWith("ti-"))?.slice(3);
+		const ekstra = [...el.classList].filter((c) => c !== "ti" && !c.startsWith("ti-")).join(" ");
+		const t = document.createElement("template");
+		t.innerHTML = ikonSvg(navn, ekstra);
+		const svg = t.content.firstChild;
+		if (el.style.cssText) svg.style.cssText = el.style.cssText.replace(/vertical-align:[^;]+;?/, "");
+		el.replaceWith(svg);
+	});
+}
+// src/grafikk/stil.js
+var stil_exports = /* @__PURE__ */ __exportAll({
+	STIL: () => STIL,
+	STILER: () => STILER,
+	settStil: () => settStil
+});
+var STILER = {
+	tegne: "Tegneserie",
+	piksel: "Piksel"
+};
+var STIL = "tegne";
+try {
+	const s = localStorage.getItem("kryptokoqs-stil");
+	if (STILER[s]) STIL = s;
+} catch (e) {}
+function settStil(v) {
+	STIL = v;
+}
+// src/logikk/hjelp.js
+var hjelp_exports = /* @__PURE__ */ __exportAll({
+	fmt: () => fmt,
+	sum: () => sum,
+	today: () => today
+});
+var fmt = (x) => String(Math.round(x * 10) / 10).replace(".", ",");
+var sum = (a) => a.reduce((x, y) => x + y, 0);
+var today = () => {
+	const d = /* @__PURE__ */ new Date();
+	return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+};
+// src/logikk/konstanter.js
+var konstanter_exports = /* @__PURE__ */ __exportAll({
+	C: () => C,
+	CPU: () => CPU,
+	ENERGI_DAG: () => 3,
+	FINALE: () => FINALE,
+	GARD_XY: () => GARD_XY,
+	GEN_MAX: () => 15,
+	H: () => H,
+	HONSEHUS_DELER: () => 2,
+	KAMP: () => KAMP,
+	KAMP_MAX: () => 30,
+	KAMP_SUM: () => 90,
+	LAGRING: () => LAGRING,
+	LAG_MAKS: () => 3,
+	LOGG_MAKS: () => 8,
+	M: () => M,
+	MAKS_NIVA: () => 100,
+	MESTRE: () => MESTRE,
+	MK: () => MK,
+	RANG_SEIER: () => 1,
+	RANG_STERK: () => 1,
+	RANG_UTF: () => 3,
+	RIVAL_ETTER: () => 2,
+	RK: () => RK,
+	SE_PA: () => SE_PA,
+	SKADE_K: () => SKADE_K,
+	SPILLBARE: () => 2,
+	SPOL: () => SPOL,
+	STARTNIVA: () => 10,
+	TITLER: () => TITLER,
+	TREN_MAX: () => 30,
+	TREN_SUM: () => 100,
+	UTF_PER_DAG: () => 3,
+	UTH_TILLEGG: () => UTH_TILLEGG,
+	hakk: () => hakk,
+	settKampKonstanter: () => settKampKonstanter
+});
+var M = {
+	Ild: {
+		Is: 2,
+		Vann: .5,
+		Jord: .5
+	},
+	Vann: {
+		Ild: 2,
+		Jord: 2,
+		Is: .5
+	},
+	Is: {
+		Vann: 2,
+		Ild: .5,
+		Muskel: .5
+	},
+	Magi: {
+		Muskel: 2,
+		"Spøkelse": .5
+	},
+	Muskel: {
+		Is: 2,
+		Magi: .5,
+		Fly: .5,
+		"Spøkelse": 0
+	},
+	Lyn: {
+		Vann: 2,
+		Fly: 2,
+		"Spøkelse": 2,
+		Jord: 0
+	},
+	Jord: {
+		Ild: 2,
+		Lyn: 2,
+		Vann: .5,
+		Fly: 0
+	},
+	Fly: {
+		Muskel: 2,
+		Lyn: .5
+	},
+	"Spøkelse": {
+		Magi: 2,
+		Lyn: .5
+	}
+};
+var hakk = {
+	n: "Hakk",
+	t: null,
+	k: "f",
+	p: 35,
+	c: 0,
+	a: 100,
+	hakk: 1
+};
+var SKADE_K = 75;
+var UTH_TILLEGG = 1;
+function settKampKonstanter({ skadeK = SKADE_K, uthTillegg = UTH_TILLEGG } = {}) {
+	SKADE_K = skadeK;
+	UTH_TILLEGG = uthTillegg;
+}
+var KAMP = {
+	pustStart: 4,
+	pustPerRunde: 2,
+	pustMaks: 8,
+	uthPluss: 10,
+	nivaleddFaktor: 2,
+	nivaleddDeler: 5,
+	nivaleddPluss: 2,
+	skadeMin: .85,
+	skadeSpenn: .15,
+	fulltreffBase: .04,
+	fulltreffFartDeler: 1e3,
+	fulltreffFaktor: 2,
+	raseriMaks: .5,
+	oppvarmingFaktor: 1.5,
+	oppvarmingMaks: 2.25,
+	dukkert: .3,
+	isrustningRunder: 2,
+	isrustningSkade: .5,
+	sovRunder: 1,
+	slaTilbakeRunder: 2,
+	slaTilbakeFaktor: 2,
+	ladeFaktor: 2,
+	mokkRunder: 2,
+	mokkTreff: .6,
+	hjemsokPust: 4,
+	lavetakRunder: 2
+};
+var CPU = {
+	dukkertSjanse: .7,
+	taktikkSjanse: .3,
+	sterktSjanse: .65,
+	dukkertUnder: .6
+};
+var H = [
+	{
+		n: "Gnisten",
+		t: "Ild",
+		b: [
+			65,
+			95,
+			55,
+			85,
+			40
+		],
+		m: [
+			hakk,
+			{
+				n: "Glødenebb",
+				t: "Ild",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Ildstorm",
+				t: "Ild",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 75
+			},
+			{
+				n: "Oppvarming",
+				e: "opp",
+				c: 3,
+				a: 100,
+				d: "Slår 50 % hardere resten av kampen"
+			}
+		]
+	},
+	{
+		n: "Plasken",
+		t: "Vann",
+		b: [
+			95,
+			70,
+			70,
+			60,
+			50
+		],
+		m: [
+			hakk,
+			{
+				n: "Vannsprut",
+				t: "Vann",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Flodbølge",
+				t: "Vann",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 75
+			},
+			{
+				n: "Dukkert",
+				e: "heal",
+				c: 3,
+				a: 100,
+				d: "Får tilbake 30 % utholdenhet"
+			}
+		]
+	},
+	{
+		n: "Frosten",
+		t: "Is",
+		b: [
+			85,
+			65,
+			100,
+			40,
+			35
+		],
+		m: [
+			hakk,
+			{
+				n: "Isnebb",
+				t: "Is",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Snøstorm",
+				t: "Is",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 75
+			},
+			{
+				n: "Isrustning",
+				e: "skjold",
+				c: 3,
+				a: 100,
+				d: "Tar halv skade i 2 runder"
+			}
+		]
+	},
+	{
+		n: "Hokus",
+		t: "Magi",
+		b: [
+			55,
+			30,
+			45,
+			80,
+			100
+		],
+		m: [
+			hakk,
+			{
+				n: "Tankebølge",
+				t: "Magi",
+				k: "m",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Stjerneregn",
+				t: "Magi",
+				k: "m",
+				p: 90,
+				c: 5,
+				a: 70
+			},
+			{
+				n: "Hypnose",
+				e: "sov",
+				c: 3,
+				a: 70,
+				d: "Motstanderen sovner og står over en runde"
+			}
+		]
+	},
+	{
+		n: "Brutus",
+		t: "Muskel",
+		b: [
+			90,
+			105,
+			65,
+			50,
+			30
+		],
+		m: [
+			hakk,
+			{
+				n: "Brystdytt",
+				t: "Muskel",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Superspark",
+				t: "Muskel",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 70
+			},
+			{
+				n: "Slå tilbake",
+				e: "ctr",
+				c: 3,
+				a: 100,
+				d: "Angriper motstanderen, får den dobbel skade tilbake"
+			}
+		]
+	},
+	{
+		n: "Zappo",
+		t: "Lyn",
+		b: [
+			60,
+			75,
+			50,
+			105,
+			70
+		],
+		m: [
+			hakk,
+			{
+				n: "Støtnebb",
+				t: "Lyn",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Tordenbrak",
+				t: "Lyn",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 70
+			},
+			{
+				n: "Oppladning",
+				e: "lad",
+				c: 3,
+				a: 100,
+				d: "Neste angrep gjør dobbel skade"
+			}
+		]
+	},
+	{
+		n: "Møkkis",
+		t: "Jord",
+		b: [
+			95,
+			85,
+			80,
+			35,
+			40
+		],
+		m: [
+			hakk,
+			{
+				n: "Gjørmekast",
+				t: "Jord",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Jordskjelv",
+				t: "Jord",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 75
+			},
+			{
+				n: "Møkkabad",
+				e: "mokk",
+				c: 3,
+				a: 100,
+				d: "Motstanderen blir skitten og bommer oftere i 2 runder"
+			}
+		]
+	},
+	{
+		n: "Spøkis",
+		t: "Spøkelse",
+		b: [
+			65,
+			40,
+			60,
+			75,
+			95
+		],
+		m: [
+			hakk,
+			{
+				n: "Skremmeskrik",
+				t: "Spøkelse",
+				k: "m",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Mareritt",
+				t: "Spøkelse",
+				k: "m",
+				p: 90,
+				c: 5,
+				a: 70
+			},
+			{
+				n: "Hjemsøk",
+				e: "redd",
+				c: 3,
+				a: 100,
+				d: "Motstanderen blir redd og mister 4 pust"
+			}
+		]
+	},
+	{
+		n: "Ørnulf",
+		t: "Fly",
+		b: [
+			70,
+			85,
+			55,
+			95,
+			40
+		],
+		m: [
+			hakk,
+			{
+				n: "Stup",
+				t: "Fly",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Ørneangrep",
+				t: "Fly",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 65
+			},
+			{
+				n: "Flaks opp på låvetaket",
+				e: "fly",
+				c: 3,
+				a: 100,
+				d: "Ingen kan treffe ham før neste runde er over"
+			}
+		]
+	}
+];
+var LAGRING = "kryptokoqs-v1";
+var C = {
+	startMett: 60,
+	startHumor: 60,
+	tilstandMaks: 100,
+	forMett: 30,
+	overfor: 80,
+	latOkter: 2,
+	sulten: 25,
+	surmuler: 30,
+	mettOkt: 15,
+	mettDag: 35,
+	humorDag: 20,
+	humorForsomt: 10,
+	stell: 20,
+	kos: 8,
+	kosDag: 3,
+	seier: 5,
+	humorKry: 70,
+	trenBase: .8,
+	forBonus: 1.25,
+	straff: .5,
+	xpPerNiva: 4,
+	xpBase: 10,
+	xpTren: .2,
+	xpTrenPluss: 5,
+	xpSeierFaktor: 2,
+	xpSeierPluss: 5,
+	seireDag: 5,
+	kampDag: 3,
+	gunhildGodt: 10,
+	maksNetter: 7,
+	spennLav: -.2,
+	spennHoy: .15,
+	skalK: .035,
+	skalGulv: .1,
+	skalTak: 2,
+	keMye: 1.5,
+	keNormalt: .9,
+	keLitt: .4,
+	fluktBase: .6,
+	fluktK: .5,
+	fluktMin: .3,
+	fluktMax: 1
+};
+var SE_PA = .5;
+var TITLER = [
+	[0, "Bakgårdshane"],
+	[10, "Gårdshane"],
+	[25, "Bygdemester"],
+	[50, "Fylkesgaler"],
+	[100, "Landsgaler"],
+	[200, "Hanekonge"]
+];
+var MESTRE = [
+	{
+		id: "kaia",
+		sted: "Kaia",
+		navn: "Fiskar-Frida",
+		j: 1,
+		h: "Tangen",
+		L: 15,
+		merke: "Kaimerket",
+		x: 74,
+		y: 118,
+		lp: "o",
+		inn: "Fiskar-Frida skyller sildetønna og ser opp. «Tangen har tålt mer saltsprut enn du har sett vann. Kom an!»",
+		vant: "Frida ler så hun rister. «Ingen har tørket Tangen så grundig siden stormen i nittiåtte. Kaimerket er ditt!»",
+		tapte: "«Kom tilbake når hanen din har fått litt sjøbein,» sier Frida og vinker med en sild."
+	},
+	{
+		id: "sag",
+		sted: "Sagbruket",
+		navn: "Barske Bjarne",
+		j: 4,
+		h: "Kubben",
+		L: 25,
+		ekstra: [{
+			j: 6,
+			h: "Sagflisa",
+			L: 19
+		}],
+		merke: "Sagmerket",
+		x: 122,
+		y: 150,
+		inn: "Barske Bjarne legger fra seg motorsaga. «Kubben her løfter tømmerstokker til frokost. Hva løfter din?»",
+		vant: "Bjarne tørker en tåre med flanellsermen. «Sagmerket er ditt. Ikke si det til gutta.»",
+		tapte: "«Mer havre, mindre prat,» brummer Bjarne og starter saga igjen."
+	},
+	{
+		id: "smia",
+		sted: "Smia",
+		navn: "Smed-Sigurd",
+		j: 0,
+		h: "Glohaue",
+		L: 35,
+		merke: "Smiemerket",
+		x: 168,
+		y: 112
+	},
+	{
+		id: "myra",
+		sted: "Myra",
+		navn: "Torvstikker-Tore",
+		j: 6,
+		h: "Torva",
+		L: 45,
+		merke: "Myrmerket",
+		x: 214,
+		y: 152
+	},
+	{
+		id: "kirke",
+		sted: "Kirketårnet",
+		navn: "Klokker-Klara",
+		j: 7,
+		h: "Klemten",
+		L: 55,
+		merke: "Klokkemerket",
+		x: 250,
+		y: 104
+	},
+	{
+		id: "stol",
+		sted: "Fjellstølen",
+		navn: "Seterjenta Solveig",
+		j: 2,
+		h: "Rimfrost",
+		L: 65,
+		merke: "Stølsmerket",
+		x: 284,
+		y: 52
+	},
+	{
+		id: "kraft",
+		sted: "Kraftstasjonen",
+		navn: "Elektriker-Edvin",
+		j: 5,
+		h: "Volten",
+		L: 75,
+		merke: "Kraftmerket",
+		x: 214,
+		y: 40
+	},
+	{
+		id: "skole",
+		sted: "Skolen",
+		navn: "Lærerinne Lilly",
+		j: 3,
+		h: "Pekestokken",
+		L: 85,
+		merke: "Skolemerket",
+		x: 150,
+		y: 62
+	}
+];
+var FINALE = {
+	sted: "Storgården",
+	navn: "Storbonde Fjærstad",
+	h: "Keiser Kykeliky",
+	L: 95,
+	x: 88,
+	y: 44
+};
+var GARD_XY = {
+	x: 34,
+	y: 150,
+	lp: "u"
+};
+var MK = {
+	tr: 1,
+	trb: 0,
+	ke: .4,
+	gen: 8
+};
+var RK = {
+	L: 21,
+	tr: .8,
+	ke: .3,
+	gen: 6,
+	L2under: 2
+};
+var SPOL = {
+	nivaPerDag: 2.5,
+	trenPerDag: 2.85,
+	kePerDag: 2.7,
+	nivaSteg: 5,
+	bjarne: 25,
+	frode: 26,
+	hane2Andel: .8,
+	hane2Under: 7
+};
+// src/logikk/egenskaper.js
+var egenskaper_exports = /* @__PURE__ */ __exportAll({
+	ADJ: () => ADJ,
+	STAT: () => STAT,
+	capped: () => capped,
+	critP: () => critP,
+	eff: () => eff,
+	fordelt: () => fordelt,
+	hane: () => hane,
+	make: () => make,
+	rage: () => rage,
+	stat: () => stat
+});
+var hane = {
+	Ild: "Ildhane",
+	Vann: "Vannhane",
+	Is: "Ishane",
+	Magi: "Magihane",
+	Muskel: "Muskelhane",
+	Lyn: "Lynhane",
+	Jord: "Jordhane",
+	Fly: "Flyhane",
+	"Spøkelse": "Spøkelseshane"
+};
+var capped = (v, max, sum) => {
+	const c = v.map((x) => Math.max(0, Math.min(max, x)));
+	let r = sum;
+	return c.map((x) => {
+		const y = Math.min(x, r);
+		r -= y;
+		return y;
+	});
+};
+var stat = (b, g, tr, ke, L) => Math.max(1, Math.floor((b + g + tr + ke) * L / 100));
+var eff = (a, d) => {
+	if (!a) return 1;
+	const v = M[a] && M[a][d];
+	return v === void 0 ? 1 : v;
+};
+function make(h, L, tren = [
+	0,
+	0,
+	0,
+	0,
+	0
+], kamp = [
+	0,
+	0,
+	0,
+	0,
+	0
+], gen = null) {
+	const g = gen || h.b.map(() => Math.floor(Math.random() * 16));
+	const tr = capped(tren, 30, 100), ke = capped(kamp, 30, 90);
+	const st = h.b.map((v, i) => stat(v, g[i], tr[i], ke[i], L) + (i === 0 ? UTH_TILLEGG * (L + KAMP.uthPluss) : 0));
+	return {
+		...h,
+		L,
+		g,
+		tr,
+		ke,
+		st,
+		hp: st[0],
+		pust: KAMP.pustStart,
+		atk: 1,
+		skj: 0,
+		sov: 0,
+		ctr: 0,
+		lad: 0,
+		mokk: 0,
+		air: 0
+	};
+}
+var rage = (c) => c.t === "Muskel" ? 1 + KAMP.raseriMaks * (1 - c.hp / c.st[0]) : 1;
+var critP = (c) => KAMP.fulltreffBase + c.b[3] / KAMP.fulltreffFartDeler;
+var STAT = [
+	"Utholdenhet",
+	"Hakk",
+	"Fjærdrakt",
+	"Fart",
+	"Fokus"
+];
+var ADJ = [
+	"seigere",
+	"hardere i nebbet",
+	"tykkere i fjærdrakta",
+	"raskere",
+	"mer fokusert"
+];
+function fordelt(tot, h) {
+	const w = h.b.map((v) => v * v), ws = sum(w);
+	return capped(w.map((x) => x / ws * tot), 30, 100);
+}
+// src/logikk/tilstand.js
+var tilstand_exports = /* @__PURE__ */ __exportAll({
+	S: () => S,
+	hn: () => hn,
+	mote: () => mote,
+	note: () => note,
+	settMote: () => settMote,
+	settS: () => settS,
+	settView: () => settView,
+	view: () => view
+});
+var S = null;
+var view = "start";
+var hn = () => H[S.type].n;
+function note(s) {
+	S.logg.push(s);
+	if (S.logg.length > 8) S.logg = S.logg.slice(-8);
+}
+var mote = null;
+function settView(v) {
+	view = v;
+}
+function settS(v) {
+	S = v;
+}
+function settMote(v) {
+	mote = v;
+}
+// src/logikk/kroker.js
+var kroker = {
+	render() {},
+	spill() {}
+};
+// src/logikk/kamp.js
+var kamp_exports = /* @__PURE__ */ __exportAll({
+	E: () => E,
+	ET: () => ET,
+	MSG: () => MSG,
+	P: () => P,
+	PT: () => PT,
+	RULES: () => RULES,
+	W: () => W,
+	act: () => act,
+	busy: () => busy,
+	cpu: () => cpu,
+	disp: () => disp,
+	err: () => err,
+	kampMester: () => kampMester,
+	kampNr: () => kampNr,
+	kampStat: () => kampStat,
+	ko: () => ko,
+	log: () => log,
+	nullstill: () => nullstill,
+	over: () => over,
+	rnd: () => rnd,
+	round: () => round,
+	say: () => say,
+	settBusy: () => settBusy,
+	settDisp: () => settDisp,
+	settOver: () => settOver,
+	startKamp: () => startKamp,
+	steps: () => steps,
+	tvungen: () => tvungen,
+	useful: () => useful
+});
+var MSG = {
+	"Ild>Is": "Ilden smelter isen.",
+	"Is>Vann": "Isen fryser vannet.",
+	"Vann>Ild": "Vannet slukker ilden.",
+	"Vann>Jord": "Jorda blir til gjørme.",
+	"Magi>Muskel": "Hjerne slår muskler.",
+	"Muskel>Is": "Musklene knuser isen.",
+	"Lyn>Vann": "Strøm og vann er en farlig blanding.",
+	"Lyn>Fly": "Lynet treffer den som flyr høyest.",
+	"Lyn>Spøkelse": "Spøkelser tåler ikke lys.",
+	"Jord>Ild": "Jorda kveler ilden.",
+	"Jord>Lyn": "Strømmen går rett i bakken.",
+	"Fly>Muskel": "Musklene hjelper lite mot en som er i lufta.",
+	"Spøkelse>Magi": "Spøkelset skremmer vettet av magikeren.",
+	"Muskel>Spøkelse": "Slaget går rett gjennom spøkelset.",
+	"Lyn>Jord": "Strømmen forsvinner i bakken.",
+	"Jord>Fly": "Jordskjelvet når ikke opp i lufta."
+};
+var RULES = [
+	"Ild smelter Is",
+	"Is fryser Vann",
+	"Vann slukker Ild",
+	"Vann gjør Jord til gjørme",
+	"Jord kveler Ild",
+	"Magi slår Muskel",
+	"Muskel knuser Is",
+	"Fly slår Muskel",
+	"Lyn slår Vann, Fly og Spøkelse",
+	"Jord slår Lyn, og Lyn treffer ikke Jord",
+	"Spøkelse slår Magi",
+	"Muskel treffer ikke Spøkelse",
+	"Jord treffer ikke Fly",
+	"Hakk treffer alle, også når hanen er møkkete",
+	"Ingen angrep når opp på låvetaket, heller ikke Hakk",
+	"Raske haner får oftere fulltreff"
+];
+var P;
+var E;
+var log = [];
+var steps = [];
+var over = false;
+var busy = false;
+var disp = null;
+var err = "";
+var rnd = 1;
+var PT = [];
+var ET = [];
+var kampMester = null;
+var tvungen = false;
+function startKamp(feil) {
+	PT = mote.PT || [mote.P];
+	ET = mote.ET || [mote.E];
+	P = PT[0];
+	E = ET[0];
+	E.f = mote.f;
+	P.deltok = true;
+	kampMester = mote.mester || null;
+	tvungen = false;
+	kampNr++;
+	kampStat = {
+		bareHakk: true,
+		taktikk: false,
+		sup: 0,
+		full: 0
+	};
+	log = [...feil ? [{
+		s: feil,
+		hl: true
+	}] : [], { s: kampMester ? `${mote.info.navn} sender inn ${E.n} på nivå ${E.L} mot ${P.n} på nivå ${P.L}.` : `${E.n} på nivå ${E.L} utfordrer ${P.n} på nivå ${P.L}.` }];
+	over = false;
+	busy = false;
+	disp = null;
+	err = "";
+	rnd = 1;
+	settView("kamp");
+	kroker.render();
+}
+var kampNr = 0;
+var kampStat = {
+	bareHakk: true,
+	taktikk: false,
+	sup: 0,
+	full: 0
+};
+function say(s, hl, fx) {
+	steps.push({
+		s,
+		hl,
+		fx,
+		ph: P.hp,
+		eh: E.hp,
+		pp: P.pust,
+		ep: E.pust,
+		pi: PT.indexOf(P),
+		ei: ET.indexOf(E)
+	});
+}
+var W = (c) => PT.includes(c) ? "P" : "E";
+function nullstill(c) {
+	c.atk = 1;
+	c.skj = 0;
+	c.sov = 0;
+	c.ctr = 0;
+	c.lad = 0;
+	c.mokk = 0;
+	c.air = 0;
+}
+function act(u, t, m) {
+	if (u.sov > 0) {
+		u.sov--;
+		say(`${u.n} sover og står over.`, false, {
+			k: "sover",
+			a: W(u)
+		});
+		return;
+	}
+	if (m.c > u.pust) {
+		say(`${u.n} er for andpusten til ${m.n} og hakker i stedet.`);
+		m = hakk;
+	}
+	u.pust -= m.c;
+	if (W(u) === "P") {
+		if (!m.hakk) kampStat.bareHakk = false;
+		if (m.e) kampStat.taktikk = true;
+	}
+	const mk = u.mokk > 0 && !m.hakk, acc = m.a * (mk ? KAMP.mokkTreff : 1);
+	if (Math.random() * 100 >= acc) {
+		say(`${u.n} bruker ${m.n}, men bommer.${mk ? " Møkka i øynene hjelper ikke." : ""}`, false, {
+			k: "bom",
+			a: W(u),
+			t: W(t),
+			m: m.n
+		});
+		return;
+	}
+	if ((!m.e || m.e === "sov" || m.e === "mokk" || m.e === "redd") && t.air > 0) {
+		say(`${u.n} bruker ${m.n}, men ${t.n} sitter trygt på låvetaket.`, false, {
+			k: "bom",
+			a: W(u),
+			t: W(t),
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "opp") {
+		if (u.atk >= KAMP.oppvarmingMaks) say(`${u.n} er allerede glovarm.`);
+		else {
+			u.atk = Math.min(KAMP.oppvarmingMaks, u.atk * KAMP.oppvarmingFaktor);
+			say(`${u.n} varmer seg opp og slår hardere resten av kampen.`, false, {
+				k: "taktikk",
+				a: W(u),
+				type: u.t,
+				m: m.n
+			});
+		}
+		return;
+	}
+	if (m.e === "heal") {
+		const b = u.hp;
+		u.hp = Math.min(u.st[0], u.hp + Math.round(u.st[0] * KAMP.dukkert));
+		say(`${u.n} tar en dukkert og får tilbake ${Math.round(u.hp - b)} utholdenhet.`, false, {
+			k: "taktikk",
+			a: W(u),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "skjold") {
+		u.skj = KAMP.isrustningRunder;
+		say(`${u.n} tar på seg isrustning og tar halv skade i 2 runder.`, false, {
+			k: "taktikk",
+			a: W(u),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "ctr") {
+		u.ctr = KAMP.slaTilbakeRunder;
+		say(`${u.n} spenner musklene og venter. Angriper motstanderen nå, slår han tilbake dobbelt.`, false, {
+			k: "taktikk",
+			a: W(u),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "lad") {
+		u.lad = 1;
+		say(`${u.n} lader opp. Fjærene står rett ut, og neste angrep gjør dobbel skade.`, false, {
+			k: "taktikk",
+			a: W(u),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "fly") {
+		u.air = KAMP.lavetakRunder;
+		say(`${u.n} flakser klønete opp på låvetaket. Ingen kan treffe ham nå.`, false, {
+			k: "taktikk",
+			a: W(u),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "sov") {
+		if (t.sov > 0) say(`${t.n} sover allerede.`);
+		else {
+			t.sov = KAMP.sovRunder;
+			say(`${u.n} svinger med et lommeur. ${t.n} sovner.`, false, {
+				k: "taktikk",
+				a: W(u),
+				t: W(t),
+				type: u.t,
+				m: m.n
+			});
+		}
+		return;
+	}
+	if (m.e === "mokk") {
+		t.mokk = KAMP.mokkRunder;
+		say(`${u.n} rister av seg gjørma. ${t.n} blir møkkete og ser dårlig.`, false, {
+			k: "taktikk",
+			a: W(u),
+			t: W(t),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	if (m.e === "redd") {
+		const b = t.pust;
+		t.pust = Math.max(0, t.pust - KAMP.hjemsokPust);
+		say(`${u.n} hjemsøker ${t.n}, som blir redd og mister ${b - t.pust} pust.`, false, {
+			k: "taktikk",
+			a: W(u),
+			t: W(t),
+			type: u.t,
+			m: m.n
+		});
+		return;
+	}
+	const e = eff(m.t, t.t);
+	if (e === 0) {
+		say(`${u.n} bruker ${m.n}. ${MSG[m.t + ">" + t.t] || ""} Det har ingen effekt.`, false, {
+			k: "ingen",
+			a: W(u),
+			t: W(t),
+			m: m.n
+		});
+		return;
+	}
+	const mg = m.k === "m", ld = u.lad > 0 ? KAMP.ladeFaktor : 1;
+	u.lad = 0;
+	const cr = Math.random() < critP(u) ? KAMP.fulltreffFaktor : 1;
+	if (W(u) === "P") {
+		if (e > 1) kampStat.sup++;
+		if (cr > 1) kampStat.full++;
+	}
+	const A = (mg ? u.st[4] : u.st[1]) * u.atk * rage(u), D = mg ? t.st[4] : t.st[2], sh = !mg && t.skj > 0 ? KAMP.isrustningSkade : 1, lv = KAMP.nivaleddFaktor * u.L / KAMP.nivaleddDeler + KAMP.nivaleddPluss;
+	const d = Math.max(1, Math.floor(lv * m.p * A / D / SKADE_K * e * cr * sh * ld * (KAMP.skadeMin + Math.random() * KAMP.skadeSpenn)));
+	if (cr > 1) say(`Fulltreff! ${u.n} treffer helt perfekt med ${m.n}.`, true, {
+		k: "varsel",
+		a: W(u),
+		m: m.n
+	});
+	t.hp = Math.max(0, t.hp - d);
+	const x = [];
+	if (ld > 1) x.push("Full lading.");
+	if (e > 1) x.push((MSG[m.t + ">" + t.t] || "") + " Supereffektivt.");
+	else if (e < 1) x.push("Det bet dårlig.");
+	if (sh < 1) x.push("Isrustningen tok av for slaget.");
+	if (mg && t.skj > 0) x.push("Det gikk rett gjennom isrustningen.");
+	say((cr > 1 ? `Dobbel skade. ${x.join(" ")} ${t.n} mister ${d}.` : `${u.n} bruker ${m.n}. ${x.join(" ")} ${t.n} mister ${d}.`).replace(/\s+/g, " "), false, {
+		k: cr > 1 ? "fulltreff" : "treff",
+		a: W(u),
+		t: W(t),
+		type: m.t || null,
+		sup: e > 1,
+		svak: e < 1,
+		d,
+		m: cr > 1 ? null : m.n
+	});
+	if (t.ctr > 0 && t.hp > 0) {
+		const r = d * KAMP.slaTilbakeFaktor;
+		t.ctr = 0;
+		u.hp = Math.max(0, u.hp - r);
+		say(`${t.n} slår tilbake med full kraft. ${u.n} mister ${r}.`, false, {
+			k: "treff",
+			a: W(t),
+			t: W(u),
+			type: "Muskel",
+			d: r,
+			m: "Slå tilbake"
+		});
+	}
+}
+function useful(m) {
+	switch (m.e) {
+		case "opp": return E.atk < KAMP.oppvarmingMaks;
+		case "skjold": return E.skj === 0;
+		case "heal": return E.hp < E.st[0] * CPU.dukkertUnder;
+		case "sov": return P.sov === 0;
+		case "ctr": return E.ctr === 0;
+		case "lad": return E.lad === 0;
+		case "mokk": return P.mokk === 0;
+		case "redd": return P.pust >= KAMP.hjemsokPust;
+		case "fly": return E.air === 0;
+	}
+	return false;
+}
+function cpu() {
+	const ok = (m) => m.c <= E.pust, [b, md, st, tc] = E.m, self = [
+		"opp",
+		"heal",
+		"skjold",
+		"ctr",
+		"lad",
+		"fly"
+	].includes(tc.e);
+	if (P.air > 0) return ok(tc) && self && useful(tc) ? tc : b;
+	if (ok(tc) && useful(tc) && Math.random() < (tc.e === "heal" ? CPU.dukkertSjanse : CPU.taktikkSjanse)) return tc;
+	if (ok(st) && eff(st.t, P.t) >= 1 && Math.random() < CPU.sterktSjanse) return st;
+	if (ok(md) && eff(md.t, P.t) >= 1) return md;
+	if (ok(st) && eff(st.t, P.t) >= 1) return st;
+	return b;
+}
+function ko(c) {
+	if (over || c.ute) return;
+	c.ute = true;
+	say(`${c.n} gir opp og stikker hodet i sanden.`, false, {
+		k: "ko",
+		a: W(c)
+	});
+	if (W(c) === "E") {
+		const n = ET.find((x) => x.hp > 0);
+		if (n) {
+			E = n;
+			say(`${kampMester ? mote.info.navn : "Motstanderen"} sender inn ${E.n} på nivå ${E.L}!`, true, {
+				k: "inn",
+				a: "E"
+			});
+			return;
+		}
+	} else if (PT.some((x) => x.hp > 0)) {
+		tvungen = true;
+		say(`Hvem sender du inn nå?`, true);
+		return;
+	}
+	over = true;
+	const vant = W(c) === "E";
+	say(vant ? `Du vant. ${P.n} galer triumferende.` : PT.length > 1 ? "Du tapte. Hele laget trasker til Hønsehuset for å komme seg." : `Du tapte. ${P.n} trasker til Hønsehuset for å komme seg.`);
+	belonn(vant);
+}
+function round(i, bytt) {
+	if (over || busy) return;
+	if (tvungen) {
+		const ny = PT[bytt];
+		if (bytt == null || !ny || ny.hp <= 0) return;
+		steps = [];
+		P = ny;
+		P.deltok = true;
+		tvungen = false;
+		err = "";
+		say(`Inn med ${P.n}!`, true, {
+			k: "inn",
+			a: "P"
+		});
+		kroker.spill();
+		return;
+	}
+	let pm = null;
+	if (bytt == null) {
+		pm = P.m[i];
+		if (pm.c > P.pust) {
+			err = `${pm.n} krever ${pm.c} pust. Du har ${P.pust}.`;
+			kroker.render();
+			return;
+		}
+	} else {
+		const ny = PT[bytt];
+		if (!ny || ny.hp <= 0 || ny === P) return;
+	}
+	err = "";
+	log.push({
+		sep: true,
+		r: rnd
+	});
+	steps = [];
+	const em = cpu();
+	if (bytt != null) {
+		const ny = PT[bytt];
+		nullstill(P);
+		say(`${P.n}, kom tilbake! Inn med ${ny.n}!`, true, {
+			k: "inn",
+			a: "P"
+		});
+		P = ny;
+		P.deltok = true;
+		if (E.hp > 0) {
+			act(E, P, em);
+			if (P.hp <= 0) ko(P);
+			if (E.hp <= 0) ko(E);
+		}
+	} else {
+		const order = P.st[3] > E.st[3] || P.st[3] === E.st[3] && Math.random() < .5 ? [[P, pm], [E, em]] : [[E, em], [P, pm]];
+		for (const [u, m] of order) {
+			if (over || tvungen) break;
+			if (u.hp <= 0 || u.ute) continue;
+			const t = W(u) === "P" ? E : P;
+			act(u, t, m);
+			if (t.hp <= 0) ko(t);
+			if (u.hp <= 0) ko(u);
+		}
+	}
+	if (!over) {
+		[P, E].forEach((c) => {
+			if (c.skj > 0) c.skj--;
+			if (c.ctr > 0) c.ctr--;
+			if (c.mokk > 0) c.mokk--;
+			if (c.air > 0) c.air--;
+			c.pust = Math.min(KAMP.pustMaks, c.pust + KAMP.pustPerRunde);
+		});
+		rnd++;
+	}
+	kroker.spill();
+}
+function settBusy(v) {
+	busy = v;
+}
+function settDisp(v) {
+	disp = v;
+}
+function settOver(v) {
+	over = v;
+}
+// src/logikk/lagring.js
+var lagring_exports = /* @__PURE__ */ __exportAll({
+	lagringOk: () => lagringOk,
+	load: () => load,
+	save: () => save,
+	slett: () => slett
+});
+var lagringOk = true;
+function save() {
+	synk();
+	try {
+		localStorage.setItem(LAGRING, JSON.stringify(S));
+		lagringOk = true;
+	} catch (e) {
+		lagringOk = false;
+	}
+}
+function load() {
+	try {
+		const r = localStorage.getItem(LAGRING);
+		if (r) {
+			const o = JSON.parse(r);
+			if (o && o.v === 1 && H[o.type]) {
+				if (typeof o.seireDag !== "number") o.seireDag = 0;
+				if (typeof o.keDag !== "number") o.keDag = 0;
+				if (typeof o.rang !== "number") o.rang = 0;
+				if (typeof o.gullfjaer !== "number") o.gullfjaer = 0;
+				if (typeof o.rekke !== "number") o.rekke = 0;
+				if (!Array.isArray(o.merker)) o.merker = [];
+				if (!o.rival) o.rival = {
+					slatt: false,
+					tap: 0
+				};
+				if (typeof o.intro !== "boolean") o.intro = false;
+				if (!Array.isArray(o.lag)) {
+					o.lag = [];
+					o.aktiv = 0;
+					if (o.merker.length >= 1) o.egg = true;
+				}
+				if (typeof o.egg !== "boolean") o.egg = false;
+				return o;
+			}
+		}
+	} catch (e) {
+		lagringOk = false;
+	}
+	return null;
+}
+function slett() {
+	try {
+		localStorage.removeItem(LAGRING);
+	} catch (e) {}
+}
+// src/logikk/omsorg.js
+var omsorg_exports = /* @__PURE__ */ __exportAll({
+	FOR: () => FOR,
+	GUNHILD: () => GUNHILD,
+	OVELSE: () => OVELSE,
+	faktor: () => faktor,
+	gainXp: () => gainXp,
+	gi: () => gi,
+	gunhild: () => gunhild,
+	kos: () => kos,
+	nyDag: () => nyDag,
+	rom: () => rom,
+	sjekkDato: () => sjekkDato,
+	stell: () => stell,
+	tren: () => tren,
+	xpNeed: () => xpNeed
+});
+var OVELSE = [
+	{
+		n: "Høystakk-løft",
+		kort: "Høystakk",
+		i: 0,
+		ic: "ti-hoystakk",
+		t: (n) => `${n} løfter en høystakk og ser seg rundt for å sjekke at noen så det.`
+	},
+	{
+		n: "Hakkeblokk",
+		kort: "Hakkeblokk",
+		i: 1,
+		ic: "ti-hakkeblokk",
+		t: (n) => `${n} hakker løs på hakkeblokka. Flisene fyker.`
+	},
+	{
+		n: "Motvindsstå",
+		kort: "Motvind",
+		i: 2,
+		ic: "ti-motvind",
+		t: (n) => `${n} står i motvind med fjærene til værs og prøver å se dramatisk ut.`
+	},
+	{
+		n: "Sprint på gårdsplassen",
+		kort: "Sprint",
+		i: 3,
+		ic: "ti-sprint",
+		t: (n) => `${n} spurter over gårdsplassen og skremmer opp tre høner.`
+	},
+	{
+		n: "Meditasjon",
+		kort: "Meditasjon",
+		i: 4,
+		ic: "ti-meditasjon",
+		t: (n) => `${n} mediterer. Eller sover. Vanskelig å si.`
+	}
+];
+var FOR = {
+	havre: {
+		n: "Havre",
+		i: 0
+	},
+	meitemark: {
+		n: "Meitemark",
+		i: 1
+	},
+	solsikkefro: {
+		n: "Solsikkefrø",
+		i: 2
+	},
+	mais: {
+		n: "Mais",
+		i: 3
+	},
+	blabar: {
+		n: "Blåbær",
+		i: 4
+	}
+};
+var xpNeed = (L) => Math.round(C.xpPerNiva * L + C.xpBase);
+function nyDag(n) {
+	for (let k = 0; k < n; k++) {
+		S.humor = Math.max(0, S.humor - C.humorDag - (S.stelt ? 0 : C.humorForsomt));
+		S.mett = Math.max(0, S.mett - C.mettDag);
+		S.energi = 3;
+		S.stelt = false;
+		S.kos = 0;
+		S.seireDag = 0;
+		S.keDag = 0;
+		S.dag++;
+		(S.lag || []).forEach((h, j) => {
+			if (!h || j === S.aktiv) return;
+			h.humor = Math.max(0, h.humor - Math.round(C.humorDag / 2));
+			h.mett = Math.max(0, h.mett - Math.round(C.mettDag / 2));
+			h.energi = 3;
+			h.stelt = false;
+			h.kos = 0;
+			h.seireDag = 0;
+			h.keDag = 0;
+			const ov = gunhildTrener(h);
+			if (ov != null && k === n - 1) note(`Gunhild tok med ${H[h.type].n} på ${OVELSE[ov].n.toLowerCase()} i natt.`);
+		});
+	}
+	lagUtf();
+	note(`Dag ${S.dag}. ${hn()} har sovet ut og har full energi.${S.mett < C.sulten ? " Han er sulten." : ""}${S.humor < C.surmuler ? " Han surmuler." : ""}`);
+}
+function sjekkDato() {
+	if (!S) return;
+	const t = today();
+	if (S.dato < t) {
+		const n = Math.max(1, Math.min(C.maksNetter, Math.round((new Date(t) - new Date(S.dato)) / 864e5)));
+		S.dato = t;
+		nyDag(n);
+		save();
+	}
+}
+function gainXp(n) {
+	const up = [];
+	S.xp += n;
+	while (S.L < 100 && S.xp >= xpNeed(S.L)) {
+		S.xp -= xpNeed(S.L);
+		S.L++;
+		up.push(S.L);
+	}
+	if (S.L >= 100) S.xp = 0;
+	return up;
+}
+function faktor(i) {
+	let x = C.trenBase;
+	const f = [];
+	if (S.mett < C.sulten) {
+		x *= C.straff;
+		f.push("sulten");
+	}
+	if (S.humor < C.surmuler) {
+		x *= C.straff;
+		f.push("surmuler");
+	}
+	if (S.lat > 0) {
+		x *= C.straff;
+		f.push("lat");
+	}
+	if (S.for && FOR[S.for].i === i && S.mett >= C.sulten) {
+		x *= C.forBonus;
+		f.push(FOR[S.for].n.toLowerCase() + " i magen");
+	}
+	return {
+		x,
+		f
+	};
+}
+var rom = (i) => Math.max(0, Math.min(30 - S.tr[i], 100 - sum(S.tr)));
+function tren(i) {
+	const o = OVELSE[i];
+	if (S.energi <= 0 || rom(i) <= 0) return;
+	const { x, f } = faktor(i);
+	const g = Math.min(x, rom(i));
+	S.tr[i] = Math.round((S.tr[i] + g) * 10) / 10;
+	S.energi--;
+	S.mett = Math.max(0, S.mett - C.mettOkt);
+	if (S.lat > 0) S.lat--;
+	note(`${o.t(hn())} +${fmt(g)} ${STAT[i]}${f.length ? ` (${f.join(", ")})` : ""}.`);
+	gainXp(Math.round(C.xpTren * (S.L + C.xpTrenPluss))).forEach((l) => note(`${hn()} er nå på nivå ${l}.`));
+}
+function gi(k) {
+	const over = S.mett >= C.overfor;
+	S.mett = Math.min(C.tilstandMaks, S.mett + C.forMett);
+	S.for = k;
+	const n = FOR[k].n.toLowerCase();
+	if (over) {
+		S.lat = C.latOkter;
+		note(`${hn()} stapper i seg ${n} selv om han er mett, og blir lat. De neste ${C.latOkter} øktene gir halv effekt.`);
+	} else note(`${hn()} kaster i seg ${n}. ${STAT[FOR[k].i]}-trening gir ${Math.round((C.forBonus - 1) * 100)} % mer så lenge han ikke er sulten.`);
+}
+function stell() {
+	if (S.stelt) {
+		note(`${hn()} er allerede stelt i dag og nekter å bli pusset mer.`);
+		return;
+	}
+	S.stelt = true;
+	S.humor = Math.min(C.tilstandMaks, S.humor + C.stell);
+	note(`Du pusser fjærene til ${hn()} og rydder vaglet. Han ser forfengelig på seg selv i vannbøtta.`);
+}
+function kos() {
+	if (S.kos >= C.kosDag) {
+		note(`${hn()} har fått nok kos for i dag og later som han ikke kjenner deg.`);
+		return;
+	}
+	S.kos++;
+	S.humor = Math.min(C.tilstandMaks, S.humor + C.kos);
+	note(`Du klør ${hn()} under nebbet. Han lukker øynene og glemmer et øyeblikk å være stolt.`);
+}
+var GUNHILD = [
+	[
+		"Han tåler litt mer juling enn før.",
+		"Han er seig som en gammel støvel.",
+		"Den hanen kunne gått tolv runder med en okse."
+	],
+	[
+		"Nebbet hans har fått litt mer bitt.",
+		"Han hakker som en spikerpistol.",
+		"Det nebbet kunne knust en valnøtt. Med skallet på."
+	],
+	[
+		"Fjærene sitter litt bedre enn før.",
+		"Fjærdrakta hans er tett som et stråtak.",
+		"Han kunne stått ute i storm uten å miste en eneste fjær."
+	],
+	[
+		"Han er blitt litt kvikkere på foten.",
+		"Hanen din er blitt rask som en rev.",
+		"Han er så rask at han kommer hjem før han har dratt."
+	],
+	[
+		"Han tenker seg litt om før han hakker nå.",
+		"Han ser ting de andre hanene ikke ser.",
+		"Han kunne hypnotisert hele låven med blikket alene."
+	]
+];
+function gunhild() {
+	const m = Math.max(...S.ke);
+	if (m <= 0) {
+		note(`Gamle Gunhild myser på ${hn()}: «Han har ikke lært noe i kamp ennå. Han må slå noen som kan måle seg med ham.»`);
+		return;
+	}
+	const top = S.ke.map((v, i) => v === m ? i : -1).filter((i) => i >= 0), k = top[Math.floor(Math.random() * top.length)];
+	const t = m >= 30 - 1e-6 ? 2 : m >= C.gunhildGodt ? 1 : 0;
+	note(`Gamle Gunhild kniper sammen øynene og kakler: «${GUNHILD[k][t]}»`);
+}
+// src/logikk/laget.js
+var laget_exports = /* @__PURE__ */ __exportAll({
+	HANEFELT: () => HANEFELT,
+	gunhildTrener: () => gunhildTrener,
+	haneData: () => haneData,
+	hentHane: () => hentHane,
+	klekk: () => klekk,
+	lagHane: () => lagHane,
+	lagKjempere: () => lagKjempere,
+	newHen: () => newHen,
+	synk: () => synk,
+	xpPaa: () => xpPaa
+});
+var HANEFELT = [
+	"type",
+	"g",
+	"L",
+	"xp",
+	"tr",
+	"ke",
+	"mett",
+	"humor",
+	"energi",
+	"for",
+	"lat",
+	"stelt",
+	"kos",
+	"seireDag",
+	"keDag"
+];
+var haneData = () => JSON.parse(JSON.stringify(Object.fromEntries(HANEFELT.map((k) => [k, S[k]]))));
+function synk() {
+	if (!S) return;
+	if (!Array.isArray(S.lag)) S.lag = [];
+	if (typeof S.aktiv !== "number") S.aktiv = 0;
+	S.lag[S.aktiv] = haneData();
+}
+function hentHane(j) {
+	synk();
+	Object.assign(S, JSON.parse(JSON.stringify(S.lag[j])));
+	S.aktiv = j;
+}
+function lagHane(i) {
+	return {
+		type: i,
+		g: H[i].b.map(() => Math.floor(Math.random() * 16)),
+		L: 10,
+		xp: 0,
+		tr: [
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+		ke: [
+			0,
+			0,
+			0,
+			0,
+			0
+		],
+		mett: C.startMett,
+		humor: C.startHumor,
+		energi: 3,
+		for: null,
+		lat: 0,
+		stelt: false,
+		kos: 0,
+		seireDag: 0,
+		keDag: 0
+	};
+}
+function newHen(i) {
+	settS({
+		v: 1,
+		...lagHane(i),
+		dag: 1,
+		dato: today(),
+		seire: 0,
+		tap: 0,
+		rang: 0,
+		gullfjaer: 0,
+		rekke: 0,
+		merker: [],
+		rival: {
+			slatt: false,
+			tap: 0
+		},
+		intro: false,
+		lag: [],
+		aktiv: 0,
+		egg: false,
+		logg: []
+	});
+	lagUtf();
+	note(`${H[i].n} flytter inn i hønsehuset og krever det beste vaglet.`);
+	save();
+}
+function xpPaa(h, n) {
+	const up = [];
+	h.xp += n;
+	while (h.L < 100 && h.xp >= xpNeed(h.L)) {
+		h.xp -= xpNeed(h.L);
+		h.L++;
+		up.push(h.L);
+	}
+	if (h.L >= 100) h.xp = 0;
+	return up;
+}
+function gunhildTrener(h) {
+	const rom = STAT.map((_, i) => Math.max(0, Math.min(30 - h.tr[i], 100 - sum(h.tr)))), mulige = rom.map((r, i) => r > 0 ? i : -1).filter((i) => i >= 0);
+	if (!mulige.length) return null;
+	const i = mulige[Math.floor(Math.random() * mulige.length)], g = Math.min(C.trenBase, rom[i]);
+	h.tr[i] = Math.round((h.tr[i] + g) * 10) / 10;
+	xpPaa(h, Math.round(C.xpTren * (h.L + C.xpTrenPluss)));
+	return i;
+}
+function klekk(i) {
+	if (!S.egg || S.lag.length >= 3 || S.lag.some((h) => h && h.type === i)) return;
+	synk();
+	S.lag.push(lagHane(i));
+	S.egg = false;
+	if (S.spolEgg) {
+		const orig = S.aktiv;
+		hentHane(S.lag.length - 1);
+		spolHane(S.spolEgg);
+		hentHane(orig);
+		delete S.spolEgg;
+	}
+	note(`Egget klekkes! ${H[i].n} spankulerer ut og krever sin plass på laget.`);
+	save();
+}
+function lagKjempere() {
+	synk();
+	return [S.aktiv, ...S.lag.map((_, j) => j).filter((j) => j !== S.aktiv)].filter((j) => S.lag[j]).map((j) => {
+		const h = S.lag[j], c = make(H[h.type], h.L, h.tr, h.ke, h.g);
+		c.i = h.type;
+		c.hi = j;
+		return c;
+	});
+}
+// src/logikk/villmote.js
+var villmote_exports = /* @__PURE__ */ __exportAll({
+	FLUKT: () => FLUKT,
+	FLUKT_FEIL: () => FLUKT_FEIL,
+	MOTE: () => MOTE,
+	fluktSjanse: () => fluktSjanse,
+	flykt: () => flykt,
+	keOrd: () => keOrd,
+	motTrening: () => motTrening,
+	moteXp: () => moteXp,
+	nyttMote: () => nyttMote,
+	skala: () => skala,
+	xpGrunn: () => xpGrunn
+});
+function motTrening() {
+	const tot = Math.min(100, sum(S.tr)), w = STAT.map(() => Math.random()), ws = sum(w);
+	return capped(w.map((x) => x / ws * tot), 30, 100);
+}
+var skala = (EL, L) => Math.max(C.skalGulv, Math.min(C.skalTak, 1 + C.skalK * ((EL - L) / L * 100)));
+function nyttMote() {
+	const L = S.L, lo = Math.max(1, Math.min(L - 1, Math.round(L * (1 + C.spennLav)))), hi = Math.min(100, Math.max(L + 1, Math.round(L * (1 + C.spennHoy))));
+	const EL = lo + Math.floor(Math.random() * (hi - lo + 1));
+	let j;
+	do
+		j = Math.floor(Math.random() * H.length);
+	while (j === S.type);
+	const PT0 = lagKjempere(), mP = PT0[0], mE = make(H[j], EL, motTrening());
+	settMote({
+		j,
+		EL,
+		f: skala(EL, L),
+		hi,
+		P: mP,
+		E: mE,
+		PT: PT0,
+		ET: [mE],
+		p: fluktSjanse(mP.st[3], mE.st[3])
+	});
+	settView("mote");
+}
+var fluktSjanse = (a, b) => Math.max(C.fluktMin, Math.min(C.fluktMax, C.fluktBase + C.fluktK * (a / Math.max(1, b) - 1)));
+var keOrd = (f) => f >= C.keMye ? "mye" : f >= C.keNormalt ? "normalt" : f >= C.keLitt ? "litt" : "nesten ingenting";
+var xpGrunn = (EL, L) => C.xpSeierFaktor * L + C.xpSeierPluss;
+var moteXp = () => Math.max(1, Math.round(xpGrunn(mote.EL, S.L) * mote.f));
+var MOTE = [
+	(e, l) => `En vill ${e} på nivå ${l} dukker opp bak låven!`,
+	(e, l) => `${e} på nivå ${l} spankulerer inn på gårdsplassen og bryster seg.`,
+	(e, l) => `En vill ${e} på nivå ${l} hopper ned fra gjerdet og ser utfordrende på deg.`
+];
+var FLUKT = [
+	(n) => `${n} snur på hælen og later som han så noe interessant bak låven.`,
+	(n) => `${n} husker plutselig at han har en avtale i hønsehuset.`,
+	(n) => `${n} trekker seg tilbake med hevet nebb. Det var ikke flukt, det var taktikk.`
+];
+var FLUKT_FEIL = [
+	(n, e) => `${n} prøver å stikke av, men snubler i sin egen stolthet. ${e} er over ham på et blunk!`,
+	(n, e) => `${n} spurter mot låven, men ${e} kommer først. Det blir kamp likevel!`,
+	(n, e) => `${n} later som han ikke ser ${e}. Det virker ikke. Kampen er i gang!`
+];
+function flykt() {
+	if (Math.random() < mote.p) {
+		const f = FLUKT[Math.floor(Math.random() * FLUKT.length)](hn());
+		nyttMote();
+		mote.flukt = f;
+		return true;
+	}
+	startKamp(FLUKT_FEIL[Math.floor(Math.random() * FLUKT_FEIL.length)](hn(), H[mote.j].n));
+	return false;
+}
+// src/logikk/historie.js
+var historie_exports = /* @__PURE__ */ __exportAll({
+	INTRO: () => INTRO,
+	RIVAL: () => RIVAL,
+	lagNavn: () => lagNavn,
+	merker: () => merker,
+	mesterHane: () => mesterHane,
+	mesterLag: () => mesterLag,
+	mesterResultat: () => mesterResultat,
+	motType: () => motType,
+	nesteMester: () => nesteMester,
+	nyttMesterMote: () => nyttMesterMote,
+	rivalHane: () => rivalHane,
+	rivalLag: () => rivalLag,
+	rivalType: () => rivalType,
+	rivalVenter: () => rivalVenter,
+	spol: () => spol,
+	spolHane: () => spolHane,
+	spolLag: () => spolLag
+});
+var RIVAL = {
+	navn: "Frode Fjærstad",
+	h: "Kronprinsen",
+	h2: "Arvesølvet",
+	inn: "Frode Fjærstad lener seg over grinda. «Bestefar sier gården deres burde vært parkeringsplass. Kronprinsen og jeg skal vise deg hvorfor.»",
+	vant: "Frode blir rød som en hanekam. «Det var flaks! Bestefar skal høre om dette … nei forresten, han skal ikke høre om det.»",
+	tapte: "«Kronprinsen vinner alltid. Det står i stamtavla,» flirer Frode og spankulerer hjemover."
+};
+var INTRO = [
+	"Så du er barnebarnet. Velkommen til Galestad.",
+	"For femti år siden trente jeg hanen til bestefaren din. Den vant Gullkammen på hanestevnet. Ja, jeg er en gammel høne. Ikke spør.",
+	"Siden den gang har Storgården vunnet hvert eneste år. Nå er det Storbonde Fjærstad og den oppblåste Keiser Kykeliky den femte som troner der oppe.",
+	"Rundt i bygda bor åtte gårdsmestre. Slå dem én etter én, så får du utfordre Storbonden. Begynn hos Fiskar-Frida på Kaia."
+];
+var merker = () => S.merker || [];
+var nesteMester = () => MESTRE[merker().length] || null;
+var rivalVenter = () => merker().length >= 2 && !(S.rival && S.rival.slatt);
+function mesterHane(m) {
+	const h = H[m.j], tr = fordelt(Math.min(100, MK.tr * (m.L - 10) + MK.trb), h), ke = fordelt(Math.min(90, MK.ke * (m.L - 10)), h);
+	const c = make(h, m.L, tr, ke, h.b.map(() => MK.gen));
+	c.n = m.h;
+	c.i = m.j;
+	return c;
+}
+function motType(type) {
+	const t = H[type].t;
+	const j = H.findIndex((h) => eff(h.t, t) > 1);
+	return j < 0 ? (type + 1) % H.length : j;
+}
+var rivalType = () => motType(S.type);
+var mesterLag = (m) => [mesterHane(m), ...(m.ekstra || []).map((x) => mesterHane({
+	...m,
+	...x
+}))];
+var lagNavn = (m) => [{
+	h: m.h,
+	L: m.L
+}, ...m.ekstra || []].map((x) => `${x.h} (${x.L})`).join(" og ");
+function rivalHane() {
+	const j = rivalType(), h = H[j], L = RK.L;
+	const c = make(h, L, fordelt(RK.tr * (L - 10), h), fordelt(RK.ke * (L - 10), h), h.b.map(() => RK.gen));
+	c.n = RIVAL.h;
+	c.i = j;
+	return c;
+}
+function rivalLag() {
+	synk();
+	const andre = S.lag.find((h, j) => h && j !== S.aktiv);
+	let j = andre ? motType(andre.type) : (rivalType() + 4) % H.length;
+	if (j === rivalType()) j = (j + 1) % H.length;
+	const h = H[j], L = RK.L - RK.L2under;
+	const c = make(h, L, fordelt(RK.tr * (L - 10), h), fordelt(RK.ke * (L - 10), h), h.b.map(() => RK.gen));
+	c.n = RIVAL.h2;
+	c.i = j;
+	return [rivalHane(), c];
+}
+function nyttMesterMote(id) {
+	const L = S.L, PT0 = lagKjempere(), mP = PT0[0];
+	let mE, ET0, info;
+	if (id === "rival") {
+		ET0 = rivalLag();
+		mE = ET0[0];
+		info = {
+			navn: RIVAL.navn,
+			inn: RIVAL.inn,
+			tittel: "Rivalen"
+		};
+	} else {
+		const m = MESTRE.find((x) => x.id === id);
+		if (!m || m !== nesteMester() || MESTRE.indexOf(m) >= 2) return false;
+		ET0 = mesterLag(m);
+		mE = ET0[0];
+		info = {
+			navn: m.navn,
+			inn: m.inn,
+			tittel: `Gårdsmester på ${m.sted}`
+		};
+	}
+	settMote({
+		j: mE.i,
+		EL: mE.L,
+		f: skala(mE.L, L),
+		P: mP,
+		E: mE,
+		PT: PT0,
+		ET: ET0,
+		p: 0,
+		mester: id,
+		info,
+		txt: info.inn
+	});
+	settView("mote");
+	return true;
+}
+function mesterResultat(win) {
+	const id = kampMester;
+	if (!id) return;
+	if (id === "rival") {
+		S.rival = S.rival || {
+			slatt: false,
+			tap: 0
+		};
+		if (win) {
+			S.rival.slatt = true;
+			say(RIVAL.vant, true);
+		} else {
+			S.rival.tap++;
+			say(RIVAL.tapte);
+		}
+		return;
+	}
+	const m = MESTRE.find((x) => x.id === id);
+	if (win) {
+		if (!merker().includes(id)) S.merker = [...merker(), id];
+		say(m.vant, true);
+		say(`Laget ditt får ${m.merke}! ${merker().length} av 8 merker.`, true, { k: "merke" });
+		if (merker().length === 1 && S.lag.length < 3) {
+			S.egg = true;
+			say("Gunhild venter hjemme med noe rundt og hvitt under vingen …", true);
+		}
+		if (merker().length === 2) say("Noen venter ved grinda hjemme på gården …", true);
+	} else say(m.tapte);
+}
+function spolHane(L) {
+	L = Math.min(100, L);
+	if (S.L >= L) return;
+	const d = (L - S.L) / SPOL.nivaPerDag, h = H[S.type];
+	const tr = fordelt(Math.min(100 - sum(S.tr), SPOL.trenPerDag * d), h), ke = fordelt(Math.min(90 - sum(S.ke), SPOL.kePerDag * d), h);
+	S.tr = capped(S.tr.map((v, i) => Math.round((v + tr[i]) * 100) / 100), 30, 100);
+	S.ke = capped(S.ke.map((v, i) => Math.round((v + ke[i]) * 100) / 100), 30, 90);
+	S.L = L;
+	S.xp = 0;
+}
+function spolLag(L, andre = L - SPOL.hane2Under) {
+	const orig = S.aktiv;
+	spolHane(L);
+	synk();
+	S.lag.forEach((x, j) => {
+		if (x && j !== orig) {
+			hentHane(j);
+			spolHane(andre);
+		}
+	});
+	hentHane(orig);
+}
+function spolHistorie(L) {
+	const L2 = Math.round(L * SPOL.hane2Andel);
+	if (S.lag.filter(Boolean).length < 2) {
+		S.egg = true;
+		S.spolEgg = L2;
+	}
+	spolLag(L, L2);
+}
+function spol(til) {
+	S.intro = true;
+	if (til === "bjarne") {
+		S.merker = ["kaia"];
+		spolHistorie(SPOL.bjarne);
+		note("Testverktøy: spolt frem til Barske Bjarne. Kaimerket er tatt.");
+	} else if (til === "frode") {
+		S.merker = ["kaia", "sag"];
+		S.rival = {
+			slatt: false,
+			tap: 0
+		};
+		spolHistorie(SPOL.frode);
+		note("Testverktøy: spolt frem til Frode. Kaimerket og Sagmerket er tatt.");
+	} else if (til === "niva") {
+		spolLag(S.L + SPOL.nivaSteg);
+		note(`Testverktøy: ${hn()} er nå nivå ${S.L}.`);
+	}
+	save();
+}
+// src/logikk/belonning.js
+var belonning_exports = /* @__PURE__ */ __exportAll({
+	AERE: () => AERE,
+	UTF: () => UTF,
+	belonn: () => belonn,
+	belonnHane: () => belonnHane,
+	giRang: () => giRang,
+	igjen: () => igjen,
+	lagUtf: () => lagUtf,
+	nesteTittel: () => nesteTittel,
+	oppdaterUtf: () => oppdaterUtf,
+	tittel: () => tittel,
+	tittelNr: () => tittelNr,
+	utfTekst: () => utfTekst
+});
+var igjen = () => Math.max(0, C.seireDag - S.seireDag);
+var AERE = [
+	(n) => `${n} er mett på ære for i dag. Han galer likevel, bare for å høre seg selv.`,
+	(n) => `${n} er så full av seg selv at det ikke er plass til mer lærdom før i morgen.`,
+	(n) => `${n} poserer for hønene. Seieren smaker godt, men han lærer ikke mer i dag.`
+];
+function belonn(win) {
+	mesterResultat(win);
+	oppdaterUtf(win);
+	if (!win) {
+		S.tap++;
+		save();
+		return;
+	}
+	S.seire++;
+	const rp = 1 + (ET[0].L > PT[0].L ? 1 : 0);
+	say(`Laget får ${rp} rangpoeng (${tittel(S.rang + rp)}).`);
+	giRang(rp);
+	const orig = S.aktiv;
+	let gardXp = 0;
+	for (const c of PT.filter((x) => x.deltok)) {
+		hentHane(c.hi);
+		const x = belonnHane(c, PT.length > 1);
+		if (c.hi === orig) gardXp = x;
+	}
+	hentHane(orig);
+	synk();
+	const delt = new Set(PT.filter((x) => x.deltok).map((x) => x.hi));
+	if (gardXp > 0) S.lag.forEach((h, j) => {
+		if (!h || j === orig || delt.has(j)) return;
+		const n = Math.max(1, Math.round(gardXp * SE_PA)), nv = H[h.type].n;
+		say(`${nv} så på fra Hønsehuset og får ${n} erfaringspoeng.`);
+		xpPaa(h, n).forEach((l) => say(`${nv} er nå på nivå ${l}.`, true));
+	});
+	save();
+}
+function belonnHane(c, lag) {
+	const M0 = ET[0];
+	if (igjen() <= 0) {
+		say(AERE[Math.floor(Math.random() * AERE.length)](c.n));
+		return 0;
+	}
+	S.seireDag++;
+	const f = c === PT[0] && M0.f != null ? M0.f : skala(M0.L, c.L), xp = Math.max(1, Math.round(xpGrunn(M0.L, c.L) * f));
+	S.humor = Math.min(C.tilstandMaks, S.humor + C.seier);
+	if (S.keDag >= C.kampDag) say(`${c.n} har lært det han kan av kamp i dag, men erfaringen tar han med seg.`);
+	else {
+		S.keDag++;
+		const sk = M0.st.map((v, i) => i === 0 ? v - UTH_TILLEGG * (M0.L + KAMP.uthPluss) : v), k = sk.indexOf(Math.max(...sk));
+		const add = Math.min(f, 30 - S.ke[k], 90 - sum(S.ke));
+		if (add > 0) {
+			S.ke[k] = Math.round((S.ke[k] + add) * 100) / 100;
+			say(f < C.keLitt ? `${c.n} lærte nesten ingenting av en så svak motstander.` : `${c.n} har lært noe av ${M0.n} og føler seg litt ${ADJ[k]}.`);
+		}
+	}
+	say(`${c.n} får ${xp} erfaringspoeng.`);
+	gainXp(xp).forEach((l) => say(`${c.n} er nå på nivå ${l}.`, true));
+	say(igjen() > 0 ? `${lag ? c.n + ": " : ""}${igjen()} belønnede seire igjen i dag.` : `Det var dagens siste belønnede seier. Nå er ${c.n} mett på ære til i morgen.`);
+	return xp;
+}
+var tittelNr = (r) => TITLER.reduce((n, [g], i) => r >= g ? i : n, 0);
+var tittel = (r) => TITLER[tittelNr(r)][1];
+var nesteTittel = (r) => TITLER[tittelNr(r) + 1] || null;
+var UTF = {
+	hakk: {
+		t: () => "Vinn en kamp med bare Hakk",
+		mal: 1
+	},
+	type: {
+		t: (a) => `Slå en ${hane[a].toLowerCase()}`,
+		mal: 1
+	},
+	sterk: {
+		t: () => "Slå en hane på høyere nivå enn deg",
+		mal: 1
+	},
+	rekke: {
+		t: () => "Vinn 3 kamper på rad",
+		mal: 3
+	},
+	sup: {
+		t: () => "Gjør supereffektiv skade 3 ganger",
+		mal: 3
+	},
+	full: {
+		t: () => "Få et fulltreff",
+		mal: 1
+	},
+	frisk: {
+		t: () => "Vinn med over halve utholdenheten i behold",
+		mal: 1
+	},
+	taktikk: {
+		t: () => "Vinn en kamp der du bruker taktikken din",
+		mal: 1
+	}
+};
+function lagUtf() {
+	const ids = Object.keys(UTF).sort(() => Math.random() - .5).slice(0, 3);
+	const typer = [...new Set(H.map((h) => h.t))].filter((t) => t !== H[S.type].t);
+	S.utf = ids.map((id) => ({
+		id,
+		arg: id === "type" ? typer[Math.floor(Math.random() * typer.length)] : null,
+		f: 0,
+		ok: false
+	}));
+}
+var utfTekst = (u) => UTF[u.id].t(u.arg);
+function giRang(n, hvorfor) {
+	const før = tittelNr(S.rang);
+	S.rang += n;
+	const etter = tittelNr(S.rang);
+	if (etter > før) {
+		say(`Ny tittel: ${P.n} er nå ${TITLER[etter][1]}!`, true);
+		note(`${hn()} har fått tittelen ${TITLER[etter][1]}.`);
+	}
+}
+function oppdaterUtf(win) {
+	if (!S.utf) return;
+	S.rekke = win ? (S.rekke || 0) + 1 : 0;
+	for (const u of S.utf) {
+		if (u.ok) continue;
+		const m = UTF[u.id].mal;
+		if (u.id === "rekke") u.f = Math.min(m, S.rekke);
+		else if (u.id === "sup") u.f = Math.min(m, u.f + kampStat.sup);
+		else if (u.id === "full") u.f = Math.min(m, u.f + kampStat.full);
+		else if (win && (u.id === "hakk" && kampStat.bareHakk || u.id === "type" && ET.some((x) => x.t === u.arg) || u.id === "sterk" && ET[0].L > PT[0].L || u.id === "frisk" && P.hp > P.st[0] / 2 || u.id === "taktikk" && kampStat.taktikk)) u.f = m;
+		if (u.f >= m) {
+			u.ok = true;
+			S.gullfjaer = (S.gullfjaer || 0) + 1;
+			say(`Utfordring fullført: ${utfTekst(u)}! Gunhild gir ${P.n} en gullfjær.`, true);
+			giRang(3);
+		}
+	}
+}
+// src/ui/felles.js
+var felles_exports = /* @__PURE__ */ __exportAll({
+	$: () => $,
+	aereLinje: () => aereLinje,
+	app: () => app,
+	badge: () => badge,
+	bar: () => bar,
+	h2: () => h2,
+	hpc: () => hpc,
+	icon: () => icon,
+	lbl: () => lbl,
+	ned: () => ned,
+	nedTekst: () => nedTekst,
+	tilMidnatt: () => tilMidnatt,
+	tint: () => tint
+});
+var tint = {
+	Ild: "red",
+	Vann: "blue",
+	Is: "aqua",
+	Magi: "violet",
+	Muskel: "orange",
+	Lyn: "yellow",
+	Jord: "green",
+	Fly: "magenta",
+	"Spøkelse": "spokelse"
+};
+var icon = {
+	Ild: "ti-flame",
+	Vann: "ti-droplet",
+	Is: "ti-snowflake",
+	Magi: "ti-sparkles",
+	Muskel: "ti-barbell",
+	Lyn: "ti-bolt",
+	Jord: "ti-mountain",
+	Fly: "ti-feather",
+	"Spøkelse": "ti-ghost"
+};
+var app = document.getElementById("app");
+var badge = (t) => {
+	const c = tint[t];
+	return `<span class="badge" style="background:${c ? `var(--bg-tint-${c})` : "var(--surface-1)"};color:${c ? `var(--text-tint-${c})` : "var(--text-secondary)"}"><i class="ti ${icon[t]}" aria-hidden="true" style="margin-right:4px;vertical-align:-1px"></i>${hane[t]}</span>`;
+};
+function aereLinje() {
+	const n = igjen();
+	return `<div style="font-size:12px;color:${n ? "var(--text-secondary)" : "var(--text-warning)"};margin-top:8px"><i class="ti ti-trophy" aria-hidden="true" style="margin-right:4px;vertical-align:-1px"></i>${n ? `Belønnede seire igjen i dag: ${n} av ${C.seireDag}` : `Mett på ære. Nye belønnede seire om ${ned()}. Rang og utfordringer teller fortsatt.`}</div>`;
+}
+function bar(v, max, col) {
+	return `<div class="bar" style="margin-top:4px"><div class="fill" style="width:${Math.max(0, Math.min(100, v / max * 100))}%;background:${col}"></div></div>`;
+}
+var lbl = "font-size:12px;color:var(--text-secondary)";
+var h2 = "font-size:13px;font-weight:500;color:var(--text-secondary);margin:16px 0 6px";
+var $ = (id) => document.getElementById(id);
+function tilMidnatt() {
+	const n = /* @__PURE__ */ new Date(), m = new Date(n);
+	m.setHours(24, 0, 0, 0);
+	return m - n;
+}
+function nedTekst() {
+	const ms = tilMidnatt(), t = Math.floor(ms / 36e5), min = Math.floor(ms % 36e5 / 6e4);
+	return t > 0 ? `${t} t ${min} min` : min > 0 ? `${min} min` : "under ett minutt";
+}
+var ned = () => `<span data-ned>${nedTekst()}</span>`;
+function hpc(p) {
+	return p > .5 ? "var(--fill-success)" : p > .2 ? "var(--fill-warning)" : "var(--fill-danger)";
+}
+// src/grafikk/pikseldata.js
+var pikseldata_exports = /* @__PURE__ */ __exportAll({
+	GB: () => GB,
+	PIX: () => PIX,
+	PIXN: () => 48,
+	pixCache: () => pixCache,
+	pixGrid: () => pixGrid,
+	pixRects: () => pixRects
+});
+var PIX = [
+	[
+		".u01.z.802.z.8002000.400.q00.600.2002001.201.p02.402.0012100.102.h00.6002000.4002000.0002200.0012000.g02.5002000.400210024012100.g002000.501.500210024002200.g002000.501.5002b00.g02.402.40124032101.g01.5002000.50022021103.h01.5002000.5002109.h001000.4002100.40312041000.b01.2001001.3002100.501130012001003.801.2001100.3002100.50113072004.3002000.2001200.2002100.500140031011106.401.2001201.1002100.500140411002101.601.2001300.1002200.4001b02.802.2001300.0002200.4011a00.a012000.10013022200.5001802.b002100.00014012200.5011602.c002200.00014002300.40215001001.c00220114002300.30121061001.c002301140020072703.e0023011301140227002000.f01230110011600200027002000.g0123021700200027002000.h012210001404200026002200.h0121001302130126002200.j0212011600102410002200.k0013001203120120022300.k001300160111002600.m0012001103110010012600.m001201140110002701.m01130211022800.o00150211012600.q01180020002301.s0117002004.w0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.h00.z.902.z.000.6002000.z02.5002000.z002000.501.n01.a002000.501.l02.b02.402.k012000.b01.5002000.i012200.101.701.5002000.h01220321.7001000.4002100.g00250022.201.2001001.3002100.f012800.201.2001100.3002100.f0120002600.1002000.2001200.2002100.e072300.201.2001201.1002100.d0114022101.201.2001300.1002200.b01150322.202.2001300.0002200.b00150521.2012000.10013022200.a011401100321.3002100.00014012200.60415011104.3002200.00014002300.40515003004.600220114002300.3032100150030021000.600230114002008230115021001.70023011301140225001901.701230110011601260117002100.701230217012701110111022000.801221000140627082002.80121001302130225021101.104.a0212011701230120001001.501.b0013001203120021012202.k001300160111012500.m0012001103110010012600.m001201140110002701.m01130211022800.o00150211012600.q01180020002301.s0117002004.w0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".u01.z.802.z.8002000.400.q00.600.2002001.201.p02.402.0012100.102.h00.6002000.4002000.0002200.0012000.g02.5002000.400210024012100.g002000.501.500210024002200.g002000.501.5002b00.g02.402.40124032101.g01.5002000.50022021103.h01.5002000.5002109.h001000.4002100.40312041000.b01.2001001.3002100.501130012001003.801.2001100.3002100.50113072004.3002000.2001200.2002100.500140031011106.401.2001201.1002100.500140411002101.601.2001300.1002200.4001b02.802.2001300.0002200.4011a00.a012000.10013022200.5001802.b002100.00014012200.5011602.c002200.00014002300.40215001001.c00220114002300.30121061001.c002301140020072703.e0023011301140227002000.f01230110011600200027002000.g0123021700200027002000.h012210001404200026002200.h0121001302130126002200.j0212011600102410002200.k0013001203120120022300.k001300160111002600.m0012001103110010012600.m001201140110002701.m01130211022800.o00150211012600.q01180020002301.s0117002004.w0313002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.y01.r00.b07.q01.90111001300.o02.9031400.g01.5002000.802302007.e01.5002000.801230011011000.e001000.4002100.8002307.d001001.3002100.70221013005.d001100.3002100.70531003003.d001200.2002100.70112003403.c001201.1002100.7001300330010002102.401.2001300.1002200.6001401300110002103.302.2001300.0002200.60015011202.7012000.10013022200.6001a04.6002100.00014012200.6011706.6002200.00014002300.5021504.a00220114002300.400110212011000.200.80023011400200813041100.101.9002301130115011803.d012301100117011703.f012302170010001701.i01221000140616002000.j0121001302130116002000.l021201160312002100.m001300120312052101.j0213001601110025002001.g002200120011031100100026002100.g00220012011401100026012200.f00130711022304102200.g001124100a23122100.i01241224002000241201.l032012240020002303.r092004.y0020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.h04.c001001.3002100.h031001.a001100.3002100.g0131011002.8001200.2002100.e0223001201.7001201.1002100.d0323011200.201.2001300.1002200.b02100121031001.202.2001300.0002200.b0013041002.3012000.10013022200.a01140031031000.3002100.00014012200.a00140032031000.3002200.00014002300.60314003403.400220114002300.402110014013203.50023011400200813011407.600230113011501150015021001.701230110011700160117002001.701230217011701110111012100.8012210001406170c.80121001302130215021105.001.a0212011701120220001001.103.d0013001203120011012202.500.b0213001601110124002001.001.d002200120011031100100026002100.001.d00220012011401100026012200.f00130711022304102200.g001124100a23122100.i01241224002000241201.l032012240020002303.r092004.y0020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.y01.r00.b07.q01.90111001300.o02.9031400.g01.5002000.802302007.e01.5002000.801230011011000.e001000.4002100.8002307.d001001.3002100.70221013005.d001100.3002100.70531003003.d001200.2002100.70112003403.c001201.1002100.7001300330010002102.401.2001300.1002200.6001401300110002103.302.2001300.0002200.60015011202.7012000.10013022200.6001a04.6002100.00014012200.6011706.6002200.00014002300.5021504.a00220114002300.400110212011000.200.80023011400200813041100.101.9002301130115011803.d012301100117011703.f012302170010001701.i01221000140616002000.j0121001302130116002000.l021201160312002100.m001300120312052101.j0213001601110025002001.g002200120011031100100026002100.g00220012011401100026012200.f00130711022304102200.g001124100a23122100.i01241224002000241201.l032012240020002303.r092004.v002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5003000.9001007.g01.5003000.9022401.g002000.4003100.80124002100.f002100.3003100.70123032100.e002100.3003100.700240030022000.e002200.2003100.700230130022003.b002201.1003100.7002400310120002102.401.2002300.1003200.60025022107.202.2002300.0003200.6002a002102.4012000.1002310013200.6002a02.8002100.00024013200.6012702.a002200.00024003300.5022502.c00220124003300.400210222011000.c0023012400300823041100.d002301230125012803.d012301200127012703.f012302270020002701.i012300240626003000.j0121002302230126003000.l02220010260322003100.m002300220322053100.m002300260121003500.n002200210222102000203500.n002201240120003600.o01230122023700.p0026012101342000.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5003000.z.001.5003000.k01.d002000.4003100.i06.9002100.3003100.h0110011100.9002100.3003100.g0210001102.8002200.2003100.e071003.7002201.1003100.d0125011200.201.2002300.1003200.b0127011100.202.2002300.0003200.b0026002102.3012000.1002310013200.a0124042000.5002100.00024013200.a00250032002000.5002200.00024003300.603250030022000.600220124003300.4022100250030022000.600230124003008230125022001.70023012301250125002901.701230120012700260127002100.701230227012701210121022000.8012300240627082002.80121002302230225021101.104.a022200102701230130001001.501.b0023002203220021013202.k002300260121013400.n002200210222102000203500.n002201240120003600.o01230122023700.p0026012101342000.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5003000.9001007.g01.5003000.9022401.g002000.4003100.80124002100.f002100.3003100.70123032100.e002100.3003100.700240030022000.e002200.2003100.700230130022003.b002201.1003100.7002400310120002102.401.2002300.1003200.60025022107.202.2002300.0003200.6002a002102.4012000.1002310013200.6002a02.8002100.00024013200.6012702.a002200.00024003300.5022502.c00220124003300.400210222011000.c0023012400300823041100.d002301230125012803.d012301200127012703.f012302270020002701.i012300240626003000.j0121002302230126003000.l02220010260322003100.m002300220322053100.m002300260121003500.n002200210222102000203500.n002201240120003600.o01230122023700.p0026012101342000.r0128002005.t0127002003.x0323002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001001.3002100.70113041000.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60014031107.202.2001300.0002200.6001a002102.4012000.10013022200.6001a02.8002100.00014012200.6011702.a002200.00014002300.5021502.c00220213002300.400110212011000.c0023011400200813041100.d002301130115011803.d012301100117011703.f012302170010001701.i01221000140616002000.j0121001302130116002000.l021201160312002100.m001300120312052100.m0013001100130111002500.n001200110311022600.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.i06.9001001.3002100.h0110011100.9001100.3002100.g0210001102.8001200.2002100.e071003.7001201.1002100.d0115011200.201.2001300.1002200.b0117011100.202.2001300.0002200.b0015011102.3012000.10013022200.a0114041000.5002100.00014012200.a00150032001000.5002200.00014002300.603150030021000.600220213002300.4021100150030021000.600230114002008130115021001.70023011301150115001901.701230110011700160117002100.701230217011701110111022000.801221000140617082002.80121001302130215021101.104.a0212011701120220001001.501.b0013001203120011012202.k0013001100130111012400.n001200110311022600.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001001.3002100.70113041000.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60014031107.202.2001300.0002200.6001a002102.4012000.10013022200.6001a02.8002100.00014012200.6011702.a002200.00014002300.5021502.c00220213002300.400110212011000.c0023011400200813041100.d002301130115011803.d012301100117011703.f012302170010001701.i01221000140616002000.j0121001302130116002000.l021201160312002100.m001300120312052100.m0013001100130111002500.n001200110311022600.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001001.3002100.70113031100.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60014031107.202.2001300.0002200.6001a002102.4012000.10013022200.6001a02.8002100.00014012200.6011702.a002200.00014002300.5021502.c00220114002300.400110212011000.c0023011400200813041100.d002301130115011803.d012301100117011703.f012302170010001701.i01221000140616002000.j0121001302130116002000.l021201160312002100.m001300120312052100.m001300160111002500.n0012001103110010012500.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.i06.9001001.3002100.h0110011100.9001100.3002100.g0210001102.8001200.2002100.e071003.7001201.1002100.d0115011200.201.2001300.1002200.b0117011100.202.2001300.0002200.b0016001102.3012000.10013022200.a0114041000.5002100.00014012200.a00150032001000.5002200.00014002300.603150030021000.600220114002300.4021100150030021000.600230114002008130115021001.70023011301150115001901.701230110011700160117002100.701230217011701110111022000.801221000140617082002.80121001302130215021101.104.a0212011701130120001001.501.b0013001203120011012202.k001300160111012400.n0012001103110010012500.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001001.3002100.70113031100.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60014031107.202.2001300.0002200.6001a002102.4012000.10013022200.6001a02.8002100.00014012200.6011702.a002200.00014002300.5021502.c00220114002300.400110212011000.c0023011400200813041100.d002301130115011803.d012301100117011703.f012302170010001701.i01221000140616002000.j0121001302130116002000.l021201160312002100.m001300120312052100.m001300160111002500.n0012001103110010012500.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5001000.9001007.g01.5001000.9022401.g002000.4001001.80124002100.f002100.3001100.70123032100.e002100.3001100.700240030022000.e002200.2001100.700230130022003.b002201.1001100.7002400310120002102.401.2002300.1001101.60025022107.202.2002300.0001200.6002a002102.4012000.10024011200.6002a02.8002100.00024011200.6012702.a002200.00024001201.5022502.c00220124011200.400210222011000.c002301240a23041100.d002301230125012803.d012301200127012703.f012302270020002701.i012300240626003000.j0121002302230126003000.l02220010260322003100.m002300220322053100.m002300260121003500.n00220021022400203500.n002201240120003600.o0123012202362000.p0026012101342000.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5001000.z.001.5001000.k01.d002000.4001001.i06.9002100.3001100.h0110011100.9002100.3001100.g0210001102.8002200.2001100.e071003.7002201.1001100.d0125011200.201.2002300.1001101.b0127011100.202.2002300.0001200.b0026002102.3012000.10024011200.a0124042000.5002100.00024011200.a00250032002000.5002200.00024001201.603250030022000.600220124011200.4012200250030022000.6002301240a230125022001.70023012301250125002901.701230120012700260127002100.701230227012701210121022000.8012300240627082002.80121002302230225021101.104.a022200102701230130001001.501.b0023002203220021013202.k002300260121013400.n00220021022400203500.n002201240120003600.o0123012202362000.p0026012101342000.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5001000.9001007.g01.5001000.9022401.g002000.4001001.80124002100.f002100.3001100.70123032100.e002100.3001100.700240030022000.e002200.2001100.700230130022003.b002201.1001100.7002400310120002102.401.2002300.1001101.60025022107.202.2002300.0001200.6002a002102.4012000.10024011200.6002a02.8002100.00024011200.6012702.a002200.00024001201.5022502.c00220124011200.400210222011000.c002301240a23041100.d002301230125012803.d012301200127012703.f012302270020002701.i012300240626003000.j0121002302230126003000.l02220010260322003100.m002300220322053100.m002300260121003500.n00220021022400203500.n002201240120003600.o0123012202362000.p0026012101342000.r0128002005.t0127002003.x0323002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001001.3002100.70113041000.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60014031107.202.2001300.0002200.6001a002102.403.10013022200.6001a02.8001100.00113012200.6011702.a001200.00014002300.5021502.c00120213002300.400110212011000.c0013011400200813041100.d001301130115011803.d011301100117011703.f011302170010001701.i011300140616002000.j0111001302130116002000.l021201160312002100.m001300120312052100.m0013001100130111002500.n001200100411032500.n001201140110002600.o01130210032700.p00150211012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.i06.9001001.3002100.h0110011100.9001100.3002100.g0210001102.8001200.2002100.e071003.7001201.1002100.d0115011200.201.2001300.1002200.b0117011100.202.2001300.0002200.b0015011102.303.10013022200.a0114041000.5001100.00113012200.a00150032001000.5001200.00014002300.603150030021000.600120213002300.4021100150030021000.600130114002008130115021001.70013011301150115001901.701130110011700160117002100.701130217011701110111022000.8011300140617082002.80111001302130215021101.104.a0212011701120220001001.501.b0013001203120011012202.k0013001100130111012400.n001200100411032500.n001201140110002600.o01130210032700.p00150211012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001001.3002100.70113041000.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60014031107.202.2001300.0002200.6001a002102.403.10013022200.6001a02.8001100.00113012200.6011702.a001200.00014002300.5021502.c00120213002300.400110212011000.c0013011400200813041100.d001301130115011803.d011301100117011703.f011302170010001701.i011300140616002000.j0111001302130116002000.l021201160312002100.m001300120312052100.m0013001100130111002500.n001200100411032500.n001201140110002600.o01130210032700.p00150211012500.r0118002005.t0117002003.x0313002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.100.q00.b00.0002004.p01.90321002100.p01.900200121002100.g01.5003000.900201006.g01.5003000.9022401.g001000.4003100.80124002100.f001100.3003100.70123032100.e001100.3003100.700240030022000.e001200.2003100.700230130022003.b001201.1003100.7002400310120002102.401.2001300.1003200.60025022107.202.2001300.0003200.6002a002102.5002000.10014013200.6002a02.8002100.00014013200.6012702.a002200.00014003300.5022502.c00220114003300.400210222011000.c0023011400300823041100.d002301130125012803.d012301100127012703.f012302270010002701.i012300240626003000.j0121002302130126003000.l022200170322003100.m002300120312053100.m002300160111003500.n00220011021400203500.n002201140110003600.o0123011202362000.p0026012101342000.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.900.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.901.z.001.5003000.z.001.5003000.k01.d001000.4003100.i06.9001100.3003100.h0021012100.9001100.3003100.g0210002102.8001200.2003100.e072003.7001201.1003100.d0125012200.201.2001300.1003200.b0127012100.202.2001300.0003200.b0026002102.4002000.10014013200.a0124042000.5002100.00014013200.a00250032002000.5002200.00014003300.603250030022000.600220114003300.4022100250030022000.600230114003008230125022001.70023011301250125002901.701230110012700260127002100.701230227012701210121022000.8012300240627082002.80121002302130225021101.104.a0222001801230130001001.501.b0023001203120021013202.k002300160111013400.n00220011021400203500.n002201140110003600.o0123011202362000.p0026012101342000.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.900.z.t",
+		".z.z.z.z.z.z.z.z.v02.100.q00.b00.0002004.p01.90321002100.p01.900200121002100.g01.5003000.900201006.g01.5003000.9022401.g001000.4003100.80124002100.f001100.3003100.70123032100.e001100.3003100.700240030022000.e001200.2003100.700230130022003.b001201.1003100.7002400310120002102.401.2001300.1003200.60025022107.202.2001300.0003200.6002a002102.5002000.10014013200.6002a02.8002100.00014013200.6012702.a002200.00014003300.5022502.c00220114003300.400210222011000.c0023011400300823041100.d002301130125012803.d012301100127012703.f012302270010002701.i012300240626003000.j0121002302130126003000.l022200170322003100.m002300120312053100.m002300160111003500.n00220011021400203500.n002201140110003600.o0123011202362000.p0026012101342000.r0128002005.t0127002003.x0323002001.y002001.0042000.y002000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9022401.g001000.4002100.80124002100.f001100.3002100.70123031100.e001100.3002100.700240030022000.e001200.2002100.700230130022003.b001201.1002100.7002400310120002102.401.2001300.1002200.6002410022107.202.2001300.0002200.6002a002102.4012000.10013022200.6002a02.8002100.00014012200.6012702.a002200.00014002300.5022502.c00220114002300.400210222011000.c0023011400200823041100.d002301130125012803.d012301100127012703.f012302270010002701.i01221000240626002000.j0121002302130126002000.l022201160322002100.m002300120312052100.m002300160111002500.n0022001103110010002600.n002201140110002600.o01230211022700.p00260121012500.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.i06.9001100.3002100.h0110011100.9001100.3002100.g0210001102.8001200.2002100.e071003.7001201.1002100.d0125011200.201.2001300.1002200.b0127011100.202.2001300.0002200.b0026002102.3012000.10013022200.a0124042000.5002100.00014012200.a00250032002000.5002200.00014002300.603250030022000.600220114002300.4022100250030022000.600230114002008230125022001.70023011301250125002901.701230110012700260127002100.701230227012701210121022000.801221000240627082002.80121002302130225021101.104.a0222011701230120001001.501.b002300120312001020012202.k002300160111012400.n0022001103110010002600.n002201140110002600.o01230211022700.p00260121012500.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9022401.g001000.4002100.80124002100.f001100.3002100.70123031100.e001100.3002100.700240030022000.e001200.2002100.700230130022003.b001201.1002100.7002400310120002102.401.2001300.1002200.6002410022107.202.2001300.0002200.6002a002102.4012000.10013022200.6002a02.8002100.00014012200.6012702.a002200.00014002300.5022502.c00220114002300.400210222011000.c0023011400200823041100.d002301130125012803.d012301100127012703.f012302270010002701.i01221000240626002000.j0121002302130126002000.l022201160322002100.m002300120312052100.m002300160111002500.n0022001103110010002600.n002201140110002600.o01230211022700.p00260121012500.r0128002005.t0127002003.x0323002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	]
+];
+var GB = [
+	"#0f380f",
+	"#306230",
+	"#8bac0f",
+	"#9bbc0f"
+];
+function pixGrid(rle) {
+	let s = "";
+	for (let i = 0; i < rle.length; i += 2) s += rle[i].repeat(parseInt(rle[i + 1], 36) + 1);
+	return s;
+}
+var pixCache = {};
+function pixRects(i, f) {
+	const k = i + "-" + f;
+	if (pixCache[k]) return pixCache[k];
+	const g = pixGrid(PIX[i][f]);
+	let r = "";
+	for (let y = 0; y < 48; y++) {
+		let x = 0;
+		while (x < 48) {
+			const ch = g[y * 48 + x];
+			let e = x;
+			while (e < 48 && g[y * 48 + e] === ch) e++;
+			if (ch !== ".") r += `<rect x="${x}" y="${y}" width="${e - x}" height="1" fill="${GB[+ch]}"/>`;
+			x = e;
+		}
+	}
+	return pixCache[k] = r;
+}
+// src/grafikk/bakgrunner.js
+var bakgrunner_exports = /* @__PURE__ */ __exportAll({
+	gardBg: () => gardBg,
+	kampBg: () => kampBg
+});
+function kampBg() {
+	if (STIL === "piksel") return `<svg class="bg" viewBox="0 0 320 200" preserveAspectRatio="none" shape-rendering="crispEdges"><rect width="320" height="200" fill="${GB[3]}"/><rect y="150" width="320" height="50" fill="${GB[2]}"/>${Array.from({ length: 40 }, (_, i) => `<rect x="${i * 8}" y="150" width="4" height="2" fill="${GB[1]}"/>`).join("")}</svg>`;
+	return `<svg class="bg" viewBox="0 0 320 200" preserveAspectRatio="none"><defs><linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd6f7"/><stop offset="1" stop-color="#e8f6ff"/></linearGradient></defs><rect width="320" height="200" fill="url(#himmel)"/><circle cx="40" cy="30" r="14" fill="#ffe17a"/><ellipse cx="250" cy="34" rx="26" ry="9" fill="#fff" opacity=".9"/><ellipse cx="268" cy="28" rx="16" ry="8" fill="#fff" opacity=".9"/><path d="M0 150 C60 128 120 140 180 132 C240 124 290 136 320 130 L320 200 L0 200 Z" fill="#8fd16a"/><path d="M0 170 C80 160 200 172 320 160 L320 200 L0 200 Z" fill="#76bf54"/></svg>`;
+}
+function gardBg() {
+	if (STIL === "piksel") return `<svg class="bg" viewBox="0 0 320 160" preserveAspectRatio="none" shape-rendering="crispEdges"><rect width="320" height="160" fill="${GB[3]}"/><rect x="200" y="40" width="90" height="80" fill="${GB[1]}"/><path d="M194 44 L245 12 L296 44 Z" fill="${GB[0]}"/><rect x="232" y="78" width="26" height="42" fill="${GB[0]}"/><rect x="236" y="82" width="18" height="34" fill="${GB[2]}"/><rect y="120" width="320" height="40" fill="${GB[2]}"/>${[
+		10,
+		40,
+		70,
+		100,
+		130,
+		160
+	].map((x) => `<rect x="${x}" y="96" width="5" height="26" fill="${GB[0]}"/>`).join("")}<rect x="6" y="102" width="164" height="4" fill="${GB[0]}"/><rect x="6" y="112" width="164" height="4" fill="${GB[0]}"/>${Array.from({ length: 40 }, (_, i) => `<rect x="${i * 8 + 2}" y="${126 + i % 3 * 9}" width="3" height="2" fill="${GB[1]}"/>`).join("")}</svg>`;
+	return `<svg class="bg" viewBox="0 0 320 160" preserveAspectRatio="none"><defs><linearGradient id="himmel2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd6f7"/><stop offset="1" stop-color="#eaf7ff"/></linearGradient></defs><rect width="320" height="160" fill="url(#himmel2)"/><circle cx="34" cy="26" r="13" fill="#ffe17a"/><rect x="200" y="44" width="92" height="78" fill="#c8402e" stroke="#2a1a10" stroke-width="2"/><path d="M193 47 L246 12 L299 47 Z" fill="#8f2a1e" stroke="#2a1a10" stroke-width="2"/><rect x="230" y="78" width="32" height="44" fill="#fff" stroke="#2a1a10" stroke-width="2"/><path d="M230 78 L262 122 M262 78 L230 122" stroke="#c8402e" stroke-width="3"/><path d="M0 118 C80 112 200 122 320 114 L320 160 L0 160 Z" fill="#8fd16a"/>${[
+		10,
+		40,
+		70,
+		100,
+		130,
+		160
+	].map((x) => `<rect x="${x}" y="94" width="6" height="30" rx="2" fill="#f4e3c3" stroke="#2a1a10" stroke-width="1.5"/>`).join("")}<rect x="6" y="100" width="166" height="5" fill="#f4e3c3" stroke="#2a1a10" stroke-width="1.5"/><rect x="6" y="111" width="166" height="5" fill="#f4e3c3" stroke="#2a1a10" stroke-width="1.5"/><ellipse cx="120" cy="146" rx="60" ry="6" fill="#6aa94a" opacity=".5"/></svg>`;
+}
+// src/grafikk/tegneseriehaner.js
+var tegneseriehaner_exports = /* @__PURE__ */ __exportAll({
+	PAL: () => PAL,
+	TO: () => TO,
+	tegneHane: () => tegneHane
+});
+var TO = "#2a1a10";
+var PAL = {
+	Ild: {
+		b: "#e4472b",
+		c: "#f59a3a",
+		w: "#b5301c",
+		t: [
+			"#c8321b",
+			"#ff8a1e",
+			"#ffcf3d"
+		],
+		k: "#ffb21e"
+	},
+	Vann: {
+		b: "#3b86d1",
+		c: "#bfe6f7",
+		w: "#2a63a3",
+		t: [
+			"#2a63a3",
+			"#57b0e6",
+			"#9ed8f5"
+		],
+		k: "#e8504a"
+	},
+	Is: {
+		b: "#8fd3ea",
+		c: "#e6f7fd",
+		w: "#5aa9c8",
+		t: [
+			"#5aa9c8",
+			"#a9e2f3",
+			"#ffffff"
+		],
+		k: "#e8504a"
+	},
+	Magi: {
+		b: "#8a5cc7",
+		c: "#d8c6f0",
+		w: "#5f3a99",
+		t: [
+			"#5f3a99",
+			"#b38be6",
+			"#f2d24b"
+		],
+		k: "#e8504a"
+	},
+	Muskel: {
+		b: "#c9773c",
+		c: "#f0b48a",
+		w: "#8f4c20",
+		t: [
+			"#8f4c20",
+			"#d98b4e",
+			"#f2c48f"
+		],
+		k: "#e8504a"
+	},
+	Lyn: {
+		b: "#f2c81e",
+		c: "#fff2a6",
+		w: "#c99a0e",
+		t: [
+			"#c99a0e",
+			"#ffd84d",
+			"#3a3a3a"
+		],
+		k: "#e8504a"
+	},
+	Jord: {
+		b: "#8a6a3a",
+		c: "#c9a978",
+		w: "#5e4524",
+		t: [
+			"#5e4524",
+			"#7f9a3a",
+			"#b5c46a"
+		],
+		k: "#e8504a"
+	},
+	"Spøkelse": {
+		b: "#b9b6c9",
+		c: "#eceaf3",
+		w: "#8b88a0",
+		t: [
+			"#8b88a0",
+			"#d1cfe0",
+			"#ffffff"
+		],
+		k: "#c9c6da"
+	},
+	Fly: {
+		b: "#c9864a",
+		c: "#f2d3a8",
+		w: "#8a5428",
+		t: [
+			"#8a5428",
+			"#e07a9b",
+			"#f2b3c8"
+		],
+		k: "#e8504a"
+	}
+};
+function tegneHane(navn, type, pose, sw) {
+	pose = pose || "stand";
+	sw = sw || 2.6;
+	const p = PAL[type] || PAL.Ild, G = navn === "Gnisten", V = navn === "Plasken";
+	const st = `stroke="${TO}" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"`;
+	const leg = (a, b, c, d, cls) => `<g class="${cls}"><path d="M${a} ${b} L${c} ${d} M${c} ${d} l-6 2 M${c} ${d} l3 3 M${c} ${d} l6 1" fill="none" stroke="${TO}" stroke-width="5.2" stroke-linecap="round"/><path d="M${a} ${b} L${c} ${d} M${c} ${d} l-6 2 M${c} ${d} l3 3 M${c} ${d} l6 1" fill="none" stroke="#f2a12b" stroke-width="2.4" stroke-linecap="round"/></g>`;
+	const back = pose === "scratch" ? leg(44, 74, 30, 86, "bein-bak") : leg(44, 74, 40, 91, "bein-bak");
+	const front = leg(56, 74, 57, 91, "bein-fram");
+	const tail = `<g class="hale"><path d="M34 62 C16 60 4 48 2 30 C14 42 24 50 38 56 Z" fill="${p.t[1]}" ${st}/><path d="M34 58 C20 50 10 34 14 14 C22 28 30 40 40 50 Z" fill="${p.t[0]}" ${st}/><path d="M36 54 C30 40 28 24 34 8 C38 24 40 38 44 50 Z" fill="${p.t[2]}" ${st}/>${G ? `<path d="M14 14 c-3 -4 0 -8 2 -10 c0 4 3 5 1 10 Z M34 8 c-2 -4 1 -7 3 -8 c0 4 2 5 0 8 Z M2 30 c-3 -3 -1 -7 1 -9 c1 4 3 5 1 9 Z" fill="#ffe36b" ${st}/>` : ""}</g>`;
+	const ringBak = V ? `<path d="M19 68 A31 7 0 0 1 81 68" fill="none" stroke="${TO}" stroke-width="9"/><path d="M19 68 A31 7 0 0 1 81 68" fill="none" stroke="#ffd23f" stroke-width="5.5"/>` : "";
+	const ringFram = V ? `<path d="M19 68 A31 7 0 0 0 81 68" fill="none" stroke="${TO}" stroke-width="9"/><path d="M19 68 A31 7 0 0 0 81 68" fill="none" stroke="#ffd23f" stroke-width="5.5"/><path d="M19 68 A31 7 0 0 0 81 68" fill="none" stroke="#e8504a" stroke-width="5.5" stroke-dasharray="7 11"/>` : "";
+	const body = `<ellipse cx="48" cy="62" rx="25" ry="18" fill="${p.b}" ${st}/>`;
+	const chest = G ? `<ellipse cx="64" cy="57" rx="16" ry="19" fill="${p.c}" ${st}/>` : `<ellipse cx="63" cy="58" rx="14" ry="17" fill="${p.c}" ${st}/>`;
+	const wing = `<path d="M34 58 C44 51 58 54 60 64 C52 73 40 73 33 66 Z" fill="${p.w}" ${st}/><path d="M40 62 C46 60 52 61 55 65 M38 66 C44 65 50 66 53 69" fill="none" stroke="${TO}" stroke-width="1.6" stroke-linecap="round"/>`;
+	const glans = G ? `<path d="M66 44 l1.6 4 l4 1.6 l-4 1.6 l-1.6 4 l-1.6 -4 l-4 -1.6 l4 -1.6 Z" fill="#fff" stroke="${TO}" stroke-width="1"/>` : "";
+	let comb;
+	if (G) comb = `<path d="M61 21 C56 13 62 8 63 2 C66 8 66 12 68 13 C68 6 72 2 74 -3 C76 6 76 11 77 13 C79 9 83 8 86 5 C85 13 83 18 79 21 Z" fill="${p.k}" ${st}/><path d="M66 19 C64 14 67 11 68 8 C70 12 70 15 72 15 C72 11 74 9 75 7 C77 12 77 16 75 19 Z" fill="#ffe36b"/>`;
+	else if (V) comb = `<path d="M62 20 C60 12 66 9 70 12 C74 8 80 10 79 15 C85 16 86 25 81 28 C80 23 75 20 70 21 Z" fill="${p.k}" ${st}/><path d="M84 30 C82 33 82 35 84 35 C86 35 86 33 84 30 Z M88 37 C86.5 39.5 86.5 41 88 41 C89.5 41 89.5 39.5 88 37 Z" fill="#7cc8f2" stroke="${TO}" stroke-width="1.2"/>`;
+	else comb = `<path d="M62 19 C62 10 66 10 67 15 C68 6 73 6 73 14 C75 7 81 8 79 18 Z" fill="${p.k}" ${st}/>`;
+	let eye;
+	if (G) eye = `<circle cx="75" cy="25" r="4.4" fill="#fff" ${st}/><circle cx="77.4" cy="26.3" r="1.9" fill="${TO}"/><path d="M70.6 25 A4.4 4.4 0 0 1 79.4 25 Z" fill="${p.b}" ${st}/><path d="M69.5 18.6 L79.5 20.6" stroke="${TO}" stroke-width="2.2" stroke-linecap="round"/>`;
+	else if (V) eye = `<circle cx="75" cy="25" r="5.2" fill="#fff" ${st}/><circle cx="75.6" cy="22.6" r="1.6" fill="${TO}"/>`;
+	else eye = `<circle cx="75" cy="25" r="4.2" fill="#fff" ${st}/><circle cx="76.6" cy="25" r="2" fill="${TO}"/>`;
+	const beak = V ? `<path d="M83 25 L94 28.5 L83 31 Z" fill="#ffc22e" ${st}/><path d="M83 32 L91 33.5 L83 36 Z" fill="#f0a21a" ${st}/>` : `<path d="M83 24.5 L95 29 L83 33.5 Z" fill="#ffc22e" ${st}/><path d="M84 29 L92 29" stroke="${TO}" stroke-width="1.4"/>`;
+	const wattle = `<path d="M80 35 C83 41 79 46 76 42 C75 39 77 36 80 35 Z" fill="#e8504a" ${st}/>`;
+	const goggles = V ? `<path d="M61 27 C62 20 68 16 74 17" fill="none" stroke="${TO}" stroke-width="2.4"/><circle cx="66.5" cy="19" r="4.6" fill="#9fe3ff" ${st}/><path d="M64.6 17.6 l2 -1.6" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>` : "";
+	const head = `<g class="hode"${pose === "peck" ? " transform=\"rotate(38 62 50)\"" : G ? " transform=\"rotate(-9 62 50)\"" : ""}><path d="M53 58 C52 46 58 38 64 34 C71 34 77 38 76 45 C74 51 71 56 69 61 Z" fill="${G ? p.c : p.b}" ${st}/><g transform="translate(72 30) scale(1.22) translate(-72 -28)">${comb}<circle cx="72" cy="28" r="12" fill="${p.b}" ${st}/>${wattle}${beak}${eye}${goggles}</g></g>`;
+	return `<g${type === "Spøkelse" ? " opacity=\"0.78\"" : ""}>${back}${tail}${ringBak}${body}${chest}${wing}${glans}${ringFram}${front}${head}</g>`;
+}
+// src/grafikk/haner.js
+var haner_exports = /* @__PURE__ */ __exportAll({
+	hIdx: () => hIdx,
+	haneSvg: () => haneSvg
+});
+var hIdx = (c) => c.i !== void 0 ? c.i : H.findIndex((h) => h.n === c.n);
+function haneSvg(i, o = {}) {
+	const st = o.stil || STIL, h = H[i];
+	if (st === "piksel") {
+		const fr = o.frames ? `<g class="f-stand">${pixRects(i, 0)}</g><g class="f-peck">${pixRects(i, 1)}</g><g class="f-scratch">${pixRects(i, 2)}</g>` : pixRects(i, 0);
+		return `<svg class="hane piksel" viewBox="0 0 48 48" shape-rendering="crispEdges" role="img" aria-label="${h.n}">${fr}</svg>`;
+	}
+	return `<svg class="hane tegne" viewBox="-4 -8 104 108" role="img" aria-label="${h.n}">${tegneHane(h.n, h.t, "stand")}</svg>`;
+}
+// src/ui/bygda.js
+var bygda_exports = /* @__PURE__ */ __exportAll({
+	bygdPanel: () => bygdPanel,
+	kartSvg: () => kartSvg
+});
+function kartSvg() {
+	const P8 = STIL === "piksel", n = merker().length, pts = [
+		GARD_XY,
+		...MESTRE,
+		FINALE
+	];
+	const vei = `<path d="${pts.map((p, i) => (i ? "L" : "M") + p.x + " " + p.y).join(" ")}" fill="none" stroke="${P8 ? GB[1] : "#c9a46a"}" stroke-width="4" stroke-dasharray="${P8 ? "4 4" : "0"}" stroke-linecap="round" stroke-linejoin="round"/>`;
+	const bg = P8 ? `<rect width="320" height="190" fill="${GB[3]}"/><path d="M0 120 Q40 110 52 150 Q60 175 100 190 L0 190 Z" fill="${GB[2]}"/><path d="M240 0 L320 0 L320 90 Q300 30 240 0 Z" fill="${GB[2]}"/>` : `<rect width="320" height="190" fill="#bfe3a5"/><path d="M0 118 Q42 108 54 150 Q62 176 104 190 L0 190 Z" fill="#7cc4ea"/><path d="M236 0 L320 0 L320 92 Q302 28 236 0 Z" fill="#e9eef2"/><path d="M262 24 l14 -18 l14 18 Z M288 30 l12 -16 l12 16 Z" fill="#fff" stroke="#a8b4bd"/>`;
+	const node = (p, i) => {
+		const tatt = i > 0 && i <= n, neste = i === n + 1 && i <= 8, gard = i === 0, fin = i === 9;
+		const fyll = P8 ? tatt || gard ? GB[0] : neste ? GB[1] : GB[2] : gard ? "#e8504a" : tatt ? "#ffd23f" : neste ? "#fff" : "#d9d4c7";
+		const ring = neste ? `<circle class="kart-puls" cx="${p.x}" cy="${p.y}" r="11" fill="none" stroke="${P8 ? GB[0] : "#e8504a"}" stroke-width="2"/>` : "";
+		const nav = gard ? "Gården" : fin ? FINALE.sted : p.sted, anc = p.x > 250 ? "end" : p.x < 60 ? "start" : "middle", ty = p.lp === "u" ? p.y + 19 : p.lp === "o" ? p.y - 12 : p.y > 140 ? p.y - 12 : p.y + 19;
+		return `${ring}<circle cx="${p.x}" cy="${p.y}" r="7" fill="${fyll}" stroke="${P8 ? GB[0] : "#2a1a10"}" stroke-width="1.6"/>${tatt ? `<path d="M${p.x - 3} ${p.y} l2 2.5 l4 -5" fill="none" stroke="${P8 ? GB[3] : "#2a1a10"}" stroke-width="1.8"/>` : ""}${fin ? `<text x="${p.x}" y="${p.y + 3.5}" text-anchor="middle" font-size="9" fill="${P8 ? GB[3] : "#2a1a10"}">★</text>` : ""}<text x="${p.x + (anc === "start" ? -6 : anc === "end" ? 6 : 0)}" y="${ty}" text-anchor="${anc}" class="kart-navn" fill="${P8 ? GB[0] : "#2a1a10"}">${nav}</text>`;
+	};
+	return `<svg class="kart" viewBox="0 0 320 190" role="img" aria-label="Kart over Galestad"${P8 ? " shape-rendering=\"crispEdges\"" : ""}>${bg}${vei}${pts.map(node).join("")}</svg>`;
+}
+function bygdPanel() {
+	const n = merker().length, m = nesteMester();
+	let h = `<div class="hint">Galestad. Slå de åtte gårdsmestrene, så får du utfordre ${FINALE.navn} om Gullkammen.</div>${kartSvg()}`;
+	if (rivalVenter()) h += `<div class="card mesterkort rival"><div class="mk-topp"><div><div class="mk-sted">Rivalen ved grinda</div><b>${RIVAL.navn}</b><div class="mk-hane">med ${RIVAL.h} (${RK.L}) og ${RIVAL.h2} (${RK.L - RK.L2under})</div></div>${badge(H[rivalType()].t)}</div><p>Frode fikk hane samme dag som deg, og hanen hans har typefordel mot ${hn()}. Han kommer tilbake sterkere senere i historien.</p><button class="mv" data-act="mester" data-arg="rival" style="width:100%;text-align:center;font-weight:500"><i class="ti ti-swords" style="margin-right:6px"></i>Ta imot utfordringen</button></div>`;
+	if (m) {
+		const ok = MESTRE.indexOf(m) < 2, t = H[m.j].t;
+		h += `<div class="card mesterkort"><div class="mk-topp"><div><div class="mk-sted">Gårdsmester ${n + 1} av 8 · ${m.sted}</div><b>${m.navn}</b><div class="mk-hane">med ${lagNavn(m)}</div></div>${badge(t)}</div>
+ ${ok ? `<p>${S.L < m.L - 3 ? `Anbefalt nivå er rundt ${m.L}. ${hn()} er nivå ${S.L}, men du kan prøve når du vil. Tap koster ingenting.` : `${hn()} er nivå ${S.L}. Seieren gir ${m.merke}.`}</p><button class="mv" data-act="mester" data-arg="${m.id}" style="width:100%;text-align:center;font-weight:500"><i class="ti ti-swords" style="margin-right:6px"></i>Utfordre ${m.navn}</button>` : `<p>${m.sted} er stengt for vedlikehold. Denne mesteren kommer i en senere versjon av prototypen.</p>`}</div>`;
+	}
+	h += `<div class="merker">${MESTRE.map((x, i) => `<div class="merke${i < n ? " tatt" : ""}" title="${x.merke}"><i class="ti ti-${i < n ? "merke" : "las"}"></i><span>${(i < n ? x.merke : x.sted).replace("Kraftst", "Kraft­st").replace("Kraftm", "Kraft­m")}</span></div>`).join("")}</div><div class="hint" style="margin-top:6px">${n} av 8 merker. Merker følger kontoen og kan ikke selges. Mesterkamper følger dagens vanlige belønninger.</div>`;
+	return h;
+}
+// src/ui/uitilstand.js
+var ui = {
+	showRules: false,
+	showTest: false,
+	bekreftNullstill: false,
+	sceneFor: -1,
+	reaksjon: null,
+	fane: "stell",
+	bekreftBytt: false
+};
+// src/grafikk/typeeffekter.js
+var typeeffekter_exports = /* @__PURE__ */ __exportAll({ effektSvg: () => effektSvg });
+function effektSvg(t) {
+	const s = "stroke=\"var(--eo)\" stroke-width=\"2.5\" stroke-linejoin=\"round\"";
+	let g;
+	switch (t) {
+		case "Ild":
+			g = `<path d="M30 90 C20 70 34 62 32 46 C42 58 46 70 44 90 Z" fill="var(--e1)" ${s}/><path d="M48 92 C38 66 52 52 50 30 C64 48 66 70 62 92 Z" fill="var(--e2)" ${s}/><path d="M66 90 C60 74 70 66 70 54 C78 66 80 78 76 90 Z" fill="var(--e1)" ${s}/>`;
+			break;
+		case "Vann":
+			g = [
+				[
+					50,
+					50,
+					9
+				],
+				[
+					28,
+					36,
+					6
+				],
+				[
+					72,
+					34,
+					7
+				],
+				[
+					24,
+					64,
+					5
+				],
+				[
+					78,
+					62,
+					6
+				],
+				[
+					50,
+					22,
+					5
+				]
+			].map(([x, y, r]) => `<path d="M${x} ${y - r * 1.6} C${x - r} ${y} ${x - r} ${y + r} ${x} ${y + r} C${x + r} ${y + r} ${x + r} ${y} ${x} ${y - r * 1.6} Z" fill="var(--e1)" ${s}/>`).join("");
+			break;
+		case "Is":
+			g = `<path d="M50 18 L58 50 L50 82 L42 50 Z" fill="var(--e2)" ${s}/><path d="M18 50 L50 42 L82 50 L50 58 Z" fill="var(--e1)" ${s}/><path d="M28 28 L72 72 M72 28 L28 72" stroke="var(--eo)" stroke-width="3"/>`;
+			break;
+		case "Magi":
+			g = [
+				[
+					50,
+					30,
+					12
+				],
+				[
+					26,
+					58,
+					8
+				],
+				[
+					74,
+					62,
+					9
+				],
+				[
+					56,
+					78,
+					6
+				]
+			].map(([x, y, r]) => `<path d="M${x} ${y - r} L${x + r * .3} ${y - r * .3} L${x + r} ${y} L${x + r * .3} ${y + r * .3} L${x} ${y + r} L${x - r * .3} ${y + r * .3} L${x - r} ${y} L${x - r * .3} ${y - r * .3} Z" fill="var(--e1)" ${s}/>`).join("");
+			break;
+		case "Muskel":
+			g = `<path d="M50 12 L58 34 L82 26 L68 46 L90 58 L64 62 L70 86 L50 70 L30 86 L36 62 L10 58 L32 46 L18 26 L42 34 Z" fill="var(--e1)" ${s}/><text x="50" y="57" text-anchor="middle" font-size="15" font-weight="700" font-family="system-ui,sans-serif" fill="var(--eo)">POW</text>`;
+			break;
+		case "Lyn":
+			g = `<path d="M58 4 L30 52 L48 52 L38 96 L74 40 L54 40 L66 4 Z" fill="var(--e1)" ${s}/>`;
+			break;
+		case "Jord":
+			g = [
+				[
+					50,
+					52,
+					14
+				],
+				[
+					24,
+					40,
+					8
+				],
+				[
+					76,
+					38,
+					9
+				],
+				[
+					30,
+					72,
+					7
+				],
+				[
+					72,
+					70,
+					8
+				]
+			].map(([x, y, r]) => `<path d="M${x - r} ${y} C${x - r} ${y - r} ${x + r} ${y - r} ${x + r} ${y} C${x + r} ${y + r * .8} ${x + r * .3} ${y + r} ${x} ${y + r * .7} C${x - r * .4} ${y + r} ${x - r} ${y + r * .7} ${x - r} ${y} Z" fill="var(--e1)" ${s}/>`).join("");
+			break;
+		case "Spøkelse":
+			g = `<path d="M30 80 L30 46 C30 24 70 24 70 46 L70 80 L62 72 L56 80 L50 72 L44 80 L38 72 Z" fill="var(--e1)" ${s}/><circle cx="43" cy="46" r="4" fill="var(--eo)"/><circle cx="57" cy="46" r="4" fill="var(--eo)"/><ellipse cx="50" cy="60" rx="5" ry="7" fill="var(--eo)"/>`;
+			break;
+		case "Fly":
+			g = [
+				[
+					34,
+					30,
+					-30
+				],
+				[
+					62,
+					44,
+					20
+				],
+				[
+					44,
+					66,
+					-10
+				]
+			].map(([x, y, r]) => `<g transform="rotate(${r} ${x} ${y})"><path d="M${x} ${y - 16} C${x + 9} ${y - 8} ${x + 8} ${y + 8} ${x} ${y + 16} C${x - 8} ${y + 8} ${x - 9} ${y - 8} ${x} ${y - 16} Z" fill="var(--e1)" ${s}/><path d="M${x} ${y - 14} L${x} ${y + 16}" stroke="var(--eo)" stroke-width="2"/></g>`).join("");
+			break;
+		default: g = `<path d="M50 20 L54 42 L76 30 L60 48 L82 56 L58 58 L64 80 L50 62 L36 80 L42 58 L18 56 L40 48 L24 30 L46 42 Z" fill="var(--e1)" ${s}/>`;
+	}
+	return `<svg class="eff eff-${t || "Hakk"} anim-${t === "Ild" || t === "Spøkelse" ? "stig" : t === "Lyn" || t === "Fly" ? "fall" : "spru"}" viewBox="0 0 100 100">${g}</svg>`;
+}
+// src/ui/velg.js
+var velg_exports = /* @__PURE__ */ __exportAll({
+	pick: () => pick,
+	pickEgg: () => pickEgg
+});
+function pick() {
+	app.innerHTML = `<p style="font-size:14px;color:var(--text-secondary);margin:0 0 10px">Velg hanen du skal oppdra. Nye spillere bør starte med Gnisten, Plasken eller Frosten.</p><div class="grid">${H.map((h, i) => `<button class="mv" data-pick="${i}" style="text-align:center"><div class="minihane">${haneSvg(i)}</div><div style="font-weight:500;font-size:14px">${h.n}</div><div style="margin-top:6px">${badge(h.t)}</div>${i > 1 ? "<div class=\"plassholder\">plassholder</div>" : ""}</button>`).join("")}</div><button data-rules="1" style="margin-top:12px;width:100%"><i class="ti ti-list" aria-hidden="true" style="margin-right:6px"></i>${ui.showRules ? "Skjul typeregler" : "Vis typeregler"}</button>${ui.showRules ? `<div style="font-size:13px;color:var(--text-secondary);line-height:1.8;margin-top:10px">${RULES.map((r) => `<div>${r}</div>`).join("")}</div>` : ""}`;
+}
+function pickEgg() {
+	const har = S.lag.filter(Boolean).map((h) => h.type);
+	app.innerHTML = `<div class="card historie"><div class="utf-topp"><i class="ti ti-message-circle"></i><b>Gamle Gunhild</b></div><p>«Kaimerket, ja! Da er du klar for en hane til. Med to haner kan du bytte midt i kampen og møte typefordel med typefordel. Hva skal klekkes?»</p></div><div class="grid">${H.map((h, i) => har.includes(i) ? "" : `<button class="mv" data-egg="${i}" style="text-align:center"><div class="minihane">${haneSvg(i)}</div><div style="font-weight:500;font-size:14px">${h.n}</div><div style="margin-top:6px">${badge(h.t)}</div></button>`).join("")}</div><button data-act="gard" style="margin-top:12px;width:100%"><i class="ti ti-arrow-left" style="margin-right:6px"></i>Bestem meg senere</button>`;
+}
+// src/ui/moteskjerm.js
+var moteskjerm_exports = /* @__PURE__ */ __exportAll({
+	renderMesterMote: () => renderMesterMote,
+	renderMote: () => renderMote
+});
+function renderMote() {
+	if (mote.mester) return renderMesterMote();
+	const h = H[mote.j], n = igjen(), keOk = S.keDag < C.kampDag;
+	if (!mote.txt) mote.txt = MOTE[Math.floor(Math.random() * MOTE.length)](h.n, mote.EL);
+	const gir = n ? `<div style="display:flex;justify-content:space-between;font-size:13px"><span>Erfaring</span><span style="font-weight:500">+${moteXp()}</span></div><div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px"><span>Kamperfaring</span><span style="font-weight:500;color:${keOk && mote.f >= .9 ? "var(--text-success)" : "var(--text-secondary)"}">${keOk ? keOrd(mote.f) : "brukt opp i dag"}</span></div>` : `<div style="font-size:13px;color:var(--text-warning)">Ingen erfaring eller kamperfaring for denne seieren i dag.</div>`;
+	const rangLinje = `<div style="display:flex;justify-content:space-between;font-size:13px;margin-top:4px"><span>Rang</span><span style="font-weight:500">+${1 + (mote.EL > S.L ? 1 : 0)}</span></div>`;
+	app.innerHTML = `<p style="font-size:14px;margin:0 0 10px">${mote.txt}</p>
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div><div style="font-size:12px;color:var(--text-muted)">Motstander</div><div style="font-weight:500;font-size:15px">${h.n} <span style="font-size:13px;font-weight:400;color:var(--text-secondary)">nivå ${mote.EL}</span></div></div>${badge(h.t)}</div>
+<div class="motehane"><div class="kropp"><div class="vend">${haneSvg(mote.j)}</div></div></div><div style="font-size:12px;color:var(--text-secondary);margin-top:6px">${mote.PT && mote.PT.length > 1 ? `Ditt lag: ${mote.PT.map((x) => `${x.n} ${x.L}`).join(" · ")}` : `Din hane: ${hn()} på nivå ${S.L}`}</div></div>
+<div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin:14px 0 6px">En seier gir</div><div class="card">${gir}${rangLinje}</div>${aereLinje()}
+<div class="grid" style="margin-top:12px"><button class="mv" data-act="kjemp" style="text-align:center;min-height:48px;font-weight:500"><i class="ti ti-swords" aria-hidden="true" style="margin-right:6px"></i>Kjemp</button><button class="mv" data-act="flykt" style="text-align:center;min-height:48px"><i class="ti ti-run" aria-hidden="true" style="margin-right:6px"></i>Flykt <span style="font-size:12px;color:var(--text-secondary)">${Math.round(mote.p * 100)} %</span></button></div>
+${mote.flukt ? `<p style="font-size:13px;color:var(--text-secondary);margin:10px 0 0">${mote.flukt}</p>` : ""}
+<button data-act="gard" style="margin-top:12px;width:100%"><i class="ti ti-arrow-left" aria-hidden="true" style="margin-right:6px"></i>Tilbake til gården</button>`;
+}
+function renderMesterMote() {
+	const h = H[mote.j], n = igjen(), keOk = S.keDag < C.kampDag, E0 = mote.E, m = MESTRE.find((x) => x.id === mote.mester);
+	const gir = (n ? `<div class="rad"><span>Erfaring</span><b>+${moteXp()}</b></div><div class="rad"><span>Kamperfaring</span><b>${keOk ? keOrd(mote.f) : "brukt opp i dag"}</b></div>` : `<div style="font-size:13px;color:var(--text-warning)">Ingen erfaring eller kamperfaring for denne seieren i dag.</div>`) + `<div class="rad"><span>Rang</span><b>+${1 + (mote.EL > S.L ? 1 : 0)}</b></div>` + (m ? `<div class="rad"><span>Merke</span><b style="color:var(--text-success)">${m.merke}</b></div>` : "");
+	app.innerHTML = `<div class="card historie"><div class="utf-topp"><i class="ti ti-message-circle"></i><b>${mote.info.navn}</b></div><p>${mote.txt}</p></div>
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div><div style="font-size:12px;color:var(--text-muted)">${mote.info.tittel}</div><div style="font-weight:500;font-size:15px">${E0.n} <span style="font-size:13px;font-weight:400;color:var(--text-secondary)">nivå ${mote.EL}</span></div></div>${badge(h.t)}</div>
+<div class="motehane"><div class="kropp"><div class="vend">${haneSvg(mote.j)}</div></div></div>${mote.ET.length > 1 ? `<div class="lagrad">${mote.info.navn} har ${mote.ET.length} haner: ${mote.ET.map((x) => `<b>${x.n}</b> ${hane[x.t].toLowerCase()} ${x.L}`).join(" · ")}</div>` : ""}<div style="font-size:12px;color:var(--text-secondary);margin-top:6px">Ditt lag: ${mote.PT.map((x) => `${x.n} ${x.L}`).join(" · ")}. En mester kan du ikke flykte fra, men du kan komme tilbake senere.</div></div>
+<div style="font-size:13px;font-weight:500;color:var(--text-secondary);margin:14px 0 6px">En seier gir</div><div class="card gir">${gir}</div>${aereLinje()}
+<div class="grid" style="margin-top:12px"><button class="mv" data-act="kjemp" style="text-align:center;min-height:48px;font-weight:500"><i class="ti ti-swords" aria-hidden="true" style="margin-right:6px"></i>Kjemp</button><button class="mv" data-act="bygda" style="text-align:center;min-height:48px"><i class="ti ti-arrow-left" aria-hidden="true" style="margin-right:6px"></i>Ikke ennå</button></div>`;
+}
+// src/ui/kampskjerm.js
+var kampskjerm_exports = /* @__PURE__ */ __exportAll({
+	banner: () => banner,
+	blink: () => blink,
+	byggScene: () => byggScene,
+	byttSprite: () => byttSprite,
+	card: () => card,
+	effekt: () => effekt,
+	infoSkjelett: () => infoSkjelett,
+	lagKnapper: () => lagKnapper,
+	linjeHtml: () => linjeHtml,
+	mvBtn: () => mvBtn,
+	navnAv: () => navnAv,
+	navnUth: () => navnUth,
+	oppdaterInfo: () => oppdaterInfo,
+	play: () => play,
+	pop: () => pop,
+	renderKamp: () => renderKamp,
+	restart: () => restart,
+	statusListe: () => statusListe,
+	tall: () => tall,
+	visFx: () => visFx
+});
+var infoSkjelett = (id, egen) => `<div id="info${id}" class="info info${id}"><div class="inavn"><b class="iN"></b><span class="iL"></span></div><div class="ilag"></div><div class="imaler"><span class="ilbl">UTH</span><div class="ibar"><div class="ifill"></div></div></div>${egen ? "<div class=\"itall\"></div>" : ""}<div class="imaler"><span class="ilbl">PUST</span><div class="ipust">${"<i></i>".repeat(8)}</div></div><div class="istatus"></div></div>`;
+function byggScene() {
+	ui.sceneFor = kampNr;
+	const iE = hIdx(E), iP = hIdx(P);
+	app.innerHTML = `<div id="scene" class="scene s-${STIL}">${kampBg()}<div class="plattform plE"></div><div class="plattform plP"></div>
+<div id="sprE" class="spr sprE inn" data-k="${E.n}"><div class="kropp"><div class="vend">${haneSvg(iE)}</div></div><div class="sand"></div><div class="fx"></div></div>
+<div id="sprP" class="spr sprP inn" data-k="${P.n}"><div class="kropp">${haneSvg(iP)}</div><div class="sand"></div><div class="fx"></div></div>
+${infoSkjelett("E", false)}${infoSkjelett("P", true)}<div id="banner" class="banner"></div><div id="pop" class="pop"></div></div>
+<div id="dialog" class="dialog d-${STIL}" tabindex="0" aria-label="Kampkommentar" aria-live="polite"></div><div id="kontroll"></div>`;
+	if (over) {
+		if (E.hp <= 0) $("sprE").classList.add("ko");
+		if (P.hp <= 0) $("sprP").classList.add("ko");
+	}
+}
+function statusListe(c, hp) {
+	const s = [];
+	if (c.atk > 1) s.push("Oppvarmet");
+	if (c.skj > 0) s.push("Isrustning");
+	if (c.sov > 0) s.push("Sover");
+	if (c.ctr > 0) s.push("Klar til å slå tilbake");
+	if (c.lad > 0) s.push("Ladet");
+	if (c.mokk > 0) s.push("Møkkete");
+	if (c.air > 0) s.push("På låvetaket");
+	const r = c.t === "Muskel" ? Math.round(50 * (1 - hp / c.st[0])) : 0;
+	if (r >= 10) s.push(`Raseri +${r} %`);
+	return s;
+}
+function oppdaterInfo(id, c, hp, pu) {
+	const el = $("info" + id);
+	if (!el) return;
+	const p = Math.max(0, hp / c.st[0]);
+	const lag = id === "P" ? PT : ET, il = el.querySelector(".ilag");
+	if (il) il.innerHTML = lag.length > 1 ? lag.map((x) => `<i class="${x === c ? "inne" : x.hp <= 0 ? "ute" : "klar"}"></i>`).join("") : "";
+	el.querySelector(".iN").textContent = c.n;
+	el.querySelector(".iL").textContent = "Nv." + c.L;
+	const f = el.querySelector(".ifill");
+	f.style.width = p * 100 + "%";
+	f.style.background = STIL === "piksel" ? GB[0] : hpc(p);
+	const t = el.querySelector(".itall");
+	if (t) t.textContent = `${Math.max(0, Math.round(hp))}/${c.st[0]}`;
+	el.querySelectorAll(".ipust i").forEach((x, i) => x.classList.toggle("pa", i < pu));
+	el.querySelector(".istatus").textContent = statusListe(c, hp).join(", ");
+}
+var navnUth = (s) => [...PT, ...ET].reduce((t, c) => t.split(c.n).join(`<b class="n${W(c)}">${c.n}</b>`), s);
+var linjeHtml = (l) => l.sep ? `<div class="rsep">Runde ${l.r}</div>` : `<div class="linje${l.who ? " fra-" + l.who : ""}${l.hl ? " hl" : ""}">${navnUth(l.s)}</div>`;
+function renderKamp() {
+	const ny = !$("scene") || ui.sceneFor !== kampNr;
+	if (ny) byggScene();
+	const ph = disp ? disp.ph : P.hp, eh = disp ? disp.eh : E.hp, pp = disp ? disp.pp : P.pust, ep = disp ? disp.ep : E.pust;
+	const vp = disp && disp.pi >= 0 ? PT[disp.pi] : P, ve = disp && disp.ei >= 0 ? ET[disp.ei] : E;
+	byttSprite("P", vp);
+	byttSprite("E", ve);
+	oppdaterInfo("E", ve, eh, ep);
+	oppdaterInfo("P", vp, ph, pp);
+	$("sprE").classList.toggle("paa-tak", ve.air > 0 && !over);
+	$("sprP").classList.toggle("paa-tak", vp.air > 0 && !over);
+	$("sprE").classList.toggle("sover", ve.sov > 0 && !over);
+	$("sprP").classList.toggle("sover", vp.sov > 0 && !over);
+	const d = $("dialog"), bunn = ny || d.scrollHeight - d.scrollTop - d.clientHeight < 40;
+	if (+d.dataset.n !== log.length) {
+		d.innerHTML = log.map(linjeHtml).join("");
+		d.dataset.n = log.length;
+		if (bunn) d.scrollTop = d.scrollHeight;
+	}
+	$("kontroll").innerHTML = aereLinje() + (over && !busy ? `<div class="grid" style="margin-top:10px"><button class="mv" data-act="gard" style="text-align:center;min-height:44px"><i class="ti ti-home" aria-hidden="true" style="margin-right:6px"></i>Til gården</button>${kampMester ? ET.every((x) => x.hp <= 0) ? `<button class="mv" data-act="bygda" style="text-align:center;min-height:44px"><i class="ti ti-kart" aria-hidden="true" style="margin-right:6px"></i>Til bygda</button>` : `<button class="mv" data-act="mester" data-arg="${kampMester}" style="text-align:center;min-height:44px"><i class="ti ti-refresh" aria-hidden="true" style="margin-right:6px"></i>Prøv igjen</button>` : `<button class="mv" data-act="nykamp" style="text-align:center;min-height:44px"><i class="ti ti-refresh" aria-hidden="true" style="margin-right:6px"></i>Ny kamp</button>`}</div>` : tvungen ? lagKnapper(`${P.n} har gitt opp. Hvem sender du inn?`) : `<div class="grid" style="margin-top:10px">${P.m.map(mvBtn).join("")}</div>${PT.length > 1 ? lagKnapper("Bytt hane (koster turen)") : ""}${err ? `<p style="font-size:13px;color:var(--text-danger);margin:8px 0 0">${err}</p>` : ""}`);
+}
+function restart(el, cls) {
+	if (!el) return;
+	el.classList.remove("inn", "hopp", "treff", "fulltreff", "unnvik", "jubel");
+	el.offsetWidth;
+	el.classList.add(cls);
+}
+function blink(el, cls) {
+	if (!el) return;
+	el.classList.remove(cls);
+	el.offsetWidth;
+	el.classList.add(cls);
+}
+function pop(txt, stor) {
+	const p = $("pop");
+	if (!p) return;
+	p.textContent = txt;
+	p.className = "pop" + (stor ? " stor" : "");
+	p.offsetWidth;
+	p.classList.add("vis");
+}
+function banner(hvem, txt) {
+	const b = $("banner");
+	if (!b) return;
+	b.innerHTML = `<span class="pil">${hvem === "P" ? "▶" : "◀"}</span>${navnUth(txt)}`;
+	b.className = "banner b" + hvem;
+	b.offsetWidth;
+	b.classList.add("vis");
+}
+function tall(hvem, txt, kls) {
+	const s = $("spr" + hvem);
+	if (!s) return;
+	const e = document.createElement("div");
+	e.className = "tall " + (kls || "");
+	e.textContent = txt;
+	s.appendChild(e);
+	setTimeout(() => e.remove(), 1600);
+}
+function effekt(hvem, type) {
+	const f = $("spr" + hvem)?.querySelector(".fx");
+	if (f) f.innerHTML = effektSvg(type);
+}
+var navnAv = (h) => h === "P" ? P.n : E.n;
+function visFx(fx) {
+	if (!fx || !$("scene")) return;
+	const a = fx.a, t = fx.t;
+	if (fx.m) {
+		banner(a, `${navnAv(a)} bruker ${fx.m}!`);
+		blink($("info" + a), "aktiv");
+	}
+	switch (fx.k) {
+		case "treff":
+		case "fulltreff":
+			restart($("spr" + a), "hopp");
+			effekt(t, fx.type);
+			restart($("spr" + t), fx.k);
+			blink($("info" + t), "truffet");
+			if (fx.d) tall(t, "−" + fx.d, fx.k === "fulltreff" ? "stor" : fx.sup ? "sup" : fx.svak ? "svak" : "");
+			if (fx.k === "fulltreff") {
+				pop("FULLTREFF!", true);
+				blink($("scene"), "skjelv");
+			} else if (fx.sup) pop("Supereffektivt!");
+			else if (fx.svak) tall(t, "Det bet dårlig", "merk");
+			break;
+		case "bom":
+			restart($("spr" + a), "hopp");
+			restart($("spr" + t), "unnvik");
+			tall(t, "BOM!", "bom");
+			break;
+		case "ingen":
+			restart($("spr" + a), "hopp");
+			tall(t, "Ingen effekt", "bom");
+			break;
+		case "taktikk":
+			if (t) {
+				restart($("spr" + a), "hopp");
+				effekt(t, fx.type);
+			} else {
+				restart($("spr" + a), "jubel");
+				effekt(a, fx.type);
+			}
+			break;
+		case "sover":
+			tall(a, "Zzz …", "merk");
+			break;
+		case "ko":
+			$("spr" + a)?.classList.add("ko");
+			break;
+		case "merke":
+			pop("NYTT MERKE!", true);
+			restart($("sprP"), "jubel");
+	}
+}
+function byttSprite(id, c) {
+	const s = $("spr" + id);
+	if (!s || s.dataset.k === c.n) return;
+	s.dataset.k = c.n;
+	s.querySelector(".kropp").innerHTML = id === "E" ? `<div class="vend">${haneSvg(hIdx(c))}</div>` : haneSvg(hIdx(c));
+	s.classList.remove("ko", "paa-tak", "sover");
+	restart(s, "inn");
+}
+function lagKnapper(tittel) {
+	return `<div class="lagvalg"><div class="lv-tittel">${tittel}</div><div class="grid">${PT.map((c, k) => c === P ? "" : `<button class="mv lagknapp" data-bytt="${k}" ${c.hp <= 0 ? "disabled" : ""}><span class="lk-navn"><i class="ti ${icon[c.t]}" aria-hidden="true"></i>${c.n} <em>nv. ${c.L}</em></span><span class="lk-hp">${c.hp <= 0 ? "Har gitt opp" : `${Math.round(c.hp)}/${c.st[0]} UTH`}</span></button>`).join("")}</div></div>`;
+}
+function card(c, l, hp, pu) {
+	const s = [];
+	if (c.atk > 1) s.push("Oppvarmet");
+	if (c.skj > 0) s.push("Isrustning");
+	if (c.sov > 0) s.push("Sover");
+	if (c.ctr > 0) s.push("Klar til å slå tilbake");
+	if (c.lad > 0) s.push("Ladet");
+	if (c.mokk > 0) s.push("Møkkete");
+	if (c.air > 0) s.push("På låvetaket");
+	const r = c.t === "Muskel" ? Math.round(50 * (1 - hp / c.st[0])) : 0;
+	if (r >= 10) s.push(`Raseri +${r} %`);
+	const p = Math.max(0, hp / c.st[0]);
+	return `<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><div><div style="font-size:12px;color:var(--text-muted)">${l}</div><div style="font-weight:500;font-size:15px">${c.n} <span style="font-size:13px;font-weight:400;color:var(--text-secondary)">nivå ${c.L}</span></div></div>${badge(c.t)}</div><div class="bar"><div class="fill" style="width:${p * 100}%;background:${hpc(p)}"></div></div><div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--text-secondary);margin-top:4px"><span>${s.join(", ") || "&nbsp;"}</span><span style="white-space:nowrap">${Math.max(0, Math.round(hp))}/${c.st[0]}</span></div><div style="display:flex;align-items:center;gap:8px;margin-top:6px"><span style="font-size:12px;color:var(--text-secondary);min-width:52px">Pust ${pu}/8</span><div style="display:flex;gap:3px;flex:1">${Array.from({ length: 8 }, (_, i) => `<div class="seg" style="background:${i < pu ? "var(--fill-accent)" : "var(--surface-1)"}"></div>`).join("")}</div></div></div>`;
+}
+function mvBtn(m, i) {
+	let l2, tag = "";
+	if (m.e) {
+		const mk = P.mokk > 0, ac = mk ? Math.round(m.a * KAMP.mokkTreff) : m.a;
+		l2 = m.d + (ac < 100 ? ` · ${ac} % sjanse${mk ? " (møkk)" : ""}` : "");
+	} else {
+		const mk = P.mokk > 0 && !m.hakk, ac = mk ? Math.round(m.a * KAMP.mokkTreff) : m.a;
+		l2 = `${m.p} skade · ${ac} % treff${mk ? " (møkk)" : ""}${m.k === "m" ? " · gjennom rustning" : ""}`;
+		const e = eff(m.t, E.t);
+		if (e === 0) tag = `<span style="color:var(--text-danger)"> · treffer ikke</span>`;
+		else if (e > 1) tag = `<span style="color:var(--text-success)"> · supereffektiv</span>`;
+		else if (e < 1) tag = `<span style="color:var(--text-danger)"> · svak</span>`;
+	}
+	const cost = m.c === 0 ? "gratis" : `${m.c} pust`, low = m.c > P.pust;
+	return `<button class="mv" data-mv="${i}"><div style="display:flex;justify-content:space-between;gap:6px"><span style="font-size:14px;font-weight:500"><i class="ti ${m.hakk ? "ti-nebb" : icon[m.t || P.t]}" aria-hidden="true" style="margin-right:6px"></i>${m.n}</span><span style="font-size:12px;color:${low ? "var(--text-danger)" : "var(--text-muted)"};white-space:nowrap">${cost}</span></div><div style="font-size:12px;color:var(--text-secondary);margin-top:2px;line-height:1.4">${l2}${tag}</div></button>`;
+}
+function play() {
+	settBusy(true);
+	let i = 0;
+	const tick = () => {
+		if (i < steps.length) {
+			const s = steps[i++];
+			settDisp({
+				ph: s.ph,
+				eh: s.eh,
+				pp: s.pp,
+				ep: s.ep,
+				pi: s.pi,
+				ei: s.ei
+			});
+			log.push({
+				s: s.s,
+				hl: s.hl,
+				who: s.fx ? s.fx.a : null
+			});
+			render();
+			if (view === "kamp") visFx(s.fx);
+			setTimeout(tick, s.fx && (s.fx.m || s.fx.k === "treff" || s.fx.k === "fulltreff") ? 1250 : s.fx ? 900 : 650);
+		} else {
+			settBusy(false);
+			settDisp(null);
+			render();
+		}
+	};
+	tick();
+}
+// src/ui/testverktoy.js
+function testverktoyPanel() {
+	return `<div class="card" style="margin-top:8px;font-size:13px"><div class="grid"><button data-act="nydag"><i class="ti ti-sun" aria-hidden="true" style="margin-right:6px"></i>Neste dag</button><button data-act="nullstill" style="${ui.bekreftNullstill ? "color:var(--text-danger)" : ""}">${ui.bekreftNullstill ? "Trykk igjen for å slette" : "Nullstill hane"}</button></div>
+<div style="${lbl};margin-top:10px">Spol frem i historien (bare for testing):</div><div class="grid g3" style="margin-top:6px"><button data-act="spol" data-arg="niva">Nivå +5</button><button data-act="spol" data-arg="bjarne">Til Bjarne</button><button data-act="spol" data-arg="frode">Til Frode</button></div>
+<div style="${lbl};margin-top:10px;line-height:1.7">Skjult kamperfaring ${(Math.round(sum(S.ke) * 100) / 100).toString().replace(".", ",")}/90: ${STAT.map((n, i) => `${n} ${S.ke[i].toString().replace(".", ",")}`).join(" · ")}<br>Gener: ${STAT.map((n, i) => `${n} ${S.g[i]}`).join(" · ")}<br>Fôr: ${S.for ? FOR[S.for].n : "ingen"} · lat ${S.lat} · kos ${S.kos}/${C.kosDag} · stelt ${S.stelt ? "ja" : "nei"} · belønnede seire i dag ${S.seireDag}/${C.seireDag} · kamperfaring i dag ${S.keDag}/${C.kampDag}</div>
+<div style="${lbl};margin-top:8px;line-height:1.6">${S.logg.slice(-5).map((s) => `<div>${s}</div>`).join("")}</div>
+<button data-rules="1" style="margin-top:10px;width:100%">${ui.showRules ? "Skjul typeregler" : "Vis typeregler"}</button>${ui.showRules ? `<div style="${lbl};line-height:1.8;margin-top:8px">${RULES.map((r) => `<div>${r}</div>`).join("")}</div>` : ""}</div>`;
+}
+function installerTestkrok(ekstra = {}) {
+	const MODULER = [
+		konstanter_exports,
+		hjelp_exports,
+		egenskaper_exports,
+		tilstand_exports,
+		lagring_exports,
+		laget_exports,
+		omsorg_exports,
+		villmote_exports,
+		belonning_exports,
+		historie_exports,
+		kamp_exports,
+		tegneseriehaner_exports,
+		pikseldata_exports,
+		stil_exports,
+		haner_exports,
+		typeeffekter_exports,
+		bakgrunner_exports,
+		ikoner_exports,
+		felles_exports,
+		velg_exports,
+		moteskjerm_exports,
+		kampskjerm_exports,
+		gard_exports,
+		bygda_exports
+	];
+	const SETTERE = {
+		S: settS,
+		view: settView,
+		mote: settMote,
+		over: settOver,
+		busy: settBusy,
+		disp: settDisp,
+		STIL: settStil
+	};
+	const legg = (navn, get, set) => {
+		if (navn in window) {
+			if (!document.getElementById(navn)) console.warn(`Testkrok: ${navn} finnes allerede på window og legges ikke ut.`);
+			return;
+		}
+		Object.defineProperty(window, navn, {
+			configurable: true,
+			get,
+			set
+		});
+	};
+	for (const ns of [...MODULER, ekstra]) for (const navn of Object.keys(ns)) legg(navn, () => ns[navn], SETTERE[navn]);
+	for (const navn of Object.keys(ui)) legg(navn, () => ui[navn], (v) => {
+		ui[navn] = v;
+	});
+}
+// src/ui/gard.js
+var gard_exports = /* @__PURE__ */ __exportAll({
+	KORT: () => KORT,
+	MATTEKST: () => MATTEKST,
+	TRENTEKST: () => TRENTEKST,
+	chip: () => chip,
+	dagslinje: () => dagslinje,
+	eggKort: () => eggKort,
+	gardScene: () => gardScene,
+	humorTxt: () => humorTxt,
+	introKort: () => introKort,
+	lagPanel: () => lagPanel,
+	malKort: () => malKort,
+	mettTxt: () => mettTxt,
+	renderGard: () => renderGard,
+	trofeSvg: () => trofeSvg,
+	utfKort: () => utfKort
+});
+var mettTxt = () => S.mett < C.sulten ? "Sulten" : S.mett >= C.overfor ? "Stappmett" : "Mett";
+var humorTxt = () => S.humor < C.surmuler ? "Surmuler" : S.humor >= C.humorKry ? "Kry" : "Fornøyd";
+function dagslinje() {
+	const tomt = [];
+	if (S.energi <= 0) tomt.push("energi");
+	if (igjen() <= 0) tomt.push("belønnede seire");
+	else if (S.keDag >= C.kampDag) tomt.push("kamperfaring");
+	return `<div class="dagslinje${tomt.length ? " tom" : ""}"><i class="ti ti-klokke"></i><span>${tomt.length ? `Ny ${tomt.join(" og ")} om ${ned()}` : `Ny dag om ${ned()}`}</span></div>`;
+}
+function trofeSvg() {
+	const n = tittelNr(S.rang || 0), f = Math.min(12, S.gullfjaer || 0), P8 = STIL === "piksel";
+	if (!n && !f) return "";
+	const ros = Array.from({ length: n }, (_, i) => {
+		const x = 210 + i * 15, y = 58;
+		return P8 ? `<rect x="${x - 4}" y="54" width="8" height="8" fill="${GB[3]}"/><rect x="${x - 2}" y="62" width="4" height="7" fill="${GB[0]}"/>` : `<path d="M${x - 3} 61 l-2 8 l3 -2 l2 2 z M${x + 3} 61 l2 8 l-3 -2 l-2 2 z" fill="#3b86d1" stroke="#2a1a10" stroke-width=".8"/><circle cx="${x}" cy="${y}" r="5.5" fill="#ffd23f" stroke="#2a1a10" stroke-width="1"/><circle cx="${x}" cy="${y}" r="2.4" fill="#e8504a"/>`;
+	}).join("");
+	const fj = Array.from({ length: f }, (_, i) => {
+		const x = [
+			13,
+			43,
+			73,
+			103,
+			133,
+			163
+		][i % 6] + (i >= 6 ? 2 : 0), y = i >= 6 ? 82 : 88, r = i % 2 ? 12 : -12;
+		return P8 ? `<rect x="${x}" y="${y - 2}" width="2" height="8" fill="${GB[0]}"/><rect x="${x - 1}" y="${y - 2}" width="4" height="3" fill="${GB[1]}"/>` : `<g transform="rotate(${r} ${x + 1} ${y + 6})"><path d="M${x + 1} ${y - 6} c4 3 4 9 0 13 c-4 -4 -4 -10 0 -13 z" fill="#ffcf3d" stroke="#2a1a10" stroke-width=".8"/></g>`;
+	}).join("");
+	return `<svg class="trofe" viewBox="0 0 320 160" preserveAspectRatio="none" aria-hidden="true"${P8 ? " shape-rendering=\"crispEdges\"" : ""}>${ros}${fj}</svg>`;
+}
+function utfKort() {
+	if (!S.utf) return "";
+	return `<div class="card utfkort"><div class="utf-topp"><i class="ti ti-message-circle"></i><b>Dagens utfordringer fra Gunhild</b></div>${S.utf.map((u) => `<div class="utf${u.ok ? " ok" : ""}"><i class="ti ti-${u.ok ? "check" : "minus"}"></i><span>${utfTekst(u)}</span><em>${u.ok ? "Fullført" : UTF[u.id].mal > 1 ? `${u.f}/${UTF[u.id].mal}` : ""}</em></div>`).join("")}<div class="hint" style="margin:6px 0 0">Hver utfordring gir 3 rangpoeng og en gullfjær. Nye utfordringer om ${ned()}.</div></div>`;
+}
+function introKort() {
+	if (S.intro) return "";
+	return `<div class="card historie"><div class="utf-topp"><i class="ti ti-message-circle"></i><b>Gamle Gunhild</b></div>${INTRO.map((t) => `<p>${t}</p>`).join("")}<button class="mv" data-act="intro" style="width:100%;text-align:center;font-weight:500">Vi tar Gullkammen hjem!</button></div>`;
+}
+function eggKort() {
+	if (!S.egg || !S.intro) return "";
+	return `<div class="card eggkort"><div class="mal-tekst"><i class="ti ti-egg"></i><div><b>Gunhild har et egg til deg</b><span>Laget ditt kan ha 3 haner. Velg hvilken type som skal klekkes.</span></div></div><button class="mv" data-act="egg">Se egget</button></div>`;
+}
+function lagPanel() {
+	synk();
+	const n = S.lag.filter(Boolean).length;
+	if (n < 2) return `<div class="hint" style="margin-top:10px">${S.egg ? "Gunhild har et egg til deg. Se kortet nederst på gården." : "Laget ditt kan ha opptil 3 haner. Gunhild gir deg et egg når du har tatt det første merket."}</div>`;
+	return `<div class="lagliste"><div class="lv-tittel">Laget ditt (${n} av 3)</div>${S.lag.map((h, j) => h ? `<div class="lagmed${j === S.aktiv ? " her" : ""}"><div class="lm-hane">${haneSvg(h.type)}</div><div class="lm-tekst"><b>${H[h.type].n}</b> <span>nivå ${h.L}</span><div>${j === S.aktiv ? "På gården. Går først inn i kamp." : `I Hønsehuset · ${h.energi}/3 energi`}</div></div>${j === S.aktiv ? badge(H[h.type].t) : `<button class="mv" data-act="hent" data-arg="${j}">Hent ut</button>`}</div>` : "").join("")}<div class="hint" style="margin-top:6px">Hanen på gården er den du steller og trener, og den går først inn i kamp. Hanene i Hønsehuset steller Gunhild: de mister bare halvparten så mye mett og humør per natt, hun gir dem én treningsøkt hver natt, og de lærer halvparten av erfaringen når gårdshanen vinner.</div></div>`;
+}
+function malKort() {
+	if (!S.intro) return "";
+	if (rivalVenter()) return `<div class="card malkort rival"><div class="mal-tekst"><i class="ti ti-swords"></i><div><b>${RIVAL.navn} står ved grinda</b><span>${RIVAL.h} er nivå ${RK.L} og har typefordel mot ${hn()}.</span></div></div><button class="mv" data-act="mester" data-arg="rival">Ta imot</button></div>`;
+	const m = nesteMester();
+	if (!m) return "";
+	const ok = MESTRE.indexOf(m) < 2;
+	return `<div class="card malkort"><div class="mal-tekst"><i class="ti ti-kart"></i><div><b>Neste mål: ${m.navn} på ${m.sted}</b><span>${ok ? `${hane[H[m.j].t]} på nivå ${m.L}. Du er nivå ${S.L}.` : "Kommer i en senere versjon av prototypen."}</span></div></div>${ok ? `<button class="mv" data-fane="bygd">Bygda</button>` : ""}</div>`;
+}
+var KORT = [
+	"Uth",
+	"Hakk",
+	"Fjær",
+	"Fart",
+	"Fokus"
+];
+var MATTEKST = {
+	mais: "Mais! Nå blir jeg lynrask!",
+	meitemark: "Meitemark! Kjenn på dette nebbet!",
+	havre: "Havre! Jeg kunne løftet hele låven!",
+	solsikkefro: "Frø! Se så blanke fjær jeg får!",
+	blabar: "Blåbær! Hjernen min vokser!"
+};
+var TRENTEKST = [
+	"Puh! Sterkere enn en okse.",
+	"Hakkeblokka hadde ingen sjanse.",
+	"Ikke en fjær rikket seg!",
+	"Så du hvor fort jeg var?",
+	"Jeg er ett med låven."
+];
+function chip(ik, navn, p, lav, tekst) {
+	return `<div class="chip${lav ? " lav" : ""}"><i class="ti ti-${ik}"></i><div class="chip-tekst"><div class="chip-navn">${navn}</div><div class="chip-bar"><div style="width:${Math.max(0, Math.min(1, p)) * 100}%"></div></div><div class="chip-verdi">${tekst}</div></div></div>`;
+}
+function gardScene() {
+	const r = ui.reaksjon;
+	ui.reaksjon = null;
+	let kls = "", ekstra = "", boble = "", flyt = [], part = "";
+	if (r && r.k === "spis") {
+		kls = "r-spis" + (r.lat ? " r-lat" : "");
+		ekstra = `<div class="mat mat-${r.mat}">${ikonSvg(r.mat)}</div>`;
+		boble = r.lat ? "Uff … altfor mye. Nå orker jeg ikke trene." : MATTEKST[r.mat];
+		flyt = r.lat ? ["+30 mett", "Lat!"] : ["+30 mett", `${STAT[FOR[r.mat].i]} +25 %`];
+		if (!r.lat) part = Array.from({ length: 5 }, (_, i) => `<i class="glitter sen" style="left:${26 + i * 8}%;top:${18 + i % 2 * 26}%;animation-delay:${1.3 + i * .07}s"></i>`).join("");
+	} else if (r && r.k === "stell") {
+		kls = "r-stell";
+		boble = "Se så fin jeg er!";
+		part = Array.from({ length: 5 }, (_, i) => `<i class="glitter" style="left:${30 + i * 9}%;top:${20 + i % 2 * 25}%;animation-delay:${i * .08}s"></i>`).join("");
+	} else if (r && r.k === "kos") {
+		kls = "r-kos";
+		boble = "Kokoko …";
+		part = Array.from({ length: 3 }, (_, i) => `<i class="hjerte" style="left:${42 + i * 7}%;animation-delay:${i * .15}s">♥</i>`).join("");
+	} else if (r && r.k === "tren") {
+		kls = "r-tren";
+		boble = TRENTEKST[r.i];
+		flyt = [r.tekst];
+	}
+	return `<div class="gard g-${STIL}">${gardBg()}${trofeSvg()}<div class="gardhane ${kls}">${haneSvg(S.type, { frames: true })}${ekstra}</div>${boble ? `<div class="boble${r && r.k === "spis" ? " sen" : ""}">${boble}</div>` : ""}${flyt.map((t, i) => `<div class="flyt${r && r.k === "spis" ? " sen" : ""}" style="top:${44 + i * 14}%;animation-delay:${(r && r.k === "spis" ? 1.25 : .2) + i * .15}s">${t}</div>`).join("")}<div class="partikler">${part}</div></div><div class="fortelling">${S.logg.at(-1) || ""}</div>`;
+}
+function renderGard() {
+	const h = H[S.type], st = h.b.map((v, i) => stat(v, S.g[i], S.tr[i], S.ke[i], S.L)), need = xpNeed(S.L);
+	const status = [];
+	if (S.lat > 0) status.push(`Lat i ${S.lat} økt${S.lat > 1 ? "er" : ""}`);
+	if (S.for && S.mett >= C.sulten) status.push(`${FOR[S.for].n} i magen: ${STAT[FOR[S.for].i].toLowerCase()} +25 %`);
+	let html = introKort() + gardScene() + `<div class="card statuslinje"><div class="sl-topp"><div><b>${h.n}</b> <span class="sl-niva">nivå ${S.L}</span><div class="sl-tittel"><i class="ti ti-trophy"></i>${tittel(S.rang)} · ${S.rang} rangpoeng</div></div>${badge(h.t)}</div>
+<div class="sl-xp"><div class="bar"><div class="fill" style="width:${S.L >= 100 ? 100 : S.xp / need * 100}%;background:var(--fill-accent)"></div></div><span>${S.L >= 100 ? "Maks nivå" : `${S.xp}/${need} erfaring`}</span></div>
+<div class="chips">${chip("mett", "Mett", S.mett / 100, S.mett < C.sulten, S.mett < C.sulten || S.mett >= C.overfor ? mettTxt() : S.mett)}${chip("humor", "Humør", S.humor / 100, S.humor < C.surmuler, humorTxt())}${chip("energi", "Energi", S.energi / 3, S.energi === 0, `${S.energi}/3`)}</div>
+${status.length ? `<div class="sl-status">${status.join(" · ")}</div>` : ""}${dagslinje()}</div>`;
+	html += `<div class="faner" role="tablist">${[
+		[
+			"stell",
+			"Mat og stell",
+			"kos"
+		],
+		[
+			"tren",
+			"Trening",
+			"sprint"
+		],
+		[
+			"hane",
+			"Hanen",
+			"list"
+		],
+		[
+			"bygd",
+			"Bygda",
+			"kart"
+		]
+	].map(([k, n, ik]) => `<button class="fane${ui.fane === k ? " valgt" : ""}" data-fane="${k}" role="tab" aria-selected="${ui.fane === k}"><i class="ti ti-${ik}"></i>${n}</button>`).join("")}</div><div class="panel">`;
+	if (ui.fane === "stell") html += `<div class="hint">${S.mett >= C.overfor ? "Han er stappmett. Mer mat nå gjør ham lat." : S.mett < C.sulten ? "Han er sulten, og treningen gir bare halv effekt." : "Fôret gir 25 % mer på treningen av egenskapen det hører til."}</div><div class="fliser">` + Object.entries(FOR).map(([k, v]) => `<button class="flis" data-act="for" data-arg="${k}"><i class="ti ti-${k} ik-flis"></i><span class="flis-navn">${v.n}</span><span class="flis-info">${STAT[v.i]}</span></button>`).join("") + `<button class="flis" data-act="stell" ${S.stelt ? "disabled" : ""}><i class="ti ti-stell ik-flis"></i><span class="flis-navn">Stell</span><span class="flis-info">${S.stelt ? "Gjort i dag" : `+${C.stell} humør`}</span></button><button class="flis" data-act="kos" ${S.kos >= C.kosDag ? "disabled" : ""}><i class="ti ti-kos ik-flis"></i><span class="flis-navn">Kos</span><span class="flis-info">${C.kosDag - S.kos} igjen i dag</span></button></div>`;
+	else if (ui.fane === "tren") {
+		const fk = faktor(-1).f.filter((x) => !x.includes("magen"));
+		html += `<div class="hint">${S.energi <= 0 ? `${hn()} er utslitt. Energien fylles opp over natten.` : `${S.energi} av 3 økter igjen i dag. Trening ${fmt(sum(S.tr))} av 100.`}${fk.length ? ` <b class="advar">Halv effekt: ${fk.join(", ")}.</b>` : ""}</div><div class="fliser">` + OVELSE.map((o, i) => {
+			const { x } = faktor(i), r = rom(i);
+			return `<button class="flis" data-act="tren" data-arg="${i}" ${S.energi <= 0 || r <= 0 ? "disabled" : ""}><i class="ti ${o.ic} ik-flis"></i><span class="flis-navn">${o.kort}</span><span class="flis-info">${r <= 0 ? S.tr[i] >= 30 ? "Fullt trent" : "Taket nådd" : `+${fmt(Math.min(x, r))} ${KORT[i]}`}</span></button>`;
+		}).join("") + `</div>`;
+	} else if (ui.fane === "bygd") html += bygdPanel();
+	else html += lagPanel() + `<div class="egenskaper">${STAT.map((n, i) => `<div class="eg"><span class="eg-navn">${n}</span><b class="eg-verdi">${st[i]}</b><div class="eg-tren"><div class="bar"><div class="fill" style="width:${S.tr[i] / 30 * 100}%;background:var(--fill-accent)"></div></div><span>${fmt(S.tr[i])}/30</span></div></div>`).join("")}</div>
+<div class="hint" style="margin-top:8px">Tallene er egenskapen nå. Stripen viser treningen, opptil 30 per egenskap og 100 totalt. Kamperfaringen er skjult. Spør Gunhild.</div>
+<div class="titler">${TITLER.map(([g, n], i) => `<div class="tit${i <= tittelNr(S.rang) ? " nadd" : ""}${i === tittelNr(S.rang) ? " na" : ""}"><i class="ti ti-${i <= tittelNr(S.rang) ? "trophy" : "minus"}"></i><span>${n}</span><em>${g} p</em></div>`).join("")}</div>
+<div class="hint" style="margin-top:6px">${nesteTittel(S.rang) ? `${nesteTittel(S.rang)[0] - S.rang} rangpoeng til ${nesteTittel(S.rang)[1]}. ` : "Høyeste tittel nådd! "}Seier gir 1 rangpoeng, eller 2 mot en hane på høyere nivå, uten daglig grense. Rang gir status, ikke styrke.</div>
+<div class="hint">${S.seire} seire · ${S.tap} tap · ${S.gullfjaer || 0} gullfjær · ${S.rekke || 0} seire på rad · dag ${S.dag}</div><button data-act="gunhild" style="width:100%;font-size:13px;margin-top:6px"><i class="ti ti-message-circle" style="margin-right:6px"></i>Spør gamle Gunhild i Hønsehuset</button>
+<button data-act="bytt" style="width:100%;font-size:13px;margin-top:6px;${ui.bekreftBytt ? "color:var(--text-danger);border-color:var(--text-danger)" : ""}"><i class="ti ti-refresh" style="margin-right:6px"></i>${ui.bekreftBytt ? `Trykk igjen for å gi slipp på ${hn()} og velge ny hane` : S.lag.length > 1 ? "Start på nytt" : "Bytt hane"}</button>${ui.bekreftBytt ? `<div class="hint" style="margin-top:6px">${S.lag.length > 1 ? "Hele laget og all fremgangen forsvinner." : `${hn()} og all fremgangen hans forsvinner.`} Du starter på nivå 10 med en ny hane.</div>` : ""}`;
+	html += `</div>${eggKort()}${ui.fane === "bygd" ? "" : malKort()}${utfKort()}<button class="mv" data-act="kamp" style="text-align:center;margin-top:12px;min-height:48px;font-weight:500"><i class="ti ti-swords" aria-hidden="true" style="margin-right:6px"></i>Utfordre en datastyrt hane</button>` + aereLinje();
+	if (!lagringOk) html += `<p style="font-size:12px;color:var(--text-danger)">Nettleseren tillater ikke lagring. Fremgangen forsvinner når du lukker siden.</p>`;
+	html += `<button data-act="test" style="margin-top:14px;width:100%;font-size:13px"><i class="ti ti-flask" aria-hidden="true" style="margin-right:6px"></i>${ui.showTest ? "Skjul testverktøy" : "Testverktøy"}</button>`;
+	if (ui.showTest) html += testverktoyPanel();
+	app.innerHTML = html;
+}
+// src/ui/app.js
+kroker.render = () => render();
+kroker.spill = () => play();
+function handling(a, arg) {
+	if (a !== "nullstill") ui.bekreftNullstill = false;
+	if (a !== "bytt") ui.bekreftBytt = false;
+	if (S && a !== "nullstill") sjekkDato();
+	switch (a) {
+		case "tren": {
+			const f = faktor(+arg), g = Math.min(f.x, rom(+arg));
+			if (S.energi > 0 && rom(+arg) > 0) ui.reaksjon = {
+				k: "tren",
+				i: +arg,
+				tekst: `+${fmt(g)} ${STAT[+arg]}`
+			};
+			tren(+arg);
+			break;
+		}
+		case "for":
+			ui.reaksjon = {
+				k: "spis",
+				mat: arg,
+				lat: S.mett >= C.overfor
+			};
+			gi(arg);
+			break;
+		case "stell":
+			if (!S.stelt) ui.reaksjon = { k: "stell" };
+			stell();
+			break;
+		case "kos":
+			if (S.kos < C.kosDag) ui.reaksjon = { k: "kos" };
+			kos();
+			break;
+		case "kamp":
+		case "nykamp":
+			nyttMote();
+			break;
+		case "kjemp":
+			startKamp();
+			return;
+		case "flykt":
+			if (!flykt()) return;
+			break;
+		case "gunhild":
+			gunhild();
+			break;
+		case "intro":
+			S.intro = true;
+			note("Gunhild nikker fornøyd. Kaia ligger rett nedenfor gården.");
+			break;
+		case "mester":
+			if (nyttMesterMote(arg)) break;
+			ui.fane = "bygd";
+			settView("gard");
+			break;
+		case "bygda":
+			ui.fane = "bygd";
+			settView("gard");
+			break;
+		case "egg":
+			if (S.egg) {
+				settView("egg");
+				render();
+				return;
+			}
+			break;
+		case "hent":
+			if (S.lag[+arg]) {
+				hentHane(+arg);
+				note(`${hn()} kommer ut av Hønsehuset og tar over gårdsplassen.`);
+			}
+			break;
+		case "gard":
+			settView("gard");
+			break;
+		case "test":
+			ui.showTest = !ui.showTest;
+			break;
+		case "bytt":
+			if (!ui.bekreftBytt) {
+				ui.bekreftBytt = true;
+				break;
+			}
+			ui.bekreftBytt = false;
+			slett();
+			settS(null);
+			ui.fane = "stell";
+			settView("start");
+			render();
+			return;
+		case "nydag":
+			nyDag(1);
+			break;
+		case "spol":
+			spol(arg);
+			break;
+		case "nullstill":
+			if (!ui.bekreftNullstill) {
+				ui.bekreftNullstill = true;
+				break;
+			}
+			ui.bekreftNullstill = false;
+			slett();
+			settS(null);
+			settView("start");
+			render();
+			return;
+	}
+	if (S) save();
+	render();
+}
+function render() {
+	if (view === "kamp") renderKamp();
+	else if (view === "mote" && S && mote) renderMote();
+	else if (view === "egg" && S) pickEgg();
+	else if (view === "gard" && S) renderGard();
+	else pick();
+}
+setInterval(() => {
+	document.querySelectorAll("[data-ned]").forEach((e) => e.textContent = nedTekst());
+	if (S && S.dato < today() && (view === "gard" || view === "mote")) {
+		sjekkDato();
+		render();
+	}
+}, 15e3);
+function byttStil() {
+	settStil(STIL === "tegne" ? "piksel" : "tegne");
+	try {
+		localStorage.setItem("kryptokoqs-stil", STIL);
+	} catch (e) {}
+	oppdaterStilknapp();
+	ui.sceneFor = -1;
+	render();
+}
+function oppdaterStilknapp() {
+	const b = $("stilknapp");
+	if (b) b.innerHTML = `<i class="ti ti-palette" aria-hidden="true" style="margin-right:6px"></i>Stil: ${STILER[STIL]}`;
+	document.body.dataset.stil = STIL;
+}
+new MutationObserver(() => byttIkoner()).observe(document.body, {
+	childList: true,
+	subtree: true
+});
+app.addEventListener("click", (ev) => {
+	const b = ev.target.closest("button");
+	if (!b || b.disabled) return;
+	const d = b.dataset;
+	if (d.pick !== void 0) {
+		newHen(+d.pick);
+		settView("gard");
+		render();
+	} else if (d.mv !== void 0) round(+d.mv);
+	else if (d.bytt !== void 0) round(null, +d.bytt);
+	else if (d.egg !== void 0) {
+		klekk(+d.egg);
+		settView("gard");
+		ui.fane = "hane";
+		render();
+	} else if (d.rules !== void 0) {
+		ui.showRules = !ui.showRules;
+		render();
+	} else if (d.fane) {
+		ui.fane = d.fane;
+		ui.bekreftBytt = false;
+		render();
+	} else if (d.act) handling(d.act, d.arg);
+});
+document.addEventListener("visibilitychange", () => {
+	if (!document.hidden && S && view === "gard") {
+		sjekkDato();
+		render();
+	}
+});
+installerTestkrok({
+	handling,
+	render,
+	byttStil,
+	oppdaterStilknapp
+});
+$("stilknapp").addEventListener("click", byttStil);
+oppdaterStilknapp();
+settS(load());
+if (S) {
+	synk();
+	settView("gard");
+	sjekkDato();
+	if (!S.utf) lagUtf();
+}
+render();</script>
+  <style rel="stylesheet" crossorigin>:root{--surface-0:#f5f4f0;--surface-1:#efede6;--surface-2:#ffffff;--border:rgba(0,0,0,.12);--border-strong:rgba(0,0,0,.22);--text-primary:#1f1e1c;--text-secondary:#5f5e5a;--text-muted:#888780;--text-success:#3B6D11;--text-danger:#A32D2D;--text-warning:#854F0B;--fill-success:#639922;--fill-warning:#EF9F27;--fill-danger:#E24B4A;--fill-accent:#378ADD;--radius:8px;
+--bg-tint-red:#FCEBEB;--text-tint-red:#791F1F;--bg-tint-blue:#E6F1FB;--text-tint-blue:#0C447C;--bg-tint-aqua:#E1F5EE;--text-tint-aqua:#085041;--bg-tint-violet:#EEEDFE;--text-tint-violet:#3C3489;--bg-tint-orange:#FAECE7;--text-tint-orange:#712B13;--bg-tint-yellow:#FAEEDA;--text-tint-yellow:#633806;--bg-tint-green:#EAF3DE;--text-tint-green:#27500A;--bg-tint-magenta:#FBEAF0;--bg-tint-spokelse:#ECEAF4;--text-tint-spokelse:#4B4466;--text-tint-magenta:#72243E}
+@media (prefers-color-scheme:dark){:root{--surface-0:#1c1b19;--surface-1:#262522;--surface-2:#2e2d2a;--border:rgba(255,255,255,.12);--border-strong:rgba(255,255,255,.24);--text-primary:#f1efe8;--text-secondary:#b4b2a9;--text-muted:#888780;--text-success:#97C459;--text-danger:#F09595;--text-warning:#FAC775;
+--bg-tint-red:#791F1F;--text-tint-red:#F7C1C1;--bg-tint-blue:#0C447C;--text-tint-blue:#B5D4F4;--bg-tint-aqua:#085041;--text-tint-aqua:#9FE1CB;--bg-tint-violet:#3C3489;--text-tint-violet:#CECBF6;--bg-tint-orange:#712B13;--text-tint-orange:#F5C4B3;--bg-tint-yellow:#633806;--text-tint-yellow:#FAC775;--bg-tint-green:#27500A;--text-tint-green:#C0DD97;--bg-tint-magenta:#72243E;--bg-tint-spokelse:#3B3654;--text-tint-spokelse:#D9D3EE;--text-tint-magenta:#F4C0D1}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface-0);color:var(--text-primary);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.5}
+main{max-width:460px;margin:0 auto;padding:1.5rem 1rem 3rem}
+h1{font-size:20px;font-weight:500;margin:0 0 1rem}
+button{font:inherit;color:var(--text-primary);background:transparent;border:0.5px solid var(--border-strong);border-radius:var(--radius);padding:8px 12px;cursor:pointer}
+button:hover{background:var(--surface-1)}
+button:active{transform:scale(.98)}
+button:disabled{opacity:.45;cursor:default;transform:none}
+button:disabled:hover{background:transparent}
+button.mv:disabled:hover{background:var(--surface-2)}
+button:focus-visible{outline:2px solid var(--fill-accent);outline-offset:2px}
+.card{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:12px 14px}
+.bar{height:8px;border-radius:4px;background:var(--surface-1);overflow:hidden;margin-top:8px}
+.fill{height:100%;transition:width .4s}
+.badge{font-size:12px;padding:2px 8px;border-radius:var(--radius);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mv{text-align:left;padding:8px 10px;height:auto;min-height:56px;width:100%;background:var(--surface-2)}
+.seg{flex:1;height:6px;border-radius:3px}
+.log{font-size:13px;color:var(--text-secondary);line-height:1.6;min-height:120px;margin-top:12px}
+@media (prefers-reduced-motion:reduce){.fill{transition:none}}
+/* ---------- Visuelt (v0.9) ---------- */
+header.topp{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0 0 1rem}
+header.topp h1{margin:0}
+#stilknapp{font-size:13px;padding:6px 10px}
+.hane{display:block;width:100%;height:100%;overflow:visible}
+.scene{position:relative;height:250px;border-radius:12px;overflow:hidden;border:0.5px solid var(--border)}
+.scene .bg{position:absolute;inset:0;width:100%;height:100%}
+.s-piksel{border:3px solid #0f380f;border-radius:4px;image-rendering:pixelated}
+.plattform{position:absolute;border-radius:50%}
+.s-tegne .plattform{background:#6fb84a;border:2px solid #4e8f33}
+.s-piksel .plattform{background:#8bac0f;border:2px solid #306230;border-radius:50%}
+.plE{right:5%;top:112px;width:38%;height:22px}
+.plP{left:2%;bottom:6px;width:42%;height:26px}
+.spr{position:absolute;aspect-ratio:1}
+.sprE{right:9%;top:6px;width:31%}
+.sprP{left:5%;bottom:12px;width:36%}
+.spr .kropp{width:100%;height:100%;transform-origin:50% 88%;transition:transform .9s cubic-bezier(.5,-0.4,.6,1.2)}
+.vend{width:100%;height:100%;transform:scaleX(-1)}
+.spr .fx{position:absolute;inset:10%;pointer-events:none}
+.spr .sand{position:absolute;left:10%;right:10%;bottom:4%;height:18%;border-radius:50% 50% 8% 8%;opacity:0;transform:scaleY(.2);transform-origin:bottom;transition:opacity .4s .5s,transform .4s .5s}
+.s-tegne .sand{background:#e9cf8c;border:2px solid #2a1a10}
+.s-piksel .sand{background:#306230;border:2px solid #0f380f;border-radius:4px 4px 0 0}
+/* Villmøtet: hanene glir inn fra hver sin side */
+.inn.sprE .kropp{animation:innE .8s ease-out}
+.inn.sprP .kropp{animation:innP .8s ease-out}
+@keyframes innE{from{transform:translateX(-230%)}to{transform:none}}
+@keyframes innP{from{transform:translateX(200%)}to{transform:none}}
+/* Angrep: hopper frem mot motstanderen */
+.sprP.hopp .kropp{animation:hoppP .35s ease-out}
+.sprE.hopp .kropp{animation:hoppE .35s ease-out}
+@keyframes hoppP{50%{transform:translate(18%,-14%)}}
+@keyframes hoppE{50%{transform:translate(-18%,12%)}}
+.jubel .kropp{animation:jubel .5s ease-out}
+@keyframes jubel{30%{transform:translateY(-12%) scale(1.06)}60%{transform:translateY(0) scale(.97)}}
+/* Treff: blinking og risting. Fulltreff: mer av alt. */
+.treff .kropp{animation:blink .5s steps(1) .2s,rist .5s ease-in-out .2s}
+.fulltreff .kropp{animation:blink .8s steps(1) .2s,ristStor .8s ease-in-out .2s}
+@keyframes blink{0%,20%,40%,60%,80%{opacity:.15}10%,30%,50%,70%,90%,100%{opacity:1}}
+@keyframes rist{20%{transform:translateX(-6%)}40%{transform:translateX(6%)}60%{transform:translateX(-4%)}80%{transform:translateX(3%)}}
+@keyframes ristStor{15%{transform:translateX(-10%) rotate(-6deg)}30%{transform:translateX(10%) rotate(6deg)}45%{transform:translateX(-8%) rotate(-4deg)}60%{transform:translateX(8%) rotate(4deg)}80%{transform:translateX(-3%)}}
+/* Bom: motstanderen dukker unna */
+.sprE.unnvik .kropp{animation:unnvikE .5s ease-out .15s}
+.sprP.unnvik .kropp{animation:unnvikP .5s ease-out .15s}
+/* Låvetaket og søvn */
+.paa-tak .kropp{transform:translateY(-60%) scale(.75)}
+.sover::after{content:'Z z z';position:absolute;right:0;top:0;font:700 14px system-ui,sans-serif;color:var(--text-secondary);animation:zzz 2s ease-in-out infinite}
+@keyframes zzz{50%{transform:translateY(-8px);opacity:.5}}
+/* Gir opp: stikker hodet i sanden */
+.spr.ko{clip-path:inset(-60% -60% 10% -60%)}
+.sprP.ko .kropp{transform:translateY(4%) rotate(62deg)}
+.sprE.ko .kropp{transform:translateY(4%) rotate(-62deg)}
+.ko .sand{opacity:1;transform:scaleY(1)}
+.sprP.ko .sand{left:66%;right:-30%}
+.sprE.ko .sand{left:-30%;right:66%}
+/* Typeeffekter */
+.eff{position:absolute;inset:0;width:100%;height:100%;opacity:0;overflow:visible}
+.anim-spru{animation:spru .6s ease-out .15s}
+.anim-stig{animation:stig .8s ease-out .15s}
+.anim-fall{animation:fall .6s ease-in .1s}
+@keyframes spru{0%{opacity:1;transform:scale(.3)}60%{opacity:1;transform:scale(1.15)}100%{opacity:0;transform:scale(1.3)}}
+@keyframes stig{0%{opacity:0;transform:translateY(30%) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translateY(-40%) scale(1.1)}}
+@keyframes fall{0%{opacity:1;transform:translateY(-70%)}70%{opacity:1;transform:translateY(0)}100%{opacity:0}}
+.s-tegne{--eo:#2a1a10}
+.s-tegne .eff-Ild{--e1:#ff8a1e;--e2:#ffd23f}.s-tegne .eff-Vann{--e1:#57b0e6}.s-tegne .eff-Is{--e1:#cdefff;--e2:#8fd3ea}.s-tegne .eff-Magi{--e1:#f2d24b}.s-tegne .eff-Muskel{--e1:#ffd23f}
+.s-tegne .eff-Lyn{--e1:#ffe14a}.s-tegne .eff-Jord{--e1:#8a6a3a}.s-tegne .eff-Spøkelse{--e1:#f4f2fb}.s-tegne .eff-Fly{--e1:#f2b3c8}.s-tegne .eff-Hakk{--e1:#fff3b0}
+.s-piksel{--eo:#0f380f;--e1:#306230;--e2:#8bac0f}
+.pop{position:absolute;left:0;right:0;top:42%;text-align:center;font:700 16px system-ui,sans-serif;color:#fff;-webkit-text-stroke:1px #2a1a10;opacity:0;pointer-events:none}
+.pop.stor{font-size:26px;color:#ffd23f}
+.pop.vis{animation:popp .9s ease-out}
+@keyframes popp{0%{opacity:0;transform:scale(.5)}20%{opacity:1;transform:scale(1.15)}70%{opacity:1;transform:scale(1)}100%{opacity:0;transform:translateY(-12px)}}
+.s-piksel .pop{font-family:ui-monospace,Menlo,monospace;color:#9bbc0f;-webkit-text-stroke:0;text-shadow:2px 2px 0 #0f380f,-2px -2px 0 #0f380f,2px -2px 0 #0f380f,-2px 2px 0 #0f380f}
+/* Infobokser */
+.info{position:absolute;width:52%;padding:6px 8px;font-size:12px;line-height:1.3}
+.infoE{left:3%;top:10px}.infoP{right:3%;bottom:14px}
+.s-tegne .info{background:rgba(255,255,255,.92);color:#1f1e1c;border:2px solid #2a1a10;border-radius:10px;box-shadow:2px 3px 0 rgba(0,0,0,.18)}
+.s-piksel .info{background:#9bbc0f;color:#0f380f;border:3px solid #0f380f;border-radius:0;font-family:ui-monospace,Menlo,monospace;font-weight:700;box-shadow:3px 3px 0 #306230}
+.inavn{display:flex;justify-content:space-between;gap:6px;font-size:13px}
+.imaler{display:flex;align-items:center;gap:6px;margin-top:4px}
+.ilbl{font-size:9px;font-weight:700;min-width:30px;letter-spacing:.03em}
+.ibar{flex:1;height:7px;border-radius:4px;background:#ddd;overflow:hidden;border:1px solid #2a1a10}
+.s-piksel .ibar{background:#8bac0f;border:2px solid #0f380f;border-radius:0;height:8px}
+.ifill{height:100%;transition:width .4s}
+.itall{text-align:right;font-size:11px;margin-top:2px}
+.ipust{display:flex;gap:2px;flex:1}
+.ipust i{flex:1;height:5px;border-radius:2px;background:#ddd}
+.ipust i.pa{background:#378ADD}
+.s-piksel .ipust i{border-radius:0;background:#8bac0f}.s-piksel .ipust i.pa{background:#0f380f}
+.istatus{font-size:10px;margin-top:3px;opacity:.85}
+/* Dialogboks som i Rød/Blå */
+.dialog{margin-top:8px;padding:8px 10px;font-size:13px;line-height:1.5;min-height:84px}
+.d-tegne{background:var(--surface-2);border:2px solid var(--border-strong);border-radius:10px;color:var(--text-primary)}
+.d-piksel{background:#9bbc0f;color:#0f380f;border:4px double #0f380f;font-family:ui-monospace,Menlo,monospace;font-weight:600}
+.dialog .runde{font-size:11px;opacity:.65}
+.dialog .hl{font-weight:700}
+/* Gården */
+.gard{position:relative;height:190px;border-radius:12px;overflow:hidden;border:0.5px solid var(--border);margin-bottom:10px}
+.gard .bg{position:absolute;inset:0;width:100%;height:100%}
+.g-piksel{border:3px solid #0f380f;border-radius:4px}
+.gardhane{position:absolute;left:24%;bottom:8px;width:38%;aspect-ratio:1}
+.gardhane .hode{transform-origin:62px 52px;animation:nikk 5s ease-in-out infinite}
+.gardhane .bein-bak{transform-origin:44px 74px;animation:skrap 5s ease-in-out infinite}
+@keyframes nikk{0%,8%,22%,100%{transform:none}12%,18%{transform:rotate(22deg)}}
+@keyframes skrap{0%,55%,75%,100%{transform:none}60%,70%{transform:rotate(38deg)}65%{transform:rotate(18deg)}}
+.gardhane .f-peck,.gardhane .f-scratch{opacity:0}
+.gardhane .f-stand{animation:visStand 5s steps(1,end) infinite}
+.gardhane .f-peck{animation:visPeck 5s steps(1,end) infinite}
+.gardhane .f-scratch{animation:visScratch 5s steps(1,end) infinite}
+@keyframes visStand{0%{opacity:1}10%{opacity:0}20%{opacity:1}58%{opacity:0}72%{opacity:1}}
+@keyframes visPeck{0%{opacity:0}10%{opacity:1}20%{opacity:0}}
+@keyframes visScratch{0%{opacity:0}58%{opacity:1}72%{opacity:0}}
+.gardhane svg{animation:pust 3s ease-in-out infinite;transform-origin:50% 90%}
+@keyframes pust{50%{transform:scaleY(1.02)}}
+/* Reaksjoner */
+.r-spis .hode{animation:spis .9s ease-in-out}
+.r-spis .f-stand{animation:visStandSpis .9s steps(1,end)}.r-spis .f-peck{animation:visPeckSpis .9s steps(1,end)}.r-spis .f-scratch{animation:none}
+@keyframes spis{15%,45%,75%{transform:rotate(38deg)}0%,30%,60%,90%{transform:none}}
+@keyframes visStandSpis{0%{opacity:0}15%{opacity:1}30%{opacity:0}45%{opacity:1}60%{opacity:0}75%{opacity:1}}
+@keyframes visPeckSpis{0%{opacity:1}15%{opacity:0}30%{opacity:1}45%{opacity:0}60%{opacity:1}75%{opacity:0}}
+.r-stell svg{animation:kry 1s ease-out}
+@keyframes kry{40%{transform:scale(1.05) translateY(2%)}}
+.r-kos svg{animation:kos .9s ease-in-out}
+@keyframes kos{25%{transform:scaleY(.9) scaleX(1.06)}50%{transform:scaleY(1.04)}}
+.r-tren svg{animation:tren .6s ease-out}
+@keyframes tren{40%{transform:translateY(-14%)}}
+.partikler{position:absolute;inset:0;pointer-events:none}
+.korn{position:absolute;top:40%;width:5px;height:5px;border-radius:50%;background:#e9b52f;border:1px solid #2a1a10;opacity:0;animation:korn .8s ease-in forwards}
+.g-piksel .korn{background:#306230;border-color:#0f380f;border-radius:0}
+@keyframes korn{0%{opacity:1;transform:translateY(-40px)}100%{opacity:1;transform:translateY(70px)}}
+.glitter{position:absolute;width:10px;height:10px;background:#fff;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);opacity:0;animation:glitter .9s ease-out forwards}
+.g-piksel .glitter{background:#0f380f}
+@keyframes glitter{0%{opacity:0;transform:scale(.2)}40%{opacity:1;transform:scale(1.3)}100%{opacity:0;transform:scale(.6)}}
+.hjerte{position:absolute;top:30%;font-size:18px;color:#e8504a;opacity:0;animation:hjerte 1.1s ease-out forwards}
+.g-piksel .hjerte{color:#0f380f;font-family:ui-monospace,monospace}
+@keyframes hjerte{0%{opacity:0;transform:translateY(10px) scale(.6)}30%{opacity:1}100%{opacity:0;transform:translateY(-40px) scale(1.1)}}
+/* Små hanebilder */
+.minihane{width:64px;height:64px;margin:0 auto 4px}
+.motehane{width:120px;height:120px;margin:4px auto 0}
+.motehane .kropp{animation:innE .8s ease-out}
+.plassholder{font-size:11px;color:var(--text-muted)}
+.ik{width:1.15em;height:1.15em;vertical-align:-.2em;flex:none}
+.ik-stor{width:30px;height:30px;margin:0!important}
+.ik-knapp{display:flex;align-items:center;gap:10px}
+body[data-stil=piksel] .ikf{--i1:#306230;--i2:#8bac0f;--i3:#8bac0f;--io:#0f380f}
+body[data-stil=piksel] .ik-stor{shape-rendering:crispEdges}
+/* ---------- v0.10: gården ---------- */
+.fortelling{font-size:13px;color:var(--text-secondary);margin:-4px 2px 10px;min-height:1.5em;line-height:1.45}
+.statuslinje{padding:10px 12px}
+.sl-topp{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:15px}
+.sl-niva{font-size:13px;color:var(--text-secondary)}
+.sl-xp{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary);margin-top:6px}
+.sl-xp .bar{flex:1;margin:0;height:6px}
+.chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}
+.chip{display:flex;align-items:center;gap:6px;background:var(--surface-1);border-radius:8px;padding:6px 7px}
+.chip .ik{width:18px;height:18px;color:var(--text-secondary)}
+.chip-tekst{flex:1;min-width:0}
+.chip-navn{font-size:11px;font-weight:500;line-height:1.2}
+.chip-verdi{font-size:11px;color:var(--text-secondary);line-height:1.2;margin-top:3px;overflow-wrap:anywhere}
+.chip-bar{height:4px;border-radius:2px;background:var(--border);margin-top:4px;overflow:hidden}
+.chip-bar div{height:100%;background:var(--fill-success)}
+.chip.lav .chip-bar div{background:var(--fill-danger)}.chip.lav .ik,.chip.lav .chip-verdi{color:var(--text-danger)}
+.sl-status{font-size:12px;color:var(--text-secondary);margin-top:8px}
+.faner{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:12px;background:var(--surface-1);padding:4px;border-radius:10px}
+.fane{border:0;border-radius:8px;font-size:12.5px;padding:7px 2px;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:5px;color:var(--text-secondary)}
+.fane.valgt{background:var(--surface-2);color:var(--text-primary);font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.panel{margin-top:10px}
+.hint{font-size:12px;color:var(--text-secondary);margin-bottom:8px;line-height:1.45}
+.hint .advar{color:var(--text-danger);font-weight:500}
+.fliser{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.flis{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px 8px;background:var(--surface-2);text-align:center;min-height:86px}
+.ik-flis{width:34px;height:34px}
+.flis-navn{font-size:13px;font-weight:500;line-height:1.2}
+.flis-info{font-size:11px;color:var(--text-secondary);line-height:1.2}
+.egenskaper{background:var(--surface-2);border:0.5px solid var(--border);border-radius:12px;padding:6px 12px}
+.eg{display:grid;grid-template-columns:1fr auto 44%;align-items:center;gap:10px;padding:6px 0;border-bottom:0.5px solid var(--border)}
+.eg:last-child{border-bottom:0}
+.eg-navn{font-size:13px}.eg-verdi{font-size:16px;font-weight:600;min-width:28px;text-align:right}
+.eg-tren{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary)}
+.eg-tren .bar{flex:1;margin:0;height:5px}
+/* Snakkeboble og flytende tekst */
+.boble{position:absolute;left:58%;top:10%;max-width:38%;background:#fff;color:#1f1e1c;border:2px solid #2a1a10;border-radius:12px;padding:5px 9px;font-size:12px;font-weight:600;line-height:1.3;opacity:0;animation:boble 2.6s ease-out .1s forwards}
+.boble::after{content:'';position:absolute;left:-9px;bottom:10px;border:6px solid transparent;border-right-color:#2a1a10}
+.boble.sen{animation-delay:1.1s}
+.g-piksel .boble{background:#9bbc0f;color:#0f380f;border:3px solid #0f380f;border-radius:0;font-family:ui-monospace,Menlo,monospace}
+@keyframes boble{0%{opacity:0;transform:scale(.6) translateY(6px)}12%{opacity:1;transform:scale(1.05)}20%{transform:scale(1)}85%{opacity:1}100%{opacity:0}}
+.flyt{position:absolute;left:63%;font:700 13px system-ui,sans-serif;color:#27500A;background:rgba(255,255,255,.88);border:1.5px solid #2a1a10;border-radius:999px;padding:1px 8px;opacity:0;animation:flyt 1.6s ease-out forwards}
+.g-piksel .flyt{color:#0f380f;background:#9bbc0f;border:2px solid #0f380f;border-radius:0;font-family:ui-monospace,Menlo,monospace}
+@keyframes flyt{0%{opacity:0;transform:translateY(10px)}20%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateY(-26px)}}
+.glitter.sen{animation-duration:1s}
+/* Fôring: maten kastes inn, hanen napper den, og bryster seg etterpå */
+.mat{position:absolute;left:82%;top:16%;width:22%;aspect-ratio:1;opacity:0;animation:matKast 2.4s ease-in-out forwards}
+.mat .ik{width:100%;height:100%}
+@keyframes matKast{0%{opacity:1;transform:translate(260%,-160%) rotate(-200deg) scale(.7)}30%{opacity:1;transform:none}40%{opacity:1;transform:scale(1)}46%{opacity:1;transform:scale(.4) translateX(-30%)}50%{opacity:0;transform:scale(0)}100%{opacity:0}}
+.mat-meitemark .ik{animation:vrikk .25s ease-in-out 6 alternate}
+@keyframes vrikk{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+.r-spis .hode{animation:napp 2.4s ease-in-out forwards}
+@keyframes napp{0%,30%{transform:none}35%{transform:rotate(16deg)}39%{transform:none}43%{transform:rotate(16deg)}48%,55%{transform:none}65%,92%{transform:rotate(-10deg)}100%{transform:none}}
+.r-spis svg.hane{animation:kryEtterMat 2.4s ease-in-out forwards}
+@keyframes kryEtterMat{0%,32%{transform:none}38%{transform:translateX(3%)}42%{transform:none}46%{transform:translateX(3%)}50%,58%{transform:none}68%,92%{transform:scale(1.05)}100%{transform:none}}
+.r-spis.r-lat svg.hane{animation:slapp 2.4s ease-in-out forwards}
+@keyframes slapp{0%,50%{transform:none}65%,100%{transform:scaleY(.88) scaleX(1.06) translateY(5%)}}
+.r-spis .f-stand,.r-spis .f-peck,.r-spis .f-scratch{animation:none}
+/* ---------- v0.10: kampen ---------- */
+.dialog{max-height:132px;overflow-y:auto;scroll-behavior:smooth;overscroll-behavior:contain}
+.dialog .linje{padding:1px 0 1px 8px;border-left:3px solid transparent}
+.dialog .fra-P{border-left-color:#378ADD}.dialog .fra-E{border-left-color:#E24B4A}
+.d-piksel .fra-P{border-left:3px solid #0f380f}.d-piksel .fra-E{border-left:3px dotted #0f380f}
+.dialog .rsep{font-size:11px;opacity:.6;text-align:center;margin:6px 0 2px;border-top:1px dashed currentColor;padding-top:2px}
+.dialog .rsep:first-child{margin-top:0}
+.nP{color:#1d5fa8}.nE{color:#b52b2a}
+.d-piksel .nP,.d-piksel .nE,.banner .nP,.banner .nE{color:inherit}
+@media (prefers-color-scheme:dark){.nP{color:#8cc0f2}.nE{color:#f19a99}}
+.banner{position:absolute;left:50%;top:44%;transform:translateX(-50%);white-space:nowrap;font:700 13px system-ui,sans-serif;padding:4px 12px;border-radius:999px;opacity:0;pointer-events:none;z-index:5}
+.s-tegne .banner{background:#fff;color:#1f1e1c;border:2px solid #2a1a10}
+.s-tegne .banner.bP{box-shadow:inset 6px 0 0 #378ADD}.s-tegne .banner.bE{box-shadow:inset -6px 0 0 #E24B4A}
+.s-piksel .banner{background:#9bbc0f;color:#0f380f;border:3px solid #0f380f;border-radius:0;font-family:ui-monospace,Menlo,monospace}
+.banner .pil{margin-right:6px;font-size:11px}
+.banner.vis{animation:banner 1.15s ease-out forwards}
+@keyframes banner{0%{opacity:0;transform:translateX(-50%) scale(.7)}12%{opacity:1;transform:translateX(-50%) scale(1.06)}20%{transform:translateX(-50%) scale(1)}80%{opacity:1}100%{opacity:0}}
+.s-tegne{--glow:0 0 0 3px #ffd23f,2px 3px 0 rgba(0,0,0,.18)}.s-piksel{--glow:0 0 0 3px #306230}
+.info.aktiv{animation:aktiv 1.1s ease-out}
+@keyframes aktiv{0%{transform:none;box-shadow:var(--glow)}15%{transform:scale(1.04);box-shadow:var(--glow)}30%{transform:none}85%{box-shadow:var(--glow)}}
+.info.truffet{animation:truffet .5s ease-in-out .3s}
+@keyframes truffet{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-2px)}}
+.ifill{transition:width .55s ease .3s,background .3s ease .3s}
+/* Angrep: tar sats bakover og stuper frem */
+.sprP.hopp .kropp{animation:angrepP .62s cubic-bezier(.3,0,.4,1)}
+.sprE.hopp .kropp{animation:angrepE .62s cubic-bezier(.3,0,.4,1)}
+@keyframes angrepP{0%{transform:none}25%{transform:translate(-10%,5%) rotate(-8deg)}52%{transform:translate(70%,-48%) rotate(10deg)}70%{transform:translate(50%,-34%) rotate(4deg)}100%{transform:none}}
+@keyframes angrepE{0%{transform:none}25%{transform:translate(10%,-5%) rotate(8deg)}52%{transform:translate(-80%,62%) rotate(-10deg)}70%{transform:translate(-58%,44%) rotate(-4deg)}100%{transform:none}}
+.treff .kropp{animation:hvit .55s steps(1) .3s,rist .55s ease-in-out .3s}
+.fulltreff .kropp{animation:hvit .85s steps(1) .3s,ristStor .85s ease-in-out .3s}
+@keyframes hvit{0%,40%,80%{filter:brightness(2.6) saturate(.2)}20%,60%{opacity:.25;filter:none}100%{filter:none;opacity:1}}
+.sprE.unnvik .kropp{animation:unnvikE .55s ease-out .28s}
+.sprP.unnvik .kropp{animation:unnvikP .55s ease-out .28s}
+@keyframes unnvikE{40%{transform:translate(22%,-14%) rotate(10deg)}}
+@keyframes unnvikP{40%{transform:translate(-22%,-10%) rotate(-10deg)}}
+.scene.skjelv{animation:skjelv .45s ease-in-out .3s}
+@keyframes skjelv{20%{transform:translate(-5px,3px)}40%{transform:translate(5px,-3px)}60%{transform:translate(-3px,2px)}80%{transform:translate(2px,-1px)}}
+/* Skadetall og ord som flyter opp fra målet */
+.tall{position:absolute;left:50%;top:18%;transform:translateX(-50%);font:800 22px system-ui,sans-serif;color:#E24B4A;-webkit-text-stroke:1.2px #2a1a10;white-space:nowrap;opacity:0;pointer-events:none;z-index:4;animation:tall 1.2s ease-out .3s forwards}
+.tall.stor{font-size:32px;color:#ffd23f}.tall.sup{font-size:26px;color:#ff7a1e}.tall.svak{font-size:18px;color:#c9c6da}
+.tall.bom{font-size:18px;color:#fff;top:4%}.tall.merk{font-size:13px;color:#fff;top:62%;-webkit-text-stroke:.8px #2a1a10}
+.s-piksel .tall{font-family:ui-monospace,Menlo,monospace;color:#0f380f;-webkit-text-stroke:0;text-shadow:2px 0 #9bbc0f,-2px 0 #9bbc0f,0 2px #9bbc0f,0 -2px #9bbc0f}
+@keyframes tall{0%{opacity:0;transform:translate(-50%,10px) scale(.6)}15%{opacity:1;transform:translate(-50%,0) scale(1.2)}30%{transform:translate(-50%,-6px) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-34px)}}
+.pop{top:24%}
+.sl-tittel{font-size:12px;color:var(--text-secondary);margin-top:1px;display:flex;align-items:center;gap:4px}
+.sl-tittel .ik{width:13px;height:13px;color:#c99a0e}
+.dagslinje{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);margin-top:8px;padding-top:8px;border-top:0.5px solid var(--border)}
+.dagslinje .ik{width:15px;height:15px}
+.dagslinje.tom{color:var(--text-warning);font-weight:500}
+.utfkort{margin-top:12px;padding:10px 12px}
+.utf-topp{display:flex;align-items:center;gap:6px;font-size:13px;margin-bottom:6px}
+.utf{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+.utf .ik{width:16px;height:16px;color:var(--text-muted)}
+.utf em{font-style:normal;font-size:11px;color:var(--text-secondary);white-space:nowrap}
+.utf.ok span{color:var(--text-secondary);text-decoration:line-through}
+.utf.ok .ik,.utf.ok em{color:var(--text-success)}
+.titler{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}
+.tit{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;border-radius:8px;background:var(--surface-1);font-size:12px;text-align:center;color:var(--text-muted)}
+.tit .ik{width:20px;height:20px}
+.tit em{font-style:normal;font-size:10px}
+.tit.nadd{color:var(--text-primary)}.tit.nadd .ik{color:#c99a0e}
+.tit.na{background:var(--surface-2);box-shadow:0 0 0 2px #ffd23f;font-weight:600}
+body[data-stil=piksel] .tit.nadd .ik,body[data-stil=piksel] .sl-tittel .ik{color:#306230}
+body[data-stil=piksel] .tit.na{box-shadow:0 0 0 2px #306230}
+.gard .trofe{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.historie{margin-bottom:12px;padding:10px 12px}.historie p{font-size:13.5px;line-height:1.5;margin:6px 0}.historie .mv{margin-top:6px;min-height:42px}
+.malkort,.eggkort{margin-top:12px;padding:10px 12px;display:flex;align-items:center;gap:10px}:is(.malkort,.eggkort) .mal-tekst{display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0}
+:is(.malkort,.eggkort) .mal-tekst>div{display:flex;flex-direction:column;gap:2px;min-width:0}:is(.malkort,.eggkort) b{font-size:13.5px}:is(.malkort,.eggkort) span{font-size:12px;color:var(--text-secondary)}
+:is(.malkort,.eggkort) .mv{flex:none;width:auto;padding:8px 12px;font-size:13px;font-weight:500}.malkort.rival{box-shadow:0 0 0 2px var(--text-danger) inset}
+.kart{display:block;width:100%;height:auto;border-radius:10px;margin-top:8px;border:1px solid var(--border,rgba(0,0,0,.12))}.kart-navn{font-size:10px;font-weight:600}
+.kart-puls{animation:puls 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes puls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.25)}}
+.mesterkort{margin-top:10px;padding:10px 12px}.mesterkort p{font-size:13px;color:var(--text-secondary);margin:6px 0 8px;line-height:1.45}.mesterkort .mv{min-height:44px}
+.mesterkort.rival{box-shadow:0 0 0 2px var(--text-danger) inset}
+.mk-topp{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.mk-sted{font-size:12px;color:var(--text-muted)}.mk-hane{font-size:12.5px;color:var(--text-secondary)}
+.merker{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.merke{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px;border-radius:8px;background:var(--surface-1);font-size:11px;text-align:center;color:var(--text-muted);overflow-wrap:anywhere}
+.merke.tatt{color:var(--text-primary);font-weight:500}.merke.tatt .ik{color:#c99a0e}body[data-stil=piksel] .merke.tatt .ik{color:#306230}
+.ilag{display:flex;gap:3px;margin:1px 0 2px}.ilag i{width:7px;height:7px;border-radius:50%;border:1.2px solid currentColor;display:block}.ilag i.inne{background:currentColor}.ilag i.ute{opacity:.3;background:none}
+.lagvalg{margin-top:10px}.lv-tittel{font-size:12px;font-weight:600;color:var(--text-secondary);margin:0 0 6px}
+.lagknapp{display:flex;flex-direction:column;gap:2px;text-align:left}.lagknapp .lk-navn{font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px}.lagknapp em{font-style:normal;font-weight:400;font-size:12px;color:var(--text-secondary)}.lagknapp .lk-hp{font-size:12px;color:var(--text-secondary)}
+.lagrad{font-size:12.5px;color:var(--text-secondary);margin-top:6px;line-height:1.5}
+.lagliste{margin:4px 0 12px}.lagmed{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:10px;background:var(--surface-1);margin-bottom:6px}.lagmed.her{box-shadow:0 0 0 2px var(--fill-accent) inset}
+.lm-hane{width:44px;height:44px;flex:none}.lm-hane svg{width:100%;height:100%}.lm-tekst{flex:1;min-width:0;font-size:13px}.lm-tekst span{color:var(--text-secondary);font-size:12px}.lm-tekst div{font-size:12px;color:var(--text-secondary)}
+.lagmed .mv{flex:none;width:auto;padding:7px 10px;font-size:13px}.eggkort{box-shadow:0 0 0 2px #ffd23f inset}
+.grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid.g3 button{font-size:13px;padding:8px 4px}
+.gir .rad{display:flex;justify-content:space-between;font-size:13px;margin-top:4px}.gir .rad:first-child{margin-top:0}.gir .rad b{font-weight:500}
+@media (prefers-reduced-motion:reduce){
+.dialog{scroll-behavior:auto}.banner.vis,.boble,.tall,.flyt{opacity:1!important}.mat{display:none}.info.aktiv,.info.truffet,.scene.skjelv{animation:none!important}
+.scene *,.gard *,.motehane *,.pop,.kart *{animation:none!important;transition:none!important}
+.pop{display:none}
+.gardhane .f-peck,.gardhane .f-scratch{opacity:0!important}.gardhane .f-stand{opacity:1!important}}
+/*$vite$:1*/</style>
+</head>
+<body>
+<main>
+<header class="topp"><h1>Kryptokoqs</h1><button id="stilknapp" type="button"></button></header>
+<div id="app"></div>
+</main>
+</body>
+</html>
