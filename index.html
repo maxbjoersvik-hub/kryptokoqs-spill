@@ -61,6 +61,7 @@ var IK_STREK = {
 	barbell: "M2 12h20M5 8v8M8 6v12M16 6v12M19 8v8",
 	bolt: "M13 2L4 14h7l-1 8 9-12h-7z",
 	mountain: "M2 20l7-12 4 6 3-4 6 10z",
+	leaf: "M5 21c0-9 5-15 15-17 0 10-5 16-14 16M5 21c2-5 5-9 10-12",
 	feather: "M20 4C12 4 6 10 6 18l-2 2M6 18c8 0 14-6 14-14M10 14h5",
 	ghost: "M5 21V10a7 7 0 0 1 14 0v11l-2.5-2-2.3 2-2.2-2-2.2 2-2.3-2zM9.5 10h.01M14.5 10h.01",
 	list: "M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01",
@@ -207,6 +208,11 @@ var PIX = [
 		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9022401.g001000.4002100.80124002100.f001100.3002100.70123031100.e001100.3002100.700240030022000.e001200.2002100.700230130022003.b001201.1002100.7002400310120002102.401.2001300.1002200.6002410022107.202.2001300.0002200.6002a002102.4012000.10013022200.6002a02.8002100.00014012200.6012702.a002200.00014002300.5022502.c00220114002300.400210222011000.c0023011400200823041100.d002301130125012803.d012301100127012703.f012302270010002701.i01221000240626002000.j0121002302130126002000.l022201160322002100.m002300120312052100.m002300160111002500.n0022001103110010002600.n002201140110002600.o01230211022700.p00260121012500.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
 		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.i06.9001100.3002100.h0110011100.9001100.3002100.g0210001102.8001200.2002100.e071003.7001201.1002100.d0125011200.201.2001300.1002200.b0127011100.202.2001300.0002200.b0026002102.3012000.10013022200.a0124042000.5002100.00014012200.a00250032002000.5002200.00014002300.603250030022000.600220114002300.4022100250030022000.600230114002008230125022001.70023011301250125002901.701230110012700260127002100.701230227012701210121022000.801221000240627082002.80121002302130225021101.104.a0222011701230120001001.501.b002300120312001020012202.k002300160111012400.n0022001103110010002600.n002201140110002600.o01230211022700.p00260121012500.r0128002005.t0127002003.x0323002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
 		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9022401.g001000.4002100.80124002100.f001100.3002100.70123031100.e001100.3002100.700240030022000.e001200.2002100.700230130022003.b001201.1002100.7002400310120002102.401.2001300.1002200.6002410022107.202.2001300.0002200.6002a002102.4012000.10013022200.6002a02.8002100.00014012200.6012702.a002200.00014002300.5022502.c00220114002300.400210222011000.c0023011400200823041100.d002301130125012803.d012301100127012703.f012302270010002701.i01221000240626002000.j0121002302130126002000.l022201160322002100.m002300120312052100.m002300160111002500.n0022001103110010002600.n002201140110002600.o01230211022700.p00260121012500.r0128002005.t0127002003.x0323002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
+	],
+	[
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001100.3002100.70113031100.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60015021107.202.2001300.0002200.6001a002102.4012000.10013022200.6001a02.8002100.00014012200.6011702.a002200.00014002300.5021502.c00220114002300.400110212011000.c0023011400200813041100.d002301130115011803.d012301100117011703.f012302170010001701.i012300140616002000.j0121001302130116002000.l021201160312002100.m001300120312052100.m001300160111002500.n0012001103110010002600.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.z.s00.z.a01.z.802.z.001.5002000.z.001.5002000.k01.d001000.4002100.i06.9001100.3002100.h0110011100.9001100.3002100.g0210001102.8001200.2002100.e071003.7001201.1002100.d0115011200.201.2001300.1002200.b0117011100.202.2001300.0002200.b0016001102.3012000.10013022200.a0114041000.5002100.00014012200.a00150032001000.5002200.00014002300.603150030021000.600220114002300.4021100150030021000.600230114002008130115021001.70023011301150115001901.701230110011700160117002100.701230217011701110111022000.8012300140617082002.80121001302130215021101.104.a0212011701130120001001.501.b0013001203120011012202.k001300160111012400.n0012001103110010002600.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.z.10020042000.z.2002000.32000.z.20020.42000.z.22000.42000.z.0012002.1002101.x002410002500.w0320062000.z.100.600.z.t",
+		".z.z.z.z.z.z.z.z.v02.001.q00.b00.0001004.p01.90311001100.o02.900100111001100.g01.5002000.9001007.g01.5002000.9021401.g001000.4002100.80114001100.f001100.3002100.70113031100.e001100.3002100.700140030021000.e001200.2002100.700130130021003.b001201.1002100.7001400310110002102.401.2001300.1002200.60015021107.202.2001300.0002200.6001a002102.4012000.10013022200.6001a02.8002100.00014012200.6011702.a002200.00014002300.5021502.c00220114002300.400110212011000.c0023011400200813041100.d002301130115011803.d012301100117011703.f012302170010001701.i012300140616002000.j0121001302130116002000.l021201160312002100.m001300120312052100.m001300160111002500.n0012001103110010002600.n001201140110002600.o01130211022700.p00160111012500.r0118002005.t0117002003.x0313002001.y002001.0042000.x012000.72000.v012201.62000.u0021002200.62000.v01.002.6002101.z.4002500.z.3042000.z.900.z.t"
 	]
 ];
 var GB = [
@@ -360,6 +366,17 @@ var PAL = {
 		],
 		k: "#c9c6da"
 	},
+	Gress: {
+		b: "#6fae3c",
+		c: "#c9e39a",
+		w: "#3f7d24",
+		t: [
+			"#3f7d24",
+			"#8fcf4a",
+			"#d9ef8a"
+		],
+		k: "#e8504a"
+	},
 	Fly: {
 		b: "#c9864a",
 		c: "#f2d3a8",
@@ -444,16 +461,19 @@ var konstanter_exports = /* @__PURE__ */ __exportAll({
 var M = {
 	Ild: {
 		Is: 2,
+		Gress: 2,
 		Vann: .5,
 		Jord: .5
 	},
 	Vann: {
 		Ild: 2,
 		Jord: 2,
-		Is: .5
+		Is: .5,
+		Gress: .5
 	},
 	Is: {
 		Vann: 2,
+		Gress: 2,
 		Ild: .5,
 		Muskel: .5
 	},
@@ -477,6 +497,7 @@ var M = {
 		Ild: 2,
 		Lyn: 2,
 		Vann: .5,
+		Gress: .5,
 		Fly: 0
 	},
 	Fly: {
@@ -486,6 +507,11 @@ var M = {
 	"Spøkelse": {
 		Magi: 2,
 		Lyn: .5
+	},
+	Gress: {
+		Vann: 2,
+		Jord: 2,
+		Ild: .5
 	}
 };
 var hakk = {
@@ -529,7 +555,9 @@ var KAMP = {
 	mokkRunder: 2,
 	mokkTreff: .6,
 	hjemsokPust: 4,
-	lavetakRunder: 2
+	lavetakRunder: 2,
+	snylteRunder: 3,
+	snylteAndel: .08
 };
 var CPU = {
 	dukkertSjanse: .7,
@@ -868,6 +896,43 @@ var H = [
 				c: 3,
 				a: 100,
 				d: "Ingen kan treffe ham før neste runde er over"
+			}
+		]
+	},
+	{
+		n: "Spiren",
+		t: "Gress",
+		b: [
+			85,
+			70,
+			80,
+			45,
+			60
+		],
+		m: [
+			hakk,
+			{
+				n: "Strånebb",
+				t: "Gress",
+				k: "f",
+				p: 55,
+				c: 2,
+				a: 95
+			},
+			{
+				n: "Tornekratt",
+				t: "Gress",
+				k: "f",
+				p: 90,
+				c: 5,
+				a: 75
+			},
+			{
+				n: "Snylterot",
+				e: "rot",
+				c: 3,
+				a: 100,
+				d: "Suger utholdenhet fra motstanderen i 3 runder"
 			}
 		]
 	}
@@ -1757,8 +1822,8 @@ var FORMER = [
 		}
 	},
 	{
-		id: "jord-blomst",
-		t: "Jord",
+		id: "gress-blomst",
+		t: "Gress",
 		n: "Blomstereng",
 		d: {
 			natur: f4(389),
@@ -1771,8 +1836,8 @@ var FORMER = [
 		}
 	},
 	{
-		id: "jord-flue",
-		t: "Jord",
+		id: "gress-flue",
+		t: "Gress",
 		n: "Fluefanger",
 		d: {
 			natur: f4(393),
@@ -1785,8 +1850,8 @@ var FORMER = [
 		}
 	},
 	{
-		id: "jord-tre",
-		t: "Jord",
+		id: "gress-tre",
+		t: "Gress",
 		n: "Trestamme",
 		d: {
 			natur: f4(397),
@@ -1799,8 +1864,8 @@ var FORMER = [
 		}
 	},
 	{
-		id: "jord-baer",
-		t: "Jord",
+		id: "gress-baer",
+		t: "Gress",
 		n: "Bærbusk",
 		d: {
 			natur: f4(401),
@@ -2310,7 +2375,8 @@ var hane = {
 	Lyn: "Lynhane",
 	Jord: "Jordhane",
 	Fly: "Flyhane",
-	"Spøkelse": "Spøkelseshane"
+	"Spøkelse": "Spøkelseshane",
+	Gress: "Gresshane"
 };
 var capped = (v, max, sum) => {
 	const c = v.map((x) => Math.max(0, Math.min(max, x)));
@@ -2358,7 +2424,8 @@ function make(h, L, tren = [
 		ctr: 0,
 		lad: 0,
 		mokk: 0,
-		air: 0
+		air: 0,
+		rot: 0
 	};
 }
 var rage = (c) => c.t === "Muskel" ? 1 + KAMP.raseriMaks * (1 - c.hp / c.st[0]) : 1;
@@ -2462,7 +2529,11 @@ var MSG = {
 	"Spøkelse>Magi": "Spøkelset skremmer vettet av magikeren.",
 	"Muskel>Spøkelse": "Slaget går rett gjennom spøkelset.",
 	"Lyn>Jord": "Strømmen forsvinner i bakken.",
-	"Jord>Fly": "Jordskjelvet når ikke opp i lufta."
+	"Jord>Fly": "Jordskjelvet når ikke opp i lufta.",
+	"Gress>Vann": "Gresset drikker opp vannet.",
+	"Gress>Jord": "Røttene sprenger jorda.",
+	"Ild>Gress": "Ilden svir av gresset.",
+	"Is>Gress": "Frosten svir gresset."
 };
 var RULES = [
 	"Ild smelter Is",
@@ -2470,6 +2541,8 @@ var RULES = [
 	"Vann slukker Ild",
 	"Vann gjør Jord til gjørme",
 	"Jord kveler Ild",
+	"Gress slår Vann og Jord",
+	"Ild og Is svir Gress",
 	"Magi slår Muskel",
 	"Muskel knuser Is",
 	"Fly slår Muskel",
@@ -2552,6 +2625,7 @@ function nullstill(c) {
 	c.lad = 0;
 	c.mokk = 0;
 	c.air = 0;
+	c.rot = 0;
 }
 function act(u, t, m) {
 	if (u.sov > 0) {
@@ -2581,7 +2655,7 @@ function act(u, t, m) {
 		});
 		return;
 	}
-	if ((!m.e || m.e === "sov" || m.e === "mokk" || m.e === "redd") && t.air > 0) {
+	if ((!m.e || m.e === "sov" || m.e === "mokk" || m.e === "redd" || m.e === "rot") && t.air > 0) {
 		say(`${u.n} bruker ${m.n}, men ${t.n} sitter trygt på låvetaket.`, false, {
 			k: "bom",
 			a: W(u),
@@ -2691,6 +2765,20 @@ function act(u, t, m) {
 		});
 		return;
 	}
+	if (m.e === "rot") {
+		if (t.rot > 0) say(`${t.n} har allerede en snylterot på seg.`);
+		else {
+			t.rot = KAMP.snylteRunder;
+			say(`${u.n} sår en snylterot på ${t.n}. Den suger utholdenhet i ${KAMP.snylteRunder} runder.`, false, {
+				k: "taktikk",
+				a: W(u),
+				t: W(t),
+				type: u.t,
+				m: m.n
+			});
+		}
+		return;
+	}
 	const e = eff(m.t, t.t);
 	if (e === 0) {
 		say(`${u.n} bruker ${m.n}. ${MSG[m.t + ">" + t.t] || ""} Det har ingen effekt.`, false, {
@@ -2746,6 +2834,15 @@ function act(u, t, m) {
 		});
 	}
 }
+function snylt(c, o) {
+	if (!(c.rot > 0)) return;
+	c.rot--;
+	if (c.hp <= 1 || o.hp <= 0) return;
+	const d = Math.min(c.hp - 1, Math.max(1, Math.round(c.st[0] * KAMP.snylteAndel))), b = o.hp;
+	c.hp -= d;
+	o.hp = Math.min(o.st[0], o.hp + d);
+	say(`Snylterota suger ${d} utholdenhet fra ${c.n}${o.hp > b ? ` og gir ${Math.round(o.hp - b)} til ${o.n}` : ""}.`);
+}
 function useful(m) {
 	switch (m.e) {
 		case "opp": return E.atk < KAMP.oppvarmingMaks;
@@ -2757,6 +2854,7 @@ function useful(m) {
 		case "mokk": return P.mokk === 0;
 		case "redd": return P.pust >= KAMP.hjemsokPust;
 		case "fly": return E.air === 0;
+		case "rot": return P.rot === 0;
 	}
 	return false;
 }
@@ -2865,6 +2963,8 @@ function round(i, bytt) {
 		}
 	}
 	if (!over) {
+		snylt(P, E);
+		snylt(E, P);
 		[P, E].forEach((c) => {
 			if (c.skj > 0) c.skj--;
 			if (c.ctr > 0) c.ctr--;
@@ -3778,9 +3878,10 @@ var tint = {
 	Magi: "violet",
 	Muskel: "orange",
 	Lyn: "yellow",
-	Jord: "green",
+	Jord: "brown",
 	Fly: "magenta",
-	"Spøkelse": "spokelse"
+	"Spøkelse": "spokelse",
+	Gress: "green"
 };
 var icon = {
 	Ild: "ti-flame",
@@ -3791,7 +3892,8 @@ var icon = {
 	Lyn: "ti-bolt",
 	Jord: "ti-mountain",
 	Fly: "ti-feather",
-	"Spøkelse": "ti-ghost"
+	"Spøkelse": "ti-ghost",
+	Gress: "ti-leaf"
 };
 var app = document.getElementById("app");
 var badge = (t) => {
@@ -4038,6 +4140,40 @@ function effektSvg(t) {
 		case "Spøkelse":
 			g = `<path d="M30 80 L30 46 C30 24 70 24 70 46 L70 80 L62 72 L56 80 L50 72 L44 80 L38 72 Z" fill="var(--e1)" ${s}/><circle cx="43" cy="46" r="4" fill="var(--eo)"/><circle cx="57" cy="46" r="4" fill="var(--eo)"/><ellipse cx="50" cy="60" rx="5" ry="7" fill="var(--eo)"/>`;
 			break;
+		case "Gress":
+			g = [
+				[
+					50,
+					50,
+					0,
+					1.2
+				],
+				[
+					26,
+					34,
+					-40,
+					.8
+				],
+				[
+					74,
+					36,
+					35,
+					.85
+				],
+				[
+					30,
+					70,
+					-70,
+					.7
+				],
+				[
+					72,
+					70,
+					60,
+					.75
+				]
+			].map(([x, y, r, k]) => `<g transform="translate(${x} ${y}) rotate(${r}) scale(${k})"><path d="M0 -18 C12 -8 12 8 0 18 C-12 8 -12 -8 0 -18 Z" fill="var(--e1)" ${s}/><path d="M0 -14 L0 14" stroke="var(--eo)" stroke-width="2"/></g>`).join("");
+			break;
 		case "Fly":
 			g = [
 				[
@@ -4147,6 +4283,7 @@ function statusListe(c, hp) {
 	if (c.lad > 0) s.push("Ladet");
 	if (c.mokk > 0) s.push("Møkkete");
 	if (c.air > 0) s.push("På låvetaket");
+	if (c.rot > 0) s.push("Snylterot");
 	const r = c.t === "Muskel" ? Math.round(50 * (1 - hp / c.st[0])) : 0;
 	if (r >= 10) s.push(`Raseri +${r} %`);
 	return s;
@@ -4302,6 +4439,7 @@ function card(c, l, hp, pu) {
 	if (c.lad > 0) s.push("Ladet");
 	if (c.mokk > 0) s.push("Møkkete");
 	if (c.air > 0) s.push("På låvetaket");
+	if (c.rot > 0) s.push("Snylterot");
 	const r = c.t === "Muskel" ? Math.round(50 * (1 - hp / c.st[0])) : 0;
 	if (r >= 10) s.push(`Raseri +${r} %`);
 	const p = Math.max(0, hp / c.st[0]);
@@ -4798,9 +4936,9 @@ if (S) {
 }
 render();</script>
   <style rel="stylesheet" crossorigin>:root{--surface-0:#f5f4f0;--surface-1:#efede6;--surface-2:#ffffff;--border:rgba(0,0,0,.12);--border-strong:rgba(0,0,0,.22);--text-primary:#1f1e1c;--text-secondary:#5f5e5a;--text-muted:#888780;--text-success:#3B6D11;--text-danger:#A32D2D;--text-warning:#854F0B;--fill-success:#639922;--fill-warning:#EF9F27;--fill-danger:#E24B4A;--fill-accent:#378ADD;--radius:8px;
---bg-tint-red:#FCEBEB;--text-tint-red:#791F1F;--bg-tint-blue:#E6F1FB;--text-tint-blue:#0C447C;--bg-tint-aqua:#E1F5EE;--text-tint-aqua:#085041;--bg-tint-violet:#EEEDFE;--text-tint-violet:#3C3489;--bg-tint-orange:#FAECE7;--text-tint-orange:#712B13;--bg-tint-yellow:#FAEEDA;--text-tint-yellow:#633806;--bg-tint-green:#EAF3DE;--text-tint-green:#27500A;--bg-tint-magenta:#FBEAF0;--bg-tint-spokelse:#ECEAF4;--text-tint-spokelse:#4B4466;--text-tint-magenta:#72243E}
+--bg-tint-red:#FCEBEB;--text-tint-red:#791F1F;--bg-tint-blue:#E6F1FB;--text-tint-blue:#0C447C;--bg-tint-aqua:#E1F5EE;--text-tint-aqua:#085041;--bg-tint-violet:#EEEDFE;--text-tint-violet:#3C3489;--bg-tint-orange:#FAECE7;--text-tint-orange:#712B13;--bg-tint-yellow:#FAEEDA;--text-tint-yellow:#633806;--bg-tint-green:#EAF3DE;--text-tint-green:#27500A;--bg-tint-brown:#F1E7D8;--text-tint-brown:#5A3E1B;--bg-tint-magenta:#FBEAF0;--bg-tint-spokelse:#ECEAF4;--text-tint-spokelse:#4B4466;--text-tint-magenta:#72243E}
 @media (prefers-color-scheme:dark){:root{--surface-0:#1c1b19;--surface-1:#262522;--surface-2:#2e2d2a;--border:rgba(255,255,255,.12);--border-strong:rgba(255,255,255,.24);--text-primary:#f1efe8;--text-secondary:#b4b2a9;--text-muted:#888780;--text-success:#97C459;--text-danger:#F09595;--text-warning:#FAC775;
---bg-tint-red:#791F1F;--text-tint-red:#F7C1C1;--bg-tint-blue:#0C447C;--text-tint-blue:#B5D4F4;--bg-tint-aqua:#085041;--text-tint-aqua:#9FE1CB;--bg-tint-violet:#3C3489;--text-tint-violet:#CECBF6;--bg-tint-orange:#712B13;--text-tint-orange:#F5C4B3;--bg-tint-yellow:#633806;--text-tint-yellow:#FAC775;--bg-tint-green:#27500A;--text-tint-green:#C0DD97;--bg-tint-magenta:#72243E;--bg-tint-spokelse:#3B3654;--text-tint-spokelse:#D9D3EE;--text-tint-magenta:#F4C0D1}}
+--bg-tint-red:#791F1F;--text-tint-red:#F7C1C1;--bg-tint-blue:#0C447C;--text-tint-blue:#B5D4F4;--bg-tint-aqua:#085041;--text-tint-aqua:#9FE1CB;--bg-tint-violet:#3C3489;--text-tint-violet:#CECBF6;--bg-tint-orange:#712B13;--text-tint-orange:#F5C4B3;--bg-tint-yellow:#633806;--text-tint-yellow:#FAC775;--bg-tint-green:#27500A;--text-tint-green:#C0DD97;--bg-tint-brown:#5A3E1B;--text-tint-brown:#E8D3B0;--bg-tint-magenta:#72243E;--bg-tint-spokelse:#3B3654;--text-tint-spokelse:#D9D3EE;--text-tint-magenta:#F4C0D1}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--surface-0);color:var(--text-primary);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:16px;line-height:1.5}
 main{max-width:460px;margin:0 auto;padding:1.5rem 1rem 3rem}
@@ -4885,7 +5023,7 @@ header.topp h1{margin:0}
 @keyframes fall{0%{opacity:1;transform:translateY(-70%)}70%{opacity:1;transform:translateY(0)}100%{opacity:0}}
 .s-tegne{--eo:#2a1a10}
 .s-tegne .eff-Ild{--e1:#ff8a1e;--e2:#ffd23f}.s-tegne .eff-Vann{--e1:#57b0e6}.s-tegne .eff-Is{--e1:#cdefff;--e2:#8fd3ea}.s-tegne .eff-Magi{--e1:#f2d24b}.s-tegne .eff-Muskel{--e1:#ffd23f}
-.s-tegne .eff-Lyn{--e1:#ffe14a}.s-tegne .eff-Jord{--e1:#8a6a3a}.s-tegne .eff-Spøkelse{--e1:#f4f2fb}.s-tegne .eff-Fly{--e1:#f2b3c8}.s-tegne .eff-Hakk{--e1:#fff3b0}
+.s-tegne .eff-Lyn{--e1:#ffe14a}.s-tegne .eff-Jord{--e1:#8a6a3a}.s-tegne .eff-Gress{--e1:#7cc142}.s-tegne .eff-Spøkelse{--e1:#f4f2fb}.s-tegne .eff-Fly{--e1:#f2b3c8}.s-tegne .eff-Hakk{--e1:#fff3b0}
 .s-piksel{--eo:#0f380f;--e1:#306230;--e2:#8bac0f}
 .pop{position:absolute;left:0;right:0;top:42%;text-align:center;font:700 16px system-ui,sans-serif;color:#fff;-webkit-text-stroke:1px #2a1a10;opacity:0;pointer-events:none}
 .pop.stor{font-size:26px;color:#ffd23f}
