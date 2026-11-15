@@ -4202,8 +4202,14 @@ var velg_exports = /* @__PURE__ */ __exportAll({
 	pick: () => pick,
 	pickEgg: () => pickEgg
 });
+var START = [
+	0,
+	1,
+	9,
+	...H.map((_, i) => i).filter((i) => i > 1 && i !== 9)
+];
 function pick() {
-	app.innerHTML = `<p style="font-size:14px;color:var(--text-secondary);margin:0 0 10px">Velg hanen du skal oppdra. Nye spillere bør starte med Gnisten, Plasken eller Frosten.</p><div class="grid">${H.map((h, i) => `<button class="mv" data-pick="${i}" style="text-align:center"><div class="minihane">${haneSvg(i)}</div><div style="font-weight:500;font-size:14px">${h.n}</div><div style="margin-top:6px">${badge(h.t)}</div>${i > 1 ? "<div class=\"plassholder\">plassholder</div>" : ""}</button>`).join("")}</div><button data-rules="1" style="margin-top:12px;width:100%"><i class="ti ti-list" aria-hidden="true" style="margin-right:6px"></i>${ui.showRules ? "Skjul typeregler" : "Vis typeregler"}</button><button class="samlingknapp" data-act="samling"><i class="ti ti-list" aria-hidden="true" style="margin-right:6px"></i>Se hele samlingen</button>${ui.showRules ? `<div style="font-size:13px;color:var(--text-secondary);line-height:1.8;margin-top:10px">${RULES.map((r) => `<div>${r}</div>`).join("")}</div>` : ""}`;
+	app.innerHTML = `<p style="font-size:14px;color:var(--text-secondary);margin:0 0 10px">Velg hanen du skal oppdra. Nye spillere bør starte med Gnisten, Plasken eller Spiren.</p><div class="grid">${START.map((i) => [H[i], i]).map(([h, i]) => `<button class="mv" data-pick="${i}" style="text-align:center"><div class="minihane">${haneSvg(i)}</div><div style="font-weight:500;font-size:14px">${h.n}</div><div style="margin-top:6px">${badge(h.t)}</div>${i > 1 ? "<div class=\"plassholder\">plassholder</div>" : ""}</button>`).join("")}</div><button data-rules="1" style="margin-top:12px;width:100%"><i class="ti ti-list" aria-hidden="true" style="margin-right:6px"></i>${ui.showRules ? "Skjul typeregler" : "Vis typeregler"}</button><button class="samlingknapp" data-act="samling"><i class="ti ti-list" aria-hidden="true" style="margin-right:6px"></i>Se hele samlingen</button>${ui.showRules ? `<div style="font-size:13px;color:var(--text-secondary);line-height:1.8;margin-top:10px">${RULES.map((r) => `<div>${r}</div>`).join("")}</div>` : ""}`;
 }
 function pickEgg() {
 	const har = S.lag.filter(Boolean).map((h) => h.type);
