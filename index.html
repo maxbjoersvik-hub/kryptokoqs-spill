@@ -1216,11 +1216,11 @@ var SAMLING = {
 		"Legendarisk"
 	],
 	vektDrakt: [
-		30,
-		36,
-		18,
-		11,
-		5
+		70,
+		17,
+		7,
+		4,
+		2
 	],
 	vektBakgrunn: [
 		40,
@@ -2196,6 +2196,7 @@ var samling_exports = /* @__PURE__ */ __exportAll({
 	fro: () => fro,
 	gyldig: () => gyldig,
 	haneFil: () => haneFil,
+	naturUtseende: () => naturUtseende,
 	samling: () => samling,
 	tilbehorFil: () => tilbehorFil,
 	trekkUtseende: () => trekkUtseende,
@@ -2239,6 +2240,7 @@ var KUM_A = vekter(TILBEHOR, SAMLING.vektTilbehor);
 var KUM_H = BILDER.map((b) => vekter(b, SAMLING.vektDrakt));
 var liste = null;
 var perType = null;
+var naturPerType = null;
 function samling() {
 	if (liste) return liste;
 	const r = fro(SAMLING.fro), alle = [];
@@ -2265,6 +2267,7 @@ function samling() {
 	}
 	liste = alle;
 	perType = H.map((type) => alle.map((v, i) => FORMER[v.f].t === type.t ? i + 1 : 0).filter(Boolean));
+	naturPerType = perType.map((l) => l.filter((nr) => alle[nr - 1].d === "natur"));
 	return liste;
 }
 var variant = (nr) => samling()[nr - 1] || null;
@@ -2277,7 +2280,12 @@ function trekkUtseende(type, r = Math.random) {
 	const l = perType[type];
 	return l[Math.floor(r() * l.length)];
 }
-var fastUtseende = (type, nokkel) => trekkUtseende(type, fro(SAMLING.fro + 7919 * (nokkel + 1)));
+function naturUtseende(type, r = Math.random) {
+	samling();
+	const l = naturPerType[type];
+	return l[Math.floor(r() * l.length)];
+}
+var fastUtseende = (type, nokkel) => naturUtseende(type, fro(SAMLING.fro + 7919 * (nokkel + 1)));
 function beskriv(nr) {
 	const v = variant(nr);
 	if (!v) return null;
@@ -2321,9 +2329,9 @@ var haner_exports = /* @__PURE__ */ __exportAll({
 	haneSvg: () => haneSvg
 });
 var hIdx = (c) => c.i !== void 0 ? c.i : H.findIndex((h) => h.n === c.n);
-var feilet = /* @__PURE__ */ new Set();
+var feilet$1 = /* @__PURE__ */ new Set();
 function bildeFeilet(nr) {
-	feilet.add(nr);
+	feilet$1.add(nr);
 }
 var haneBilde = (i, u) => {
 	const v = u ? variant(u) : null;
@@ -2333,7 +2341,7 @@ function haneSvg(i, o = {}) {
 	const st = o.stil || STIL, h = H[i];
 	if (st === "kunst") {
 		const nr = haneBilde(i, o.u);
-		if (!feilet.has(nr)) return `<svg class="hane kunst" viewBox="0 0 100 100" role="img" aria-label="${h.n}" data-i="${i}" data-nr="${nr}"><image href="${haneFil(nr)}" width="100" height="100" transform="translate(100 0) scale(-1 1)"/></svg>`;
+		if (!feilet$1.has(nr)) return `<svg class="hane kunst" viewBox="0 0 100 100" role="img" aria-label="${h.n}" data-i="${i}" data-nr="${nr}"><image href="${haneFil(nr)}" width="100" height="100" transform="translate(100 0) scale(-1 1)"/></svg>`;
 	}
 	if (st === "piksel") {
 		const fr = o.frames ? `<g class="f-stand">${pixRects(i, 0)}</g><g class="f-peck">${pixRects(i, 1)}</g><g class="f-scratch">${pixRects(i, 2)}</g>` : pixRects(i, 0);
@@ -2341,6 +2349,107 @@ function haneSvg(i, o = {}) {
 	}
 	return `<svg class="hane tegne" viewBox="-4 -8 104 108" role="img" aria-label="${h.n}">${tegneHane(h.n, h.t, "stand")}</svg>`;
 }
+// src/grafikk/scener.js
+var scener_exports = /* @__PURE__ */ __exportAll({
+	KART_FOTO: () => KART_FOTO,
+	SCENER: () => SCENER,
+	sceneFeilet: () => sceneFeilet,
+	sceneFil: () => sceneFil,
+	sceneOk: () => sceneOk
+});
+var SCENER = {
+	gard: {
+		nr: 330,
+		klipp: [
+			0,
+			80,
+			768,
+			540
+		],
+		px: 768
+	},
+	arena: {
+		nr: 310,
+		klipp: [
+			0,
+			330,
+			768,
+			570
+		],
+		px: 768
+	},
+	eng: {
+		nr: 286,
+		klipp: [
+			0,
+			370,
+			768,
+			570
+		],
+		px: 768
+	},
+	kart: {
+		nr: 555,
+		klipp: [
+			0,
+			0,
+			1200,
+			1200
+		],
+		px: 800
+	}
+};
+var sceneFil = (id) => `bilder/scener/${id}.webp`;
+var KART_FOTO = [
+	{
+		x: 160,
+		y: 224
+	},
+	{
+		x: 34,
+		y: 240,
+		lp: "o"
+	},
+	{
+		x: 120,
+		y: 196,
+		lp: "o"
+	},
+	{
+		x: 156,
+		y: 128
+	},
+	{
+		x: 250,
+		y: 136
+	},
+	{
+		x: 266,
+		y: 226
+	},
+	{
+		x: 268,
+		y: 34
+	},
+	{
+		x: 218,
+		y: 292,
+		lp: "o"
+	},
+	{
+		x: 180,
+		y: 62
+	},
+	{
+		x: 104,
+		y: 106
+	}
+];
+var feilet = /* @__PURE__ */ new Set();
+function sceneFeilet(id) {
+	feilet.add(id);
+}
+var sceneOk = (id) => !feilet.has(id);
 // src/logikk/hjelp.js
 var hjelp_exports = /* @__PURE__ */ __exportAll({
 	fmt: () => fmt,
@@ -3341,7 +3450,7 @@ function lagHane(i) {
 		kos: 0,
 		seireDag: 0,
 		keDag: 0,
-		u: trekkUtseende(i)
+		u: naturUtseende(i)
 	};
 }
 function newHen(i) {
@@ -3928,11 +4037,18 @@ var bakgrunner_exports = /* @__PURE__ */ __exportAll({
 	gardBg: () => gardBg,
 	kampBg: () => kampBg
 });
-function kampBg() {
+var foto = (id) => STIL === "kunst" && SCENER[id] && sceneOk(id) ? `<img class="bg scenebilde" data-scene="${id}" src="${sceneFil(id)}" alt="">` : "";
+function kampBg(sted) {
+	return kampSvg() + foto(sted);
+}
+function kampSvg() {
 	if (STIL === "piksel") return `<svg class="bg" viewBox="0 0 320 200" preserveAspectRatio="none" shape-rendering="crispEdges"><rect width="320" height="200" fill="${GB[3]}"/><rect y="150" width="320" height="50" fill="${GB[2]}"/>${Array.from({ length: 40 }, (_, i) => `<rect x="${i * 8}" y="150" width="4" height="2" fill="${GB[1]}"/>`).join("")}</svg>`;
 	return `<svg class="bg" viewBox="0 0 320 200" preserveAspectRatio="none"><defs><linearGradient id="himmel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd6f7"/><stop offset="1" stop-color="#e8f6ff"/></linearGradient></defs><rect width="320" height="200" fill="url(#himmel)"/><circle cx="40" cy="30" r="14" fill="#ffe17a"/><ellipse cx="250" cy="34" rx="26" ry="9" fill="#fff" opacity=".9"/><ellipse cx="268" cy="28" rx="16" ry="8" fill="#fff" opacity=".9"/><path d="M0 150 C60 128 120 140 180 132 C240 124 290 136 320 130 L320 200 L0 200 Z" fill="#8fd16a"/><path d="M0 170 C80 160 200 172 320 160 L320 200 L0 200 Z" fill="#76bf54"/></svg>`;
 }
 function gardBg() {
+	return gardSvg() + foto("gard");
+}
+function gardSvg() {
 	if (STIL === "piksel") return `<svg class="bg" viewBox="0 0 320 160" preserveAspectRatio="none" shape-rendering="crispEdges"><rect width="320" height="160" fill="${GB[3]}"/><rect x="200" y="40" width="90" height="80" fill="${GB[1]}"/><path d="M194 44 L245 12 L296 44 Z" fill="${GB[0]}"/><rect x="232" y="78" width="26" height="42" fill="${GB[0]}"/><rect x="236" y="82" width="18" height="34" fill="${GB[2]}"/><rect y="120" width="320" height="40" fill="${GB[2]}"/>${[
 		10,
 		40,
@@ -3956,21 +4072,25 @@ var bygda_exports = /* @__PURE__ */ __exportAll({
 	kartSvg: () => kartSvg
 });
 function kartSvg() {
-	const P8 = STIL === "piksel", n = merker().length, pts = [
+	const P8 = STIL === "piksel", F = STIL === "kunst" && sceneOk("kart"), n = merker().length, pts = [
 		GARD_XY,
 		...MESTRE,
 		FINALE
-	];
-	const vei = `<path d="${pts.map((p, i) => (i ? "L" : "M") + p.x + " " + p.y).join(" ")}" fill="none" stroke="${P8 ? GB[1] : "#c9a46a"}" stroke-width="4" stroke-dasharray="${P8 ? "4 4" : "0"}" stroke-linecap="round" stroke-linejoin="round"/>`;
-	const bg = P8 ? `<rect width="320" height="190" fill="${GB[3]}"/><path d="M0 120 Q40 110 52 150 Q60 175 100 190 L0 190 Z" fill="${GB[2]}"/><path d="M240 0 L320 0 L320 90 Q300 30 240 0 Z" fill="${GB[2]}"/>` : `<rect width="320" height="190" fill="#bfe3a5"/><path d="M0 118 Q42 108 54 150 Q62 176 104 190 L0 190 Z" fill="#7cc4ea"/><path d="M236 0 L320 0 L320 92 Q302 28 236 0 Z" fill="#e9eef2"/><path d="M262 24 l14 -18 l14 18 Z M288 30 l12 -16 l12 16 Z" fill="#fff" stroke="#a8b4bd"/>`;
+	].map((p, i) => F ? {
+		...p,
+		lp: void 0,
+		...KART_FOTO[i]
+	} : p), HH = F ? 320 : 190;
+	const vei = F ? "" : `<path d="${pts.map((p, i) => (i ? "L" : "M") + p.x + " " + p.y).join(" ")}" fill="none" stroke="${P8 ? GB[1] : "#c9a46a"}" stroke-width="4" stroke-dasharray="${P8 ? "4 4" : "0"}" stroke-linecap="round" stroke-linejoin="round"/>`;
+	const bg = F ? `<rect width="320" height="320" fill="#bfe3a5"/><image data-scene="kart" href="${sceneFil("kart")}" width="320" height="320"/>` : P8 ? `<rect width="320" height="190" fill="${GB[3]}"/><path d="M0 120 Q40 110 52 150 Q60 175 100 190 L0 190 Z" fill="${GB[2]}"/><path d="M240 0 L320 0 L320 90 Q300 30 240 0 Z" fill="${GB[2]}"/>` : `<rect width="320" height="190" fill="#bfe3a5"/><path d="M0 118 Q42 108 54 150 Q62 176 104 190 L0 190 Z" fill="#7cc4ea"/><path d="M236 0 L320 0 L320 92 Q302 28 236 0 Z" fill="#e9eef2"/><path d="M262 24 l14 -18 l14 18 Z M288 30 l12 -16 l12 16 Z" fill="#fff" stroke="#a8b4bd"/>`;
 	const node = (p, i) => {
 		const fin = i === 9, tatt = i > 0 && i <= n && !fin || fin && !!S.gullkam, neste = i === n + 1 && i <= 8 || fin && finaleKlar() && !S.gullkam, gard = i === 0;
 		const fyll = P8 ? tatt || gard ? GB[0] : neste ? GB[1] : GB[2] : gard ? "#e8504a" : tatt ? "#ffd23f" : neste ? "#fff" : "#d9d4c7";
 		const ring = neste ? `<circle class="kart-puls" cx="${p.x}" cy="${p.y}" r="11" fill="none" stroke="${P8 ? GB[0] : "#e8504a"}" stroke-width="2"/>` : "";
-		const nav = gard ? "Gården" : fin ? FINALE.sted : p.sted, anc = p.x > 250 ? "end" : p.x < 60 ? "start" : "middle", ty = p.lp === "u" ? p.y + 19 : p.lp === "o" ? p.y - 12 : p.y > 140 ? p.y - 12 : p.y + 19;
+		const nav = gard ? "Gården" : fin ? FINALE.sted : p.sted, anc = p.x > 250 ? "end" : p.x < 60 ? "start" : "middle", ty = p.lp === "u" ? p.y + 19 : p.lp === "o" ? p.y - 12 : !F && p.y > 140 ? p.y - 12 : p.y + 19;
 		return `${ring}<circle cx="${p.x}" cy="${p.y}" r="7" fill="${fyll}" stroke="${P8 ? GB[0] : "#2a1a10"}" stroke-width="1.6"/>${tatt ? `<path d="M${p.x - 3} ${p.y} l2 2.5 l4 -5" fill="none" stroke="${P8 ? GB[3] : "#2a1a10"}" stroke-width="1.8"/>` : ""}${fin ? `<text x="${p.x}" y="${p.y + 3.5}" text-anchor="middle" font-size="9" fill="${P8 ? GB[3] : "#2a1a10"}">★</text>` : ""}<text x="${p.x + (anc === "start" ? -6 : anc === "end" ? 6 : 0)}" y="${ty}" text-anchor="${anc}" class="kart-navn" fill="${P8 ? GB[0] : "#2a1a10"}">${nav}</text>`;
 	};
-	return `<svg class="kart" viewBox="0 0 320 190" role="img" aria-label="Kart over Galestad"${P8 ? " shape-rendering=\"crispEdges\"" : ""}>${bg}${vei}${pts.map(node).join("")}</svg>`;
+	return `<svg class="kart${F ? " foto" : ""}" viewBox="0 0 320 ${HH}" role="img" aria-label="Kart over Galestad"${P8 ? " shape-rendering=\"crispEdges\"" : ""}>${bg}${vei}${pts.map(node).join("")}</svg>`;
 }
 function bygdPanel() {
 	const n = merker().length, m = nesteMester();
@@ -4270,7 +4390,7 @@ var infoSkjelett = (id, egen) => `<div id="info${id}" class="info info${id}"><di
 function byggScene() {
 	ui.sceneFor = kampNr;
 	const iE = hIdx(E), iP = hIdx(P);
-	app.innerHTML = `<div id="scene" class="scene s-${flate()}">${kampBg()}<div class="plattform plE"></div><div class="plattform plP"></div>
+	app.innerHTML = `<div id="scene" class="scene s-${flate()}${STIL === "kunst" ? " foto" : ""}">${kampBg(kampMester ? "arena" : "eng")}<div class="plattform plE"></div><div class="plattform plP"></div>
 <div id="sprE" class="spr sprE inn" data-k="${E.n}"><div class="kropp"><div class="vend">${haneSvg(iE, { u: E.u })}</div></div><div class="sand"></div><div class="fx"></div></div>
 <div id="sprP" class="spr sprP inn" data-k="${P.n}"><div class="kropp">${haneSvg(iP, { u: P.u })}</div><div class="sand"></div><div class="fx"></div></div>
 ${infoSkjelett("E", false)}${infoSkjelett("P", true)}<div id="banner" class="banner"></div><div id="pop" class="pop"></div></div>
@@ -4533,7 +4653,8 @@ function installerTestkrok(ekstra = {}) {
 		bygda_exports,
 		samling_exports,
 		samlingdata_exports,
-		samlekort_exports
+		samlekort_exports,
+		scener_exports
 	];
 	const SETTERE = {
 		S: settS,
@@ -4680,7 +4801,7 @@ function gardScene() {
 		boble = TRENTEKST[r.i];
 		flyt = [r.tekst];
 	}
-	return `<div class="gard g-${flate()}">${gardBg()}${trofeSvg()}<div class="gardhane ${kls}">${haneSvg(S.type, {
+	return `<div class="gard g-${flate()}${STIL === "kunst" ? " foto" : ""}">${gardBg()}${trofeSvg()}<div class="gardhane ${kls}">${haneSvg(S.type, {
 		frames: true,
 		u: S.u
 	})}${ekstra}</div>${boble ? `<div class="boble${r && r.k === "spis" ? " sen" : ""}">${boble}</div>` : ""}${flyt.map((t, i) => `<div class="flyt${r && r.k === "spis" ? " sen" : ""}" style="top:${44 + i * 14}%;animation-delay:${(r && r.k === "spis" ? 1.25 : .2) + i * .15}s">${t}</div>`).join("")}<div class="partikler">${part}</div></div><div class="fortelling">${S.logg.at(-1) || ""}</div>`;
@@ -4927,7 +5048,14 @@ installerTestkrok({
 });
 $("stilknapp").addEventListener("click", byttStil);
 document.addEventListener("error", (ev) => {
-	const b = ev.target, s = b && b.closest && b.closest("svg.hane.kunst");
+	const b = ev.target;
+	if (b && b.dataset && b.dataset.scene) {
+		sceneFeilet(b.dataset.scene);
+		if (b.dataset.scene === "kart") render();
+		else b.remove();
+		return;
+	}
+	const s = b && b.closest && b.closest("svg.hane.kunst");
 	if (!s) return;
 	bildeFeilet(+s.dataset.nr);
 	s.outerHTML = haneSvg(+s.dataset.i, { stil: "tegne" });
@@ -4976,6 +5104,8 @@ header.topp h1{margin:0}
 .plattform{position:absolute;border-radius:50%}
 .s-tegne .plattform{background:#6fb84a;border:2px solid #4e8f33}
 .s-piksel .plattform{background:#8bac0f;border:2px solid #306230;border-radius:50%}
+.scene.foto .plattform{background:rgba(40,25,10,.28);border:0;filter:blur(3px)}
+.scene .scenebilde,.gard .scenebilde{object-fit:cover;object-position:50% 45%}
 .plE{right:5%;top:112px;width:38%;height:22px}
 .plP{left:2%;bottom:6px;width:42%;height:26px}
 .spr{position:absolute;aspect-ratio:1}
@@ -5064,6 +5194,7 @@ header.topp h1{margin:0}
 .gard .bg{position:absolute;inset:0;width:100%;height:100%}
 .g-piksel{border:3px solid #0f380f;border-radius:4px}
 .gardhane{position:absolute;left:24%;bottom:8px;width:38%;aspect-ratio:1}
+.gard.foto{height:230px}.gard.foto .gardhane{left:38%;bottom:14px;width:34%}
 .gardhane .hode{transform-origin:62px 52px;animation:nikk 5s ease-in-out infinite}
 .gardhane .bein-bak{transform-origin:44px 74px;animation:skrap 5s ease-in-out infinite}
 @keyframes nikk{0%,8%,22%,100%{transform:none}12%,18%{transform:rotate(22deg)}}
@@ -5235,7 +5366,7 @@ body[data-stil=piksel] .tit.na{box-shadow:0 0 0 2px #306230}
 .malkort,.eggkort{margin-top:12px;padding:10px 12px;display:flex;align-items:center;gap:10px}:is(.malkort,.eggkort) .mal-tekst{display:flex;gap:8px;align-items:flex-start;flex:1;min-width:0}
 :is(.malkort,.eggkort) .mal-tekst>div{display:flex;flex-direction:column;gap:2px;min-width:0}:is(.malkort,.eggkort) b{font-size:13.5px}:is(.malkort,.eggkort) span{font-size:12px;color:var(--text-secondary)}
 :is(.malkort,.eggkort) .mv{flex:none;width:auto;padding:8px 12px;font-size:13px;font-weight:500}.malkort.rival{box-shadow:0 0 0 2px var(--text-danger) inset}
-.kart{display:block;width:100%;height:auto;border-radius:10px;margin-top:8px;border:1px solid var(--border,rgba(0,0,0,.12))}.kart-navn{font-size:10px;font-weight:600}
+.kart{display:block;width:100%;height:auto;border-radius:10px;margin-top:8px;border:1px solid var(--border,rgba(0,0,0,.12))}.kart-navn{font-size:10px;font-weight:600}.kart.foto .kart-navn{font-size:11px;font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}
 .kart-puls{animation:puls 1.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}@keyframes puls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(1.25)}}
 .mesterkort{margin-top:10px;padding:10px 12px}.mesterkort p{font-size:13px;color:var(--text-secondary);margin:6px 0 8px;line-height:1.45}.mesterkort .mv{min-height:44px}
 .mesterkort.rival{box-shadow:0 0 0 2px var(--text-danger) inset}
